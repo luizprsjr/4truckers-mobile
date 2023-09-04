@@ -3,6 +3,7 @@ import { View } from 'react-native'
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native'
 import { colors } from '@theme/index'
 
+import { AppRoutes } from './app.routes'
 import { AuthRoutes } from './auth.routes'
 
 export function Routes() {
@@ -12,7 +13,7 @@ export function Routes() {
   return (
     <View style={{ flex: 1, backgroundColor: colors.secondary50 }}>
       <NavigationContainer>
-        <AuthRoutes />
+        <AppRoutes />
       </NavigationContainer>
     </View>
   )
