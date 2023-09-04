@@ -1,5 +1,6 @@
 import { Text, TouchableOpacity, View } from 'react-native'
 
+import { Header } from '@components/Header'
 import { useNavigation } from '@react-navigation/native'
 import { AppNavigationRoutesProps } from '@routes/app.routes'
 
@@ -11,7 +12,8 @@ export function AddAnnouncement() {
   }
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View>
+      <Header />
       <Text>AddAnnouncement</Text>
       <TouchableOpacity onPress={handleButton}>
         <Text>new announcement</Text>

@@ -1,5 +1,6 @@
 import { Text, TouchableOpacity, View } from 'react-native'
 
+import { Header } from '@components/Header'
 import { useNavigation } from '@react-navigation/native'
 
 export function Announcement() {
@@ -10,7 +11,9 @@ export function Announcement() {
   }
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View>
+      <Header />
+
       <Text>Announcement</Text>
       <TouchableOpacity onPress={handleButton}>
         <Text>new account</Text>

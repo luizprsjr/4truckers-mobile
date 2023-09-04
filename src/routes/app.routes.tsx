@@ -1,15 +1,15 @@
 import { Platform } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import { Ionicons, Octicons } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons'
 import {
   BottomTabNavigationProp,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs'
 import { AddAnnouncement } from '@screens/AddAnnouncement'
+import { Announcement } from '@screens/Announcement'
 import { Home } from '@screens/Home'
 import { Profile } from '@screens/Profile'
-import { Announcement } from '@screens/Profile copy'
 import { colors } from '@theme/colors'
 import { fonts } from '@theme/fonts'
 
