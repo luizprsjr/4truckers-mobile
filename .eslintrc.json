@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "@rocketseat/eslint-config/react"
+  ], 
+  "rules": {
+    "camelcase": "off",
+    "no-use-before-define": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "react/self-closing-comp": ["error", {
+      "component": true,
+      "html": true
+    }],
+    "prettier/prettier": ["error", {
+      "semi": false,
+      "singleQuote": true
+      // "jsxSingleQuote": true
+    }]
+  }
+}
