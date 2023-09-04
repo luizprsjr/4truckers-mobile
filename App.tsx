@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import {
   SafeAreaInsetsContext,
   SafeAreaProvider,
@@ -14,6 +14,7 @@ import {
   useFonts,
 } from '@expo-google-fonts/inter'
 import { KronaOne_400Regular } from '@expo-google-fonts/krona-one'
+import { Routes } from '@routes/index'
 import { colors } from '@theme/index'
 
 export default function App() {
@@ -39,7 +40,7 @@ export default function App() {
               backgroundColor: colors.primary950,
             }}
           >
-            {fontsLoaded ? <Text>Hello World!</Text> : <Loading />}
+            {fontsLoaded ? <Routes /> : <Loading />}
           </View>
         )}
       </SafeAreaInsetsContext.Consumer>
