@@ -22,6 +22,9 @@
       "@utils/*": [
         "./src/utils/*"
       ],
+      "@theme/*": [
+        "./src/theme/*"
+      ],
       "@services/*": [
         "./src/services/*"
       ],
