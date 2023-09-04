@@ -1,6 +1,11 @@
 import { StatusBar } from 'expo-status-bar'
 import { Text, View } from 'react-native'
+import {
+  SafeAreaInsetsContext,
+  SafeAreaProvider,
+} from 'react-native-safe-area-context'
 
+import { Loading } from '@components/Loading'
 import {
   Inter_400Regular,
   Inter_500Medium,
@@ -9,6 +14,7 @@ import {
   useFonts,
 } from '@expo-google-fonts/inter'
 import { KronaOne_400Regular } from '@expo-google-fonts/krona-one'
+import { colors } from '@theme/index'
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -20,16 +26,23 @@ export default function App() {
   })
 
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F2F2F2',
-      }}
-    >
-      <StatusBar style="light" backgroundColor="#0C1033" />
-      {fontsLoaded ? <Text>Hello World!</Text> : <View />}
-    </View>
+    <SafeAreaProvider>
+      <StatusBar style="light" translucent />
+
+      {/* only use if statusbar backgroundColor doesn't change, because iOS doesn't change the background color of the StatusBar */}
+      <SafeAreaInsetsContext.Consumer>
+        {(insets) => (
+          <View
+            style={{
+              flex: 1,
+              paddingTop: insets?.top,
+              backgroundColor: colors.primary950,
+            }}
+          >
+            {fontsLoaded ? <Text>Hello World!</Text> : <Loading />}
+          </View>
+        )}
+      </SafeAreaInsetsContext.Consumer>
+    </SafeAreaProvider>
   )
 }
