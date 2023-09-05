@@ -1,4 +1,4 @@
-export const fonts = {
+export const themeFonts = {
   logo: 'KronaOne_400Regular',
   regular: 'Inter_400Regular',
   medium: 'Inter_500Medium',
