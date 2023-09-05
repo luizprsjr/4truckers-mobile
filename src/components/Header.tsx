@@ -2,19 +2,22 @@ import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { Ionicons } from '@expo/vector-icons'
-import { useNavigation, useRoute } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import { colors, fonts } from '@theme/index'
+
+type Props = {
+  hasBackButton?: boolean
+}
 
 const iconSize = 28
 const marginLeft = 32
 
-export function Header() {
+export function Header({ hasBackButton = false }: Props) {
   const { goBack } = useNavigation()
-  const { name } = useRoute()
 
   return (
     <View style={styles.container}>
-      {name !== 'home' && (
+      {hasBackButton && (
         <TouchableOpacity style={styles.backButton} onPress={() => goBack()}>
           <Ionicons name="arrow-back" size={iconSize} color={colors.white} />
         </TouchableOpacity>
@@ -39,6 +42,7 @@ const styles = StyleSheet.create({
   backButton: {
     marginLeft,
     marginRight: -marginLeft - iconSize,
+    zIndex: 1,
   },
   logoContainer: {
     flex: 1,
