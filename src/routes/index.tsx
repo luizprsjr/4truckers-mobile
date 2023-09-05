@@ -13,7 +13,7 @@ export function Routes() {
   return (
     <View style={{ flex: 1, backgroundColor: colors.secondary50 }}>
       <NavigationContainer>
-        <AppRoutes />
+        <AuthRoutes />
       </NavigationContainer>
     </View>
   )
