@@ -7,16 +7,17 @@ import { colors, fonts } from '@theme/index'
 
 type Props = {
   hasBackButton?: boolean
+  isLarge?: boolean
 }
 
 const iconSize = 28
 const marginLeft = 32
 
-export function Header({ hasBackButton = false }: Props) {
+export function Header({ hasBackButton = false, isLarge = false }: Props) {
   const { goBack } = useNavigation()
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, isLarge && { paddingVertical: 86 }]}>
       {hasBackButton && (
         <TouchableOpacity style={styles.backButton} onPress={() => goBack()}>
           <Ionicons name="arrow-back" size={iconSize} color={colors.white} />
@@ -36,8 +37,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: colors.primary950,
     alignItems: 'center',
-    paddingTop: 32,
-    paddingBottom: 32,
+    paddingVertical: 32,
   },
   backButton: {
     marginLeft,
