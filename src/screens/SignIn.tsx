@@ -13,11 +13,11 @@ import { colors, fonts } from '@theme/index'
 
 const loginFormSchema = z.object({
   email: z
-    .string({ required_error: 'O e-mail é obrigatório.' })
-    .email('Formato de e-mail inválido.'),
+    .string({ required_error: 'Por favor, forneça um e-mail válido.' })
+    .email('Por favor, insira um formato de e-mail válido.'),
   password: z
-    .string({ required_error: 'A senha é obrigatória.' })
-    .min(6, 'A senha precisa de no mínimo 6 caracteres.'),
+    .string({ required_error: 'Por favor, forneça uma senha.' })
+    .min(6, 'A senha deve ter pelo menos 6 caracteres.'),
 })
 
 type LoginFormData = z.infer<typeof loginFormSchema>
