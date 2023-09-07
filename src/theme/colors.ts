@@ -27,4 +27,8 @@ export const themeColors = {
   secondary800: '#262626',
   secondary900: '#171717',
   secondary950: '#0C0C0C',
+
+  lightRed: '#FCA5A5',
+  red: '#EF4444',
+  darkRed: '#991B1B',
 }
