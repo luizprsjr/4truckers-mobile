@@ -10,8 +10,7 @@ import { AddAnnouncement } from '@screens/AddAnnouncement'
 import { Announcement } from '@screens/Announcement'
 import { Home } from '@screens/Home'
 import { Profile } from '@screens/Profile'
-import { colors } from '@theme/colors'
-import { fonts } from '@theme/fonts'
+import { colors, fonts } from '@theme/index'
 
 type AppRoutes = {
   home: undefined

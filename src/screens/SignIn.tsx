@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   StyleSheet,
   Text,
@@ -8,11 +9,14 @@ import {
 
 import { BlankSpacer } from '@components/BlackSpacer'
 import { Header } from '@components/Header'
+import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { AuthNavigationRoutesProps } from '@routes/auth.routes'
 import { colors, fonts } from '@theme/index'
 
 export function SignIn() {
+  const [isPasswordHidden, setIsPasswordHidden] = useState(true)
+
   const { navigate } = useNavigation<AuthNavigationRoutesProps>()
 
   function handleSignIn() {
@@ -30,8 +34,31 @@ export function SignIn() {
       <View style={styles.wrapper}>
         <View style={styles.form}>
           <Text style={styles.login}>Login</Text>
-          <TextInput style={styles.input} placeholder="digite seu e-mail" />
-          <TextInput style={styles.input} placeholder="digite sua senha" />
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="digite seu e-mail"
+              placeholderTextColor={colors.secondary400}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="digite sua senha"
+              secureTextEntry={isPasswordHidden}
+              placeholderTextColor={colors.secondary400}
+            />
+            <TouchableOpacity
+              onPress={() => setIsPasswordHidden((prev) => !prev)}
+            >
+              <Ionicons
+                style={{ padding: 16 }}
+                name={isPasswordHidden ? 'eye-off-outline' : 'eye-outline'}
+                size={24}
+                color={colors.primary700}
+              />
+            </TouchableOpacity>
+          </View>
           <BlankSpacer height={12} />
           <TouchableOpacity style={styles.button} onPress={handleSignIn}>
             <Text style={styles.buttonTitle}>Entrar</Text>
@@ -66,13 +93,21 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     marginBottom: 8,
   },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: colors.primary700,
+    borderWidth: 1,
+    borderRadius: 8,
+  },
   input: {
+    flex: 1,
     paddingVertical: 20,
     paddingHorizontal: 16,
-    borderWidth: 1,
-    borderColor: colors.primary700,
-    borderRadius: 8,
     height: 60,
+    fontFamily: fonts.medium,
+    fontSize: 14,
+    color: colors.secondary700,
   },
   button: {
     width: '100%',
