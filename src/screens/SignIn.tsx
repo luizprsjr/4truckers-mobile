@@ -1,17 +1,11 @@
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { z } from 'zod'
 
 import { BlankSpacer } from '@components/BlackSpacer'
 import { Header } from '@components/Header'
-import { Ionicons } from '@expo/vector-icons'
+import { Input } from '@components/Input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigation } from '@react-navigation/native'
 import { AuthNavigationRoutesProps } from '@routes/auth.routes'
@@ -60,78 +54,33 @@ export function SignIn() {
             control={control}
             name="email"
             render={({ field: { onChange } }) => (
-              <View style={styles.inputContainer}>
-                <Ionicons
-                  style={{ paddingLeft: 16 }}
-                  name="ios-person-outline"
-                  size={24}
-                  color={colors.secondary400}
-                />
-                <TextInput
-                  style={styles.input}
-                  placeholder="digite seu e-mail"
-                  placeholderTextColor={colors.secondary400}
-                  keyboardType="email-address"
-                  onChangeText={onChange}
-                />
-              </View>
+              <Input
+                leftIcon="ios-person-outline"
+                placeholder="E-mail"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                onChangeText={onChange}
+                errorMessage={errors.email?.message}
+              />
             )}
           />
-          {errors.email && (
-            <Text
-              style={{
-                color: colors.red,
-                fontFamily: fonts.regular,
-                fontSize: 14,
-              }}
-            >
-              {errors.email.message}
-            </Text>
-          )}
 
           <Controller
             control={control}
             name="password"
             render={({ field: { onChange } }) => (
-              <View style={styles.inputContainer}>
-                <Ionicons
-                  style={{ paddingLeft: 16 }}
-                  name="lock-closed-outline"
-                  size={24}
-                  color={colors.secondary400}
-                />
-                <TextInput
-                  style={styles.input}
-                  placeholder="digite sua senha"
-                  secureTextEntry={isPasswordHidden}
-                  placeholderTextColor={colors.secondary400}
-                  onChangeText={onChange}
-                />
-                <TouchableOpacity
-                  onPress={() => setIsPasswordHidden((prev) => !prev)}
-                >
-                  <Ionicons
-                    style={{ padding: 16 }}
-                    name={isPasswordHidden ? 'eye-off-outline' : 'eye-outline'}
-                    size={24}
-                    color={colors.primary700}
-                  />
-                </TouchableOpacity>
-              </View>
+              <Input
+                leftIcon="lock-closed-outline"
+                placeholder="Senha"
+                secureTextEntry={isPasswordHidden}
+                onChangeText={onChange}
+                rightIcon={isPasswordHidden ? 'eye-off-outline' : 'eye-outline'}
+                rightIconOnPress={() => setIsPasswordHidden((prev) => !prev)}
+                errorMessage={errors.password?.message}
+              />
             )}
           />
 
-          {errors.password && (
-            <Text
-              style={{
-                color: colors.red,
-                fontFamily: fonts.regular,
-                fontSize: 14,
-              }}
-            >
-              {errors.password.message}
-            </Text>
-          )}
           <BlankSpacer height={12} />
           <TouchableOpacity
             style={styles.button}
