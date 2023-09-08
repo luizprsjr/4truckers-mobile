@@ -1,13 +1,15 @@
 import { Text, TouchableOpacity, View } from 'react-native'
 
 import { Header } from '@components/Header'
+import { useAuth } from '@hooks/useAuth'
 import { useNavigation } from '@react-navigation/native'
 
 export function Profile() {
   const { navigate } = useNavigation()
+  const { signOut } = useAuth()
 
-  function handleButton() {
-    console.warn('warn')
+  function handleWithSignOut() {
+    signOut()
   }
 
   return (
@@ -15,8 +17,8 @@ export function Profile() {
       <Header />
 
       <Text>Profile</Text>
-      <TouchableOpacity onPress={handleButton}>
-        <Text>new account</Text>
+      <TouchableOpacity onPress={handleWithSignOut}>
+        <Text>Sair</Text>
       </TouchableOpacity>
     </View>
   )
