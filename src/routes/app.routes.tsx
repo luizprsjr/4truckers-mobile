@@ -48,8 +48,12 @@ export function AppRoutes() {
         options={{
           tabBarLabel: 'Início',
           tabBarLabelStyle: { fontFamily: fonts.bold },
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="home-outline" size={24} color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons
+              name={focused ? 'home' : 'home-outline'}
+              size={24}
+              color={color}
+            />
           ),
         }}
       />
@@ -59,9 +63,9 @@ export function AppRoutes() {
         component={AddAnnouncement}
         options={{
           tabBarLabel: () => null,
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: ({ color, focused }) => (
             <Ionicons
-              name="add-circle-outline"
+              name={focused ? 'add-circle' : 'add-circle-outline'}
               size={64}
               color={color}
               style={{ zIndex: 2, position: 'absolute' }}
@@ -75,8 +79,12 @@ export function AppRoutes() {
         component={Profile}
         options={{
           tabBarLabel: 'Perfil',
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="person-circle-outline" size={24} color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons
+              name={focused ? 'person' : 'person-outline'}
+              size={24}
+              color={color}
+            />
           ),
         }}
       />
