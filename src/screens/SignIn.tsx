@@ -65,7 +65,7 @@ export function SignIn() {
 
       <View style={styles.wrapper}>
         <View style={styles.form}>
-          <Text style={styles.login}>Login</Text>
+          <Text style={styles.title}>Login</Text>
           <Controller
             control={control}
             name="email"
@@ -128,42 +128,13 @@ const styles = StyleSheet.create({
     padding: 32,
     gap: 8,
   },
-  login: {
+  title: {
     fontFamily: fonts.bold,
     fontSize: 16,
     color: colors.primary700,
     textAlign: 'center',
     textTransform: 'uppercase',
     marginBottom: 8,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: colors.primary700,
-    borderWidth: 1,
-    borderRadius: 8,
-  },
-  input: {
-    flex: 1,
-    paddingVertical: 20,
-    paddingHorizontal: 16,
-    height: 60,
-    fontFamily: fonts.medium,
-    fontSize: 14,
-    color: colors.secondary700,
-  },
-  button: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 60,
-    backgroundColor: colors.primary950,
-    borderRadius: 8,
-  },
-  buttonTitle: {
-    fontFamily: fonts.semiBold,
-    fontSize: 16,
-    color: colors.white,
   },
   addNewAccount: {
     fontFamily: fonts.regular,
