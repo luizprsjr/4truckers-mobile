@@ -7,6 +7,7 @@ import { Button } from '@components/Button'
 import { Header } from '@components/Header'
 import { Input } from '@components/Input'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useAuth } from '@hooks/useAuth'
 import { api } from '@services/api'
 import { colors, fonts } from '@theme/index'
 import { AppError } from '@utils/AppError'
@@ -41,7 +42,10 @@ const signUpFormSchema = z
 type SignUpFormData = z.infer<typeof signUpFormSchema>
 
 export function SignUp() {
+  const [isLoading, setIsLoading] = useState(false)
   const [isPasswordHidden, setIsPasswordHidden] = useState(true)
+  const { signIn } = useAuth()
+
   const {
     control,
     handleSubmit,
@@ -50,7 +54,7 @@ export function SignUp() {
     resolver: zodResolver(signUpFormSchema),
   })
 
-  async function handleRegisterNewUser({
+  async function handleSignUp({
     name,
     email,
     password,
@@ -58,15 +62,20 @@ export function SignUp() {
     phoneNumber,
   }: SignUpFormData) {
     try {
-      const { data, status } = await api.post('/users', {
+      setIsLoading(true)
+      const { status } = await api.post('/users', {
         name,
         email,
         password,
         confirmPassword,
         phoneNumber: phoneNumber.replace(/\D/g, ''),
       })
-      console.log(data, status)
+
+      if (status === 201) {
+        await signIn(email, password)
+      }
     } catch (error) {
+      setIsLoading(false)
       const isAppError = error instanceof AppError
       const message = isAppError
         ? error.message
@@ -167,8 +176,8 @@ export function SignUp() {
 
           <Button
             title="Criar conta"
-            onPress={handleSubmit(handleRegisterNewUser)}
-            // isLoading={isLoading}
+            onPress={handleSubmit(handleSignUp)}
+            isLoading={isLoading}
           />
         </View>
       </View>
