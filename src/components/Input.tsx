@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   StyleSheet,
   Text,
@@ -25,18 +26,35 @@ export function Input({
   errorMessage,
   ...rest
 }: Props) {
+  const [isFocused, setIsFocused] = useState(false)
+  const inputColor = errorMessage
+    ? colors.red
+    : isFocused
+    ? colors.primary700
+    : colors.secondary400
+
+  const handleFocus = () => {
+    setIsFocused(true)
+  }
+
+  const handleBlur = () => {
+    setIsFocused(false)
+  }
+
   return (
     <>
-      <View style={styles.inputContainer}>
+      <View style={[styles.inputContainer, { borderColor: inputColor }]}>
         <Ionicons
           style={{ paddingLeft: 16 }}
           name={leftIcon}
           size={24}
-          color={colors.secondary400}
+          color={inputColor}
         />
         <TextInput
-          style={styles.input}
-          placeholderTextColor={colors.secondary400}
+          style={[styles.input, { color: inputColor }]}
+          placeholderTextColor={inputColor}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           {...rest}
         />
         <TouchableOpacity onPress={rightIconOnPress}>

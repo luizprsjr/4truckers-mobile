@@ -53,13 +53,14 @@ export function SignIn() {
           <Controller
             control={control}
             name="email"
-            render={({ field: { onChange } }) => (
+            render={({ field: { onChange, value } }) => (
               <Input
                 leftIcon="ios-person-outline"
                 placeholder="E-mail"
                 keyboardType="email-address"
                 autoCapitalize="none"
                 onChangeText={onChange}
+                value={value}
                 errorMessage={errors.email?.message}
               />
             )}
@@ -68,14 +69,16 @@ export function SignIn() {
           <Controller
             control={control}
             name="password"
-            render={({ field: { onChange } }) => (
+            render={({ field: { onChange, value } }) => (
               <Input
                 leftIcon="lock-closed-outline"
                 placeholder="Senha"
                 secureTextEntry={isPasswordHidden}
+                autoCapitalize="none"
                 onChangeText={onChange}
                 rightIcon={isPasswordHidden ? 'eye-off-outline' : 'eye-outline'}
                 rightIconOnPress={() => setIsPasswordHidden((prev) => !prev)}
+                value={value}
                 errorMessage={errors.password?.message}
               />
             )}
