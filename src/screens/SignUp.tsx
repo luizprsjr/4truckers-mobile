@@ -10,6 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { api } from '@services/api'
 import { colors, fonts } from '@theme/index'
 import { AppError } from '@utils/AppError'
+import { formatPhoneNumber } from '@utils/formatPhoneNumber'
 
 const phoneRegex = /^\(\d{2}\) \d \d{4}-\d{4}$/
 
@@ -72,23 +73,6 @@ export function SignUp() {
         : 'Não foi possível criar a conta. Tente novamente mais tarde.'
       console.warn(message)
     }
-  }
-
-  const formatPhoneNumber = (inputText: string) => {
-    const cleanedText = inputText.replace(/\D/g, '')
-    const limitedText = cleanedText.slice(0, 11)
-    let formattedText = ''
-
-    if (limitedText.length < 11) {
-      formattedText = limitedText.replace(/(\d{2})(\d{1,4})/, '($1) $2')
-    } else {
-      formattedText = limitedText.replace(
-        /(\d{2})(\d{1})(\d{4})(\d{4})/,
-        '($1) $2 $3-$4',
-      )
-    }
-
-    return formattedText
   }
 
   return (
