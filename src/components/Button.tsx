@@ -18,7 +18,7 @@ export function Button({ title, isLoading = false, ...rest }: Props) {
   return (
     <TouchableOpacity style={styles.button} disabled={isLoading} {...rest}>
       {isLoading ? (
-        <Loading />
+        <Loading color={colors.white} />
       ) : (
         <Text style={styles.buttonTitle}>{title}</Text>
       )}

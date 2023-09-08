@@ -2,7 +2,11 @@ import { ActivityIndicator, View } from 'react-native'
 
 import { colors } from '@theme/index'
 
-export function Loading() {
+type Props = {
+  color?: string
+}
+
+export function Loading({ color }: Props) {
   return (
     <View
       style={{
@@ -11,7 +15,7 @@ export function Loading() {
         alignItems: 'center',
       }}
     >
-      <ActivityIndicator color={colors.primary500} />
+      <ActivityIndicator color={color || colors.primary500} />
     </View>
   )
 }
