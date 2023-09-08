@@ -4,12 +4,16 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { z } from 'zod'
 
 import { BlankSpacer } from '@components/BlackSpacer'
+import { Button } from '@components/Button'
 import { Header } from '@components/Header'
 import { Input } from '@components/Input'
+import { Loading } from '@components/Loading'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useAuth } from '@hooks/useAuth'
 import { useNavigation } from '@react-navigation/native'
 import { AuthNavigationRoutesProps } from '@routes/auth.routes'
 import { colors, fonts } from '@theme/index'
+import { AppError } from '@utils/AppError'
 
 const loginFormSchema = z.object({
   email: z
@@ -23,7 +27,10 @@ const loginFormSchema = z.object({
 type LoginFormData = z.infer<typeof loginFormSchema>
 
 export function SignIn() {
+  const { signIn } = useAuth()
   const [isPasswordHidden, setIsPasswordHidden] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
+
   const { navigate } = useNavigation<AuthNavigationRoutesProps>()
 
   const {
@@ -34,9 +41,19 @@ export function SignIn() {
     resolver: zodResolver(loginFormSchema),
   })
 
-  function handleSignIn({ email, password }: LoginFormData) {
-    console.log(email)
-    console.log(password)
+  async function handleSignIn({ email, password }: LoginFormData) {
+    try {
+      setIsLoading(true)
+      await signIn(email, password)
+    } catch (error) {
+      const isAppError = error instanceof AppError
+      const title = isAppError
+        ? error.message
+        : 'Não foi possível entrar. Tente novamente mais tarde.'
+
+      console.log(title) // TODO: create a toast
+      setIsLoading(false)
+    }
   }
 
   function handleAddNewAccount() {
@@ -85,12 +102,11 @@ export function SignIn() {
           />
 
           <BlankSpacer height={12} />
-          <TouchableOpacity
-            style={styles.button}
+          <Button
+            title="Entrar"
             onPress={handleSubmit(handleSignIn)}
-          >
-            <Text style={styles.buttonTitle}>Entrar</Text>
-          </TouchableOpacity>
+            isLoading={isLoading}
+          />
           <TouchableOpacity onPress={handleAddNewAccount}>
             <Text style={styles.addNewAccount}>criar conta</Text>
           </TouchableOpacity>

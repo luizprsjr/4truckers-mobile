@@ -16,7 +16,7 @@ export function Routes() {
   return (
     <View style={{ flex: 1, backgroundColor: colors.secondary50 }}>
       <NavigationContainer>
-        <AuthRoutes />
+        {user.id ? <AppRoutes /> : <AuthRoutes />}
       </NavigationContainer>
     </View>
   )
