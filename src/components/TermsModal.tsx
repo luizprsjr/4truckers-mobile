@@ -79,52 +79,12 @@ export function TermsModal({ acceptTerms, visible, declineTerms }: Props) {
           molestiae!
         </Text>
 
-        <View style={{ flexDirection: 'row', marginTop: 12, gap: 8 }}>
-          <TouchableOpacity
-            style={{
-              flex: 1,
-              marginBottom: 32,
-              backgroundColor: colors.primary500,
-              justifyContent: 'center',
-              alignItems: 'center',
-              paddingVertical: 12,
-              paddingHorizontal: 16,
-              borderRadius: 8,
-            }}
-            onPress={acceptTerms}
-          >
-            <Text
-              style={{
-                fontFamily: fonts.semiBold,
-                fontSize: 14,
-                color: colors.white,
-              }}
-            >
-              Aceitar
-            </Text>
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity style={styles.acceptButton} onPress={acceptTerms}>
+            <Text style={styles.buttonText}>Aceitar</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              flex: 1,
-              marginBottom: 32,
-              backgroundColor: colors.secondary300,
-              justifyContent: 'center',
-              alignItems: 'center',
-              paddingVertical: 12,
-              paddingHorizontal: 16,
-              borderRadius: 8,
-            }}
-            onPress={declineTerms}
-          >
-            <Text
-              style={{
-                fontFamily: fonts.semiBold,
-                fontSize: 14,
-                color: colors.white,
-              }}
-            >
-              Cancelar
-            </Text>
+          <TouchableOpacity style={styles.rejectButton} onPress={declineTerms}>
+            <Text style={styles.buttonText}>Cancelar</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -148,5 +108,35 @@ const styles = StyleSheet.create({
     fontFamily: fonts.regular,
     fontSize: 14,
     color: colors.secondary500,
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    marginTop: 12,
+    gap: 8,
+  },
+  acceptButton: {
+    flex: 1,
+    marginBottom: 32,
+    backgroundColor: colors.primary500,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+  },
+  rejectButton: {
+    flex: 1,
+    marginBottom: 32,
+    backgroundColor: colors.secondary300,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+  },
+  buttonText: {
+    fontFamily: fonts.semiBold,
+    fontSize: 14,
+    color: colors.white,
   },
 })
