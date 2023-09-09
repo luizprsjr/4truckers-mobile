@@ -14,6 +14,7 @@ import { BlankSpacer } from '@components/BlackSpacer'
 import { Button } from '@components/Button'
 import { Header } from '@components/Header'
 import { Input } from '@components/Input'
+import { TermsModal } from '@components/TermsModal'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useAuth } from '@hooks/useAuth'
 import { api } from '@services/api'
@@ -54,6 +55,7 @@ export function SignUp() {
   const [isLoading, setIsLoading] = useState(false)
   const [isPasswordHidden, setIsPasswordHidden] = useState(true)
   const [hasAcceptedTerms, setHasAcceptedTerms] = useState(false)
+  const [isModalVisible, setIsModalVisible] = useState(false)
   const { signIn } = useAuth()
 
   const {
@@ -95,6 +97,16 @@ export function SignUp() {
         : 'Não foi possível criar a conta. Tente novamente mais tarde.'
       console.warn(message)
     }
+  }
+
+  function acceptTerms() {
+    setHasAcceptedTerms(true)
+    setIsModalVisible(false)
+  }
+
+  function declineTerms() {
+    setHasAcceptedTerms(false)
+    setIsModalVisible(false)
   }
 
   return (
@@ -246,15 +258,17 @@ export function SignUp() {
             }}
           >
             <View>
-              <Text
-                style={{
-                  fontFamily: fonts.bold,
-                  fontSize: 14,
-                  color: colors.primary500,
-                }}
-              >
-                Termos e condições
-              </Text>
+              <TouchableOpacity onPress={() => setIsModalVisible(true)}>
+                <Text
+                  style={{
+                    fontFamily: fonts.bold,
+                    fontSize: 14,
+                    color: colors.primary500,
+                  }}
+                >
+                  Termos e condições
+                </Text>
+              </TouchableOpacity>
               <Text
                 style={[
                   styles.textLabel,
@@ -278,6 +292,12 @@ export function SignUp() {
               value={hasAcceptedTerms}
             />
           </View>
+
+          <TermsModal
+            visible={isModalVisible}
+            acceptTerms={acceptTerms}
+            declineTerms={declineTerms}
+          />
 
           <Button
             title={hasAcceptedTerms ? 'Criar conta' : 'Aceite os termos'}
