@@ -14,6 +14,7 @@ import { BlankSpacer } from '@components/BlackSpacer'
 import { Button } from '@components/Button'
 import { Header } from '@components/Header'
 import { Input } from '@components/Input'
+import { SelectButtons } from '@components/SelectButtons'
 import { TermsModal } from '@components/TermsModal'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useAuth } from '@hooks/useAuth'
@@ -210,74 +211,19 @@ export function SignUp() {
             control={control}
             defaultValue="USER"
             render={({ field: { onChange } }) => (
-              <View style={styles.selectTypeContainer}>
-                <TouchableOpacity
-                  style={[
-                    styles.button,
-                    selectedUserType === 'USER' && styles.selectedButton,
-                  ]}
-                  onPress={() => onChange('USER')}
-                >
-                  <Text
-                    style={
-                      selectedUserType === 'USER'
-                        ? styles.selectedText
-                        : styles.buttonText
-                    }
-                  >
-                    Usuário
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[
-                    styles.button,
-                    selectedUserType === 'TRUCKER' && styles.selectedButton,
-                  ]}
-                  onPress={() => onChange('TRUCKER')}
-                >
-                  <Text
-                    style={
-                      selectedUserType === 'TRUCKER'
-                        ? styles.selectedText
-                        : styles.buttonText
-                    }
-                  >
-                    Caminhoneiro
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              <SelectButtons
+                selectedUserType={selectedUserType}
+                onChange={onChange}
+              />
             )}
           />
 
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginVertical: 16,
-            }}
-          >
+          <View style={styles.termsContainer}>
             <View>
               <TouchableOpacity onPress={() => setIsModalVisible(true)}>
-                <Text
-                  style={{
-                    fontFamily: fonts.bold,
-                    fontSize: 14,
-                    color: colors.primary500,
-                  }}
-                >
-                  Termos e condições
-                </Text>
+                <Text style={styles.termsButtonText}>Termos e condições</Text>
               </TouchableOpacity>
-              <Text
-                style={[
-                  styles.textLabel,
-                  {
-                    fontFamily: fonts.regular,
-                    fontSize: 13,
-                  },
-                ]}
-              >
+              <Text style={styles.termsLabel}>
                 Li e concordo com os termos e condições:
               </Text>
             </View>
@@ -332,38 +278,25 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     marginBottom: 8,
   },
-
   textLabel: {
     fontFamily: fonts.medium,
     fontSize: 14,
     color: colors.secondary500,
   },
-  selectTypeContainer: {
+  termsContainer: {
     flexDirection: 'row',
-    gap: 8,
-  },
-  button: {
-    flex: 1,
-    maxWidth: '50%',
-    height: 44,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: colors.secondary400,
-    borderRadius: 8,
+    marginVertical: 16,
   },
-  selectedButton: {
-    backgroundColor: colors.primary700,
-    borderColor: colors.primary700,
-  },
-  buttonText: {
-    fontFamily: fonts.medium,
+  termsButtonText: {
+    fontFamily: fonts.bold,
     fontSize: 14,
-    color: colors.secondary400,
+    color: colors.primary500,
   },
-  selectedText: {
-    fontFamily: fonts.medium,
-    fontSize: 14,
-    color: colors.white,
+  termsLabel: {
+    fontFamily: fonts.regular,
+    fontSize: 13,
+    color: colors.secondary500,
   },
 })
