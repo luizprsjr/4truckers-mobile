@@ -8,6 +8,11 @@ import {
   storageSaveAuthToken,
 } from '@storage/storageAuthToken'
 import {
+  storageGetRefreshToken,
+  storageRemoveRefreshToken,
+  storageSaveRefreshToken,
+} from '@storage/storageRefreshToken'
+import {
   storageGetUser,
   storageRemoveUser,
   storageSaveUser,
@@ -32,19 +37,27 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [user, setUser] = useState<UserDTO>({} as UserDTO)
   const [isLoadingUserStorageData, setIsLoadingUserStorageData] = useState(true)
 
-  function updateUserAndToken(userData: UserDTO, token: string) {
+  function updateUserAndTokens(
+    userData: UserDTO,
+    token: string,
+    refreshToken: string,
+  ) {
     api.defaults.headers.common.Authorization = `Bearer ${token}`
+    api.defaults.headers.common.Cookie = refreshToken
     setUser(userData)
   }
 
   async function signIn(email: string, password: string) {
     try {
       setIsLoadingUserStorageData(true)
-      const { data } = await api.post('/sessions', { email, password })
-      if (data.user && data.token) {
+      const { data, headers } = await api.post('/sessions', { email, password })
+
+      if (data.user && data.token && headers['set-cookie']) {
+        const refreshToken = headers['set-cookie'][0]
         await storageSaveUser(data.user)
         await storageSaveAuthToken(data.token)
-        updateUserAndToken(data.user, data.token)
+        await storageSaveRefreshToken(refreshToken)
+        updateUserAndTokens(data.user, data.token, refreshToken)
       }
     } catch (error) {
       if (error) throw error
@@ -59,6 +72,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       setUser({} as UserDTO)
       await storageRemoveUser()
       await storageRemoveAuthToken()
+      await storageRemoveRefreshToken()
     } catch (error) {
       if (error) throw error
     } finally {
@@ -70,9 +84,10 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     try {
       setIsLoadingUserStorageData(true)
       const token = await storageGetAuthToken()
+      const refreshToken = await storageGetRefreshToken()
       const loggedUser = await storageGetUser()
-      if (token && loggedUser) {
-        updateUserAndToken(loggedUser, token)
+      if (token && loggedUser && refreshToken) {
+        updateUserAndTokens(loggedUser, token, refreshToken)
       }
     } catch (error) {
       if (error) throw error
