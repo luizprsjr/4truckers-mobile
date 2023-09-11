@@ -7,6 +7,8 @@
     "no-use-before-define": "off",
     "react-hooks/exhaustive-deps": "off",
     "no-useless-constructor": "off",
+    "no-async-promise-executor": "off",
+    "@typescript-eslint/no-explicit-any": "off",
     "react/self-closing-comp": ["error", {
       "component": true,
       "html": true
