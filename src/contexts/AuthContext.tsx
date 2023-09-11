@@ -37,27 +37,21 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [user, setUser] = useState<UserDTO>({} as UserDTO)
   const [isLoadingUserStorageData, setIsLoadingUserStorageData] = useState(true)
 
-  function updateUserAndTokens(
-    userData: UserDTO,
-    token: string,
-    refreshToken: string,
-  ) {
+  function updateUserAndTokens(userData: UserDTO, token: string) {
     api.defaults.headers.common.Authorization = `Bearer ${token}`
-    api.defaults.headers.common.Cookie = refreshToken
     setUser(userData)
   }
 
   async function signIn(email: string, password: string) {
     try {
       setIsLoadingUserStorageData(true)
-      const { data, headers } = await api.post('/sessions', { email, password })
+      const { data } = await api.post('/sessions', { email, password })
 
-      if (data.user && data.token && headers['set-cookie']) {
-        const refreshToken = headers['set-cookie'][0]
+      if (data.user && data.token && data.refreshToken) {
         await storageSaveUser(data.user)
         await storageSaveAuthToken(data.token)
-        await storageSaveRefreshToken(refreshToken)
-        updateUserAndTokens(data.user, data.token, refreshToken)
+        await storageSaveRefreshToken(data.refreshToken.id)
+        updateUserAndTokens(data.user, data.token)
       }
     } catch (error) {
       if (error) throw error
@@ -87,7 +81,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       const refreshToken = await storageGetRefreshToken()
       const loggedUser = await storageGetUser()
       if (token && loggedUser && refreshToken) {
-        updateUserAndTokens(loggedUser, token, refreshToken)
+        updateUserAndTokens(loggedUser, token)
       }
     } catch (error) {
       if (error) throw error
@@ -99,6 +93,14 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   useEffect(() => {
     loadUserData()
   }, [])
+
+  useEffect(() => {
+    const subscribe = api.registerInterceptTokenManager(signOut)
+
+    return () => {
+      subscribe()
+    }
+  }, [signOut])
 
   return (
     <AuthContext.Provider
