@@ -59,7 +59,7 @@ api.registerInterceptTokenManager = (signOut) => {
               const { data } = await api.patch('/token/refresh', {
                 oldRefreshToken: refreshToken,
               })
-              await storageSaveRefreshToken(data.refreshToken.id)
+              await storageSaveRefreshToken(data.refreshToken)
               if (originalRequestConfig.data) {
                 originalRequestConfig.data = JSON.parse(
                   originalRequestConfig.data,

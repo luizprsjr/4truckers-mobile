@@ -50,7 +50,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       if (data.user && data.token && data.refreshToken) {
         await storageSaveUser(data.user)
         await storageSaveAuthToken(data.token)
-        await storageSaveRefreshToken(data.refreshToken.id)
+        await storageSaveRefreshToken(data.refreshToken)
         updateUserAndTokens(data.user, data.token)
       }
     } catch (error) {
