@@ -29,6 +29,9 @@ api.registerInterceptTokenManager = (signOut) => {
     (response) => response,
     async (requestError) => {
       if (requestError?.response?.status === 401) {
+        if (requestError.response.data?.message === 'Refresh Token Expired.') {
+          signOut()
+        }
         if (
           requestError.response.data?.message.includes('Authorization token')
         ) {
