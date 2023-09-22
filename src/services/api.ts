@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosInstance } from 'axios'
+import { Alert } from 'react-native'
 
 import {
   storageGetRefreshToken,
@@ -30,6 +31,10 @@ api.registerInterceptTokenManager = (signOut) => {
     async (requestError) => {
       if (requestError?.response?.status === 401) {
         if (requestError.response.data?.message === 'Refresh Token Expired.') {
+          Alert.alert(
+            'Sessão expirada',
+            'Você ficou inativo por muito tempo e foi desconectado. Por favor, faça o login novamente.',
+          )
           signOut()
         }
         if (
@@ -100,6 +105,8 @@ api.registerInterceptTokenManager = (signOut) => {
   )
 
   return () => {
+    if (typeof interceptTokenManager === 'number') return
+
     api.interceptors.response.eject(interceptTokenManager)
   }
 }
