@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.medium,
     fontSize: 14,
     color: colors.secondary700,
-    textTransform: 'capitalize',
+    textTransform: 'none',
   },
   inputContainer: {
     flexDirection: 'row',

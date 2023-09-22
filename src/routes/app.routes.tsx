@@ -7,6 +7,7 @@ import {
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs'
 import { AddAnnouncement } from '@screens/AddAnnouncement'
+import { AddTruck } from '@screens/AddTruck'
 import { Announcement } from '@screens/Announcement'
 import { Home } from '@screens/Home'
 import { Profile } from '@screens/Profile'
@@ -15,8 +16,8 @@ import { colors, fonts } from '@theme/index'
 type AppRoutes = {
   home: undefined
   addAnnouncement: undefined
+  addTruck: undefined
   profile: undefined
-
   announcement: undefined
 }
 
@@ -30,6 +31,7 @@ export function AppRoutes() {
     <Navigator
       screenOptions={{
         headerShown: false,
+        tabBarHideOnKeyboard: true,
         tabBarActiveTintColor: colors.white,
         tabBarInactiveTintColor: colors.secondary400,
         tabBarStyle: {
@@ -92,6 +94,12 @@ export function AppRoutes() {
       <Screen
         name="announcement"
         component={Announcement}
+        options={{ tabBarButton: () => null }}
+      />
+
+      <Screen
+        name="addTruck"
+        component={AddTruck}
         options={{ tabBarButton: () => null }}
       />
     </Navigator>
