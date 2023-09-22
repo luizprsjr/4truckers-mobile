@@ -1,22 +1,57 @@
-import { Text, TouchableOpacity, View } from 'react-native'
+import { AxiosError } from 'axios'
+import { useCallback, useState } from 'react'
+import { Alert, FlatList, View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
+import { AnnouncementCard } from '@components/AnnouncementCard'
 import { Header } from '@components/Header'
-import { useNavigation } from '@react-navigation/native'
+import { AnnouncementDTO } from '@dtos/announcementDTO'
+import { useFocusEffect } from '@react-navigation/native'
+import { api } from '@services/api'
+import { AppError } from '@utils/AppError'
 
 export function Home() {
-  const { navigate } = useNavigation()
+  const [announcements, setAnnouncements] = useState<AnnouncementDTO[]>([])
+  const [isRefreshing, setIsRefreshing] = useState(false)
 
-  function handleButton() {
-    console.warn('warn')
+  const { bottom } = useSafeAreaInsets()
+
+  async function fetchAnnouncements() {
+    try {
+      setIsRefreshing(true)
+      const { data } = await api.get<AnnouncementDTO[]>('/announcements')
+      setAnnouncements(data)
+    } catch (error) {
+      if (!(error instanceof AxiosError) && error instanceof AppError) {
+        Alert.alert(error.message)
+      }
+    } finally {
+      setIsRefreshing(false)
+    }
   }
 
+  useFocusEffect(
+    useCallback(() => {
+      fetchAnnouncements()
+    }, []),
+  )
+
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <Header />
-      <Text>Home</Text>
-      <TouchableOpacity onPress={handleButton}>
-        <Text>new account</Text>
-      </TouchableOpacity>
+
+      <FlatList
+        data={announcements}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <AnnouncementCard item={item} />}
+        refreshing={isRefreshing}
+        onRefresh={fetchAnnouncements}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          padding: 32,
+          gap: 16,
+        }}
+      />
     </View>
   )
 }
