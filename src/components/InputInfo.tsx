@@ -6,6 +6,7 @@ import { colors, fonts } from '@theme/index'
 
 type Props = TextInputProps & {
   label: string
+  multiline?: boolean
   measurementUnit?: string
   placeholder?: string
   errorMessage?: string
@@ -13,6 +14,7 @@ type Props = TextInputProps & {
 
 export function InputInfo({
   label,
+  multiline = false,
   measurementUnit,
   placeholder,
   errorMessage,
@@ -37,11 +39,17 @@ export function InputInfo({
     <View style={{ gap: 4 }}>
       <Text style={[styles.label, { color: inputColor }]}>{label}</Text>
 
-      <View style={[styles.inputContainer, { borderColor: inputColor }]}>
+      <View
+        style={[
+          multiline ? styles.multilineContainer : styles.inputContainer,
+          { borderColor: inputColor },
+        ]}
+      >
         <TextInput
           style={[styles.input, { color: inputColor }]}
           placeholder={placeholder || '______________'}
           placeholderTextColor={inputColor}
+          multiline={multiline}
           onFocus={handleFocus}
           onBlur={handleBlur}
           {...rest}
@@ -70,6 +78,15 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 16,
     paddingVertical: 4,
+  },
+  multilineContainer: {
+    borderColor: colors.secondary700,
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 4,
+    width: '100%',
+    minHeight: 100,
   },
   input: {
     flex: 1,
