@@ -7,10 +7,10 @@ export type AnnouncementDTO = {
   userId?: string
   type?: AnnouncementType
   originCity?: string
-  originDate?: string
-  originEndDate?: string
+  originDate?: Date
+  originEndDate?: Date
   destinationCity?: string
-  destinationDate?: string
+  destinationDate?: Date
   weight?: number
   length?: number
   width?: number

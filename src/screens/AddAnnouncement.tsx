@@ -1,10 +1,18 @@
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { ScrollView, StyleSheet, Switch, Text, View } from 'react-native'
+import {
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Switch,
+  Text,
+  View,
+} from 'react-native'
 import { z } from 'zod'
 
 import { BlankSpacer } from '@components/BlackSpacer'
 import { Button } from '@components/Button'
+import { DateTimeInput } from '@components/DateTimeInput'
 import { Header } from '@components/Header'
 import { InputInfo } from '@components/InputInfo'
 import { SimpleButton } from '@components/SimpleButton'
@@ -15,33 +23,111 @@ import { useNavigation } from '@react-navigation/native'
 import { AppNavigationRoutesProps } from '@routes/app.routes'
 import { api } from '@services/api'
 import { colors, fonts } from '@theme/index'
-import { formatDateString } from '@utils/formatDateString'
-import { isValidDate } from '@utils/isValidDate'
-import { parseDateString } from '@utils/parseDateString'
 
 const addAnnouncementSchema = z.object({
-  originCity: z.string(),
-  destinationCity: z.string(),
+  originCity: z
+    .string({ required_error: 'Campo obrigatório.' })
+    .min(2, 'O nome da cidade deve ter pelo menos 2 caracteres.'),
+  originDate: z
+    .date({ required_error: 'Campo obrigatório.' })
+    .min(new Date(), 'Você não pode escolher uma data no passado.'),
+  originEndDate: z
+    .date()
+    .optional()
+    .refine(
+      (date) => {
+        if (date === undefined) return true
+        return date >= new Date()
+      },
+      {
+        message: 'Você não pode escolher uma data no passado.',
+      },
+    ),
+  destinationCity: z
+    .string({ required_error: 'Campo obrigatório.' })
+    .min(2, 'O nome da cidade deve ter pelo menos 2 caracteres.'),
+  destinationDate: z
+    .date()
+    .optional()
+    .refine(
+      (date) => {
+        if (date === undefined) return true
+        return date >= new Date()
+      },
+      {
+        message: 'Você não pode escolher uma data no passado.',
+      },
+    ),
 
-  originDate: z.string().refine(isValidDate, {
-    message: 'Informe uma data válida (DD/MM/AAAA).',
-  }),
+  weight: z
+    .number()
+    .optional()
+    .refine(
+      (value) => {
+        if (value === undefined) return true
+        return value >= 1
+      },
+      {
+        message: 'O peso deve ter pelo menos 1kg.',
+      },
+    ),
+  length: z
+    .number()
+    .optional()
+    .refine(
+      (value) => {
+        if (value === undefined) return true
+        return value >= 1
+      },
+      {
+        message: 'O item deve ter pelo menos 1 cm.',
+      },
+    ),
+  width: z
+    .number()
+    .optional()
+    .refine(
+      (value) => {
+        if (value === undefined) return true
+        return value >= 1
+      },
+      {
+        message: 'O item deve ter pelo menos 1 cm.',
+      },
+    ),
+  height: z
+    .number()
+    .optional()
+    .refine(
+      (value) => {
+        if (value === undefined) return true
+        return value >= 1
+      },
+      {
+        message: 'O item deve ter pelo menos 1 cm.',
+      },
+    ),
 
-  originEndDate: z.string().optional().refine(isValidDate, {
-    message: 'Informe uma data válida (DD/MM/AAAA).',
-  }),
+  description: z
+    .string()
+    .optional()
+    .refine(
+      (value) => {
+        if (value === undefined) return true
 
-  weight: z.number().min(1, 'Por favor, informe o peso do objeto.'),
-  length: z.number().optional(),
-  width: z.number().optional(),
-  height: z.number().optional(),
-
-  description: z.string().optional(),
+        return value.length <= 250
+      },
+      {
+        message: 'A descrição deve ter no máximo 250 caracteres.',
+      },
+    ),
 })
 
 type AddAnnouncementsFormData = z.infer<typeof addAnnouncementSchema>
 
 export function AddAnnouncement() {
+  const [resetDateTimeInputs, setResetDateTimeInputs] = useState(false)
+
   const [canStack, setCanStack] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -52,6 +138,7 @@ export function AddAnnouncement() {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<AddAnnouncementsFormData>({
     resolver: zodResolver(addAnnouncementSchema),
   })
@@ -65,13 +152,11 @@ export function AddAnnouncement() {
       setIsLoading(true)
       const add = {
         ...announcement,
-        originDate: parseDateString(announcement?.originDate),
-        originEndDate: announcement.originEndDate
-          ? parseDateString(announcement?.originEndDate)
-          : undefined,
         canStack,
       }
       await api.post('/announcements', add)
+      reset()
+      setResetDateTimeInputs(true)
       navigate('home')
     } catch (error) {
       setIsLoading(false)
@@ -139,34 +224,28 @@ export function AddAnnouncement() {
               <Controller
                 control={control}
                 name="originDate"
-                render={({ field: { onChange, value } }) => (
-                  <InputInfo
-                    label="Data inicial da janela de coleta"
-                    keyboardType="numeric"
+                render={({ field: { onChange } }) => (
+                  <DateTimeInput
+                    label="Melhor data e hora para a coleta"
+                    withTimer
                     placeholder="____/____/____"
-                    onChangeText={(text) => {
-                      const formattedText = formatDateString(text)
-                      onChange(formattedText)
-                    }}
-                    value={value}
                     errorMessage={errors.originDate?.message}
+                    onChange={(date) => onChange(date)}
+                    reset={resetDateTimeInputs}
                   />
                 )}
               />
               <Controller
                 control={control}
                 name="originEndDate"
-                render={({ field: { onChange, value } }) => (
-                  <InputInfo
+                render={({ field: { onChange } }) => (
+                  <DateTimeInput
                     label="Data limite de coleta (opcional)"
-                    keyboardType="numeric"
+                    withTimer
                     placeholder="____/____/____"
-                    onChangeText={(text) => {
-                      const formattedText = formatDateString(text)
-                      onChange(formattedText)
-                    }}
-                    value={value}
                     errorMessage={errors.originEndDate?.message}
+                    onChange={(date) => onChange(date)}
+                    reset={resetDateTimeInputs}
                   />
                 )}
               />
@@ -244,7 +323,7 @@ export function AddAnnouncement() {
                 )}
               />
 
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={styles.canStack}>
                 <Text style={styles.label}>Pode empilhar?</Text>
                 <Switch
                   trackColor={{
@@ -263,12 +342,6 @@ export function AddAnnouncement() {
                 name="description"
                 render={({ field: { onChange, value } }) => (
                   <InputInfo
-                    style={{
-                      width: '100%',
-                      minHeight: 100,
-                      paddingVertical: 12,
-                      color: colors.secondary400,
-                    }}
                     textAlignVertical="top"
                     label="O que você está transportando? (opcional) "
                     placeholder="digite qualquer informação relevante..."
@@ -284,6 +357,64 @@ export function AddAnnouncement() {
           ) : (
             <>
               <Text style={styles.title}>Registrar viagem</Text>
+
+              <Text style={styles.subtitle}>Locais de Datas</Text>
+
+              <Controller
+                control={control}
+                name="originCity"
+                render={({ field: { onChange, value } }) => (
+                  <InputInfo
+                    label="Cidade de partida"
+                    onChangeText={onChange}
+                    value={value}
+                    errorMessage={errors.originCity?.message}
+                  />
+                )}
+              />
+
+              <Controller
+                control={control}
+                name="originDate"
+                render={({ field: { onChange } }) => (
+                  <DateTimeInput
+                    label="Data e hora da partida"
+                    withTimer
+                    placeholder="____/____/____"
+                    errorMessage={errors.originDate?.message}
+                    onChange={(date) => onChange(date)}
+                    reset={resetDateTimeInputs}
+                  />
+                )}
+              />
+
+              <Controller
+                control={control}
+                name="destinationCity"
+                render={({ field: { onChange, value } }) => (
+                  <InputInfo
+                    label="Cidade de destino"
+                    onChangeText={onChange}
+                    value={value}
+                    errorMessage={errors.destinationCity?.message}
+                  />
+                )}
+              />
+
+              <Controller
+                control={control}
+                name="destinationDate"
+                render={({ field: { onChange } }) => (
+                  <DateTimeInput
+                    label="Data e hora de chegada (opcional)"
+                    withTimer
+                    placeholder="____/____/____"
+                    errorMessage={errors.destinationDate?.message}
+                    onChange={(date) => onChange(date)}
+                    reset={resetDateTimeInputs}
+                  />
+                )}
+              />
             </>
           )}
 
@@ -344,5 +475,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.secondary400,
     textTransform: 'none',
+  },
+  canStack: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Platform.OS === 'ios' ? 4 : 0,
   },
 })
