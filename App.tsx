@@ -1,4 +1,5 @@
 import { StatusBar } from 'expo-status-bar'
+import { ComponentType } from 'react'
 import { View } from 'react-native'
 import {
   SafeAreaInsetsContext,
@@ -18,6 +19,14 @@ import { KronaOne_400Regular } from '@expo-google-fonts/krona-one'
 import { Routes } from '@routes/index'
 import { colors } from '@theme/index'
 
+interface TextProps {
+  maxFontSizeMultiplier?: number
+}
+
+interface TextInputProps extends TextProps {
+  allowFontScaling?: boolean
+}
+
 export default function App() {
   const [fontsLoaded] = useFonts({
     Inter_400Regular,
@@ -26,6 +35,19 @@ export default function App() {
     Inter_700Bold,
     KronaOne_400Regular,
   })
+
+  const Text: ComponentType<TextProps> = () => null
+  const TextInput: ComponentType<TextInputProps> = () => null
+
+  if (Text.defaultProps === null) {
+    Text.defaultProps = {}
+    Text.defaultProps.maxFontSizeMultiplier = 1.75
+  }
+
+  if (TextInput.defaultProps == null) {
+    TextInput.defaultProps = {}
+    TextInput.defaultProps.maxFontSizeMultiplier = 1.75
+  }
 
   return (
     <SafeAreaProvider>

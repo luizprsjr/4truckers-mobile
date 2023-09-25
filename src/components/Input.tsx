@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 20,
     paddingHorizontal: 16,
-    height: 60,
+    minHeight: 60,
     fontFamily: fonts.medium,
     fontSize: 14,
     color: colors.secondary700,
