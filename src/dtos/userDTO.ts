@@ -4,7 +4,8 @@ export type UserDTO = {
   id: string
   name: string
   email: string
-  phoneNUmber: number
+  phoneNumber: string
   type: 'USER' | 'TRUCKER'
   truck: TruckDTO | null
+  avatar?: string
 }

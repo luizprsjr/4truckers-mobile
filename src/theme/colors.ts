@@ -13,7 +13,7 @@ export const themeColors = {
   primary700: '#004282',
   primary800: '#002851',
   primary900: '#011838',
-  primary950: '#000711',
+  primary950: '#0C1033',
 
   secondary0: '#F6F6F6',
   secondary50: '#F3F3F3',
