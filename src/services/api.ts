@@ -19,7 +19,7 @@ type APIInstanceProps = AxiosInstance & {
 }
 
 const api = axios.create({
-  baseURL: 'http://192.168.29.32:3333',
+  baseURL: 'https://fourtruckers-api.onrender.com',
 }) as APIInstanceProps
 
 let failedQueue: PromiseType[] = []
