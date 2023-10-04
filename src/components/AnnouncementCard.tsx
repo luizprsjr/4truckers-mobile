@@ -144,17 +144,22 @@ export function AnnouncementCard({ item }: Props) {
               >
                 {item.destinationCity}
               </Text>
-              {item.destinationDate && item.user.type === 'TRUCKER' && (
-                <Text
-                  style={{
-                    fontFamily: fonts.bold,
-                    fontSize: 14,
-                    color: colors.secondary300,
-                  }}
-                >
-                  {dayjs(item.destinationDate).format('HH:mm')}
-                </Text>
-              )}
+              {item.destinationDate &&
+                item.originDate &&
+                item.user.type === 'TRUCKER' && (
+                  <Text
+                    style={{
+                      fontFamily: fonts.bold,
+                      fontSize: 14,
+                      color: colors.secondary300,
+                    }}
+                  >
+                    {new Date(item.originDate).getDate() ===
+                    new Date(item.destinationDate).getDate()
+                      ? dayjs(item.destinationDate).format('HH:mm')
+                      : dayjs(item.destinationDate).format('DD/MM [às] HH:mm')}
+                  </Text>
+                )}
             </View>
           </View>
         </View>
