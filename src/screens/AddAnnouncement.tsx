@@ -16,7 +16,7 @@ import { DateTimeInput } from '@components/DateTimeInput'
 import { Header } from '@components/Header'
 import { InputInfo } from '@components/InputInfo'
 import { SimpleButton } from '@components/SimpleButton'
-import { AnnouncementDTO } from '@dtos/announcementDTO'
+import { CreateAnnouncementDTo } from '@dtos/announcementDTO'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useAuth } from '@hooks/useAuth'
 import { useNavigation } from '@react-navigation/native'
@@ -47,6 +47,18 @@ const addAnnouncementSchema = z.object({
     .string({ required_error: 'Campo obrigatório.' })
     .min(2, 'O nome da cidade deve ter pelo menos 2 caracteres.'),
   destinationDate: z
+    .date()
+    .optional()
+    .refine(
+      (date) => {
+        if (date === undefined) return true
+        return date >= new Date()
+      },
+      {
+        message: 'Você não pode escolher uma data no passado.',
+      },
+    ),
+  destinationEndDate: z
     .date()
     .optional()
     .refine(
@@ -147,7 +159,7 @@ export function AddAnnouncement() {
     navigate('addTruck')
   }
 
-  async function handleAddNewAnnouncement(announcement: AnnouncementDTO) {
+  async function handleAddNewAnnouncement(announcement: CreateAnnouncementDTo) {
     try {
       setIsLoading(true)
       const add = {
@@ -193,7 +205,6 @@ export function AddAnnouncement() {
           {user.type === 'USER' ? (
             <>
               <Text style={styles.title}>Registrar carga</Text>
-
               <Text style={styles.subtitle}>Locais de coleta e entrega</Text>
               <Controller
                 control={control}
@@ -219,7 +230,6 @@ export function AddAnnouncement() {
                   />
                 )}
               />
-
               <Text style={styles.subtitle}>Data de coleta</Text>
               <Controller
                 control={control}
@@ -250,6 +260,22 @@ export function AddAnnouncement() {
                 )}
               />
 
+              <Text style={styles.subtitle}>Data de Entrega</Text>
+              <Controller
+                control={control}
+                name="destinationEndDate"
+                render={({ field: { onChange } }) => (
+                  <DateTimeInput
+                    label="Prazo máximo de entrega (opcional)"
+                    withTimer
+                    placeholder="____/____/____"
+                    errorMessage={errors.destinationEndDate?.message}
+                    onChange={(date) => onChange(date)}
+                    reset={resetDateTimeInputs}
+                  />
+                )}
+              />
+
               <Text style={styles.subtitle}>Informações da carga</Text>
               <Controller
                 control={control}
@@ -268,7 +294,6 @@ export function AddAnnouncement() {
                   />
                 )}
               />
-
               <Controller
                 control={control}
                 name="length"
@@ -286,7 +311,6 @@ export function AddAnnouncement() {
                   />
                 )}
               />
-
               <Controller
                 control={control}
                 name="width"
@@ -304,7 +328,6 @@ export function AddAnnouncement() {
                   />
                 )}
               />
-
               <Controller
                 control={control}
                 name="height"
@@ -322,7 +345,6 @@ export function AddAnnouncement() {
                   />
                 )}
               />
-
               <View style={styles.canStack}>
                 <Text style={styles.label}>Pode empilhar?</Text>
                 <Switch
@@ -336,7 +358,6 @@ export function AddAnnouncement() {
                   value={canStack}
                 />
               </View>
-
               <Controller
                 control={control}
                 name="description"

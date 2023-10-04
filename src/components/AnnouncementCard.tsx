@@ -3,6 +3,8 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { AnnouncementDTO } from '@dtos/announcementDTO'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
+import { AppNavigationRoutesProps } from '@routes/app.routes'
 import { colors, fonts } from '@theme/index'
 
 type Props = {
@@ -10,6 +12,16 @@ type Props = {
 }
 
 export function AnnouncementCard({ item }: Props) {
+  const { navigate } = useNavigation<AppNavigationRoutesProps>()
+
+  function handleOpenAd() {
+    if (item.user.type === 'TRUCKER') {
+      navigate('truckerAd', { id: item.id })
+    } else {
+      navigate('userAd', { id: item.id })
+    }
+  }
+
   return (
     <View style={styles.container}>
       {item.user.type === 'TRUCKER' && (
@@ -46,7 +58,7 @@ export function AnnouncementCard({ item }: Props) {
                 height: 24,
                 width: 24,
                 borderRadius: 12,
-                backgroundColor: colors.primary50,
+                backgroundColor: colors.primary0,
               }}
             >
               <View
@@ -105,7 +117,7 @@ export function AnnouncementCard({ item }: Props) {
                   {dayjs(item.originDate).format('HH:mm')}
                 </Text>
               )}
-              {item.user.type === 'USER' && (
+              {item.user.type === 'USER' && item.weight && (
                 <Text
                   style={{
                     fontFamily: fonts.bold,
@@ -229,6 +241,7 @@ export function AnnouncementCard({ item }: Props) {
             borderRadius: 99,
             backgroundColor: colors.primary500,
           }}
+          onPress={handleOpenAd}
         >
           <Text
             style={{

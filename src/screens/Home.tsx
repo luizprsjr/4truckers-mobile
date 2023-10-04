@@ -1,7 +1,6 @@
 import { AxiosError } from 'axios'
 import { useCallback, useState } from 'react'
 import { Alert, FlatList, View } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { AnnouncementCard } from '@components/AnnouncementCard'
 import { Header } from '@components/Header'
@@ -13,8 +12,6 @@ import { AppError } from '@utils/AppError'
 export function Home() {
   const [announcements, setAnnouncements] = useState<AnnouncementDTO[]>([])
   const [isRefreshing, setIsRefreshing] = useState(false)
-
-  const { bottom } = useSafeAreaInsets()
 
   async function fetchAnnouncements() {
     try {

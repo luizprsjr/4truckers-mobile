@@ -11,6 +11,8 @@ import { AddTruck } from '@screens/AddTruck'
 import { Announcement } from '@screens/Announcement'
 import { Home } from '@screens/Home'
 import { Profile } from '@screens/Profile'
+import { TruckerAd } from '@screens/TruckerAd'
+import { UserAd } from '@screens/UserAd'
 import { colors, fonts } from '@theme/index'
 
 type AppRoutes = {
@@ -19,6 +21,12 @@ type AppRoutes = {
   addTruck: undefined
   profile: undefined
   announcement: undefined
+  truckerAd: {
+    id: string
+  }
+  userAd: {
+    id: string
+  }
 }
 
 export type AppNavigationRoutesProps = BottomTabNavigationProp<AppRoutes>
@@ -101,6 +109,21 @@ export function AppRoutes() {
         name="addTruck"
         component={AddTruck}
         options={{ tabBarButton: () => null }}
+      />
+
+      <Screen
+        name="truckerAd"
+        component={TruckerAd}
+        options={{ tabBarButton: () => null }}
+      />
+
+      <Screen
+        name="userAd"
+        component={UserAd}
+        options={{
+          tabBarButton: () => null,
+          // tabBarStyle: { display: 'none' },
+        }}
       />
     </Navigator>
   )
