@@ -13,6 +13,13 @@ import { useNavigation } from '@react-navigation/native'
 import { AuthNavigationRoutesProps } from '@routes/auth.routes'
 import { colors, fonts } from '@theme/index'
 
+GoogleSignin.configure({
+  scopes: [
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile',
+  ],
+})
+
 export function SignIn() {
   // const { signIn } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
@@ -20,22 +27,13 @@ export function SignIn() {
 
   async function handleSignIn() {
     try {
-      setIsLoading(true)
-      GoogleSignin.configure({
-        scopes: ['https://www.googleapis.com/auth/drive.readonly'],
-      })
-    } catch (error) {
-      console.log(error)
-      // const isAppError = error instanceof AppError
-      // const title = isAppError
-      //   ? error.message
-      //   : 'Não foi possível entrar. Tente novamente mais tarde.'
-
-      // console.log(title) // TODO: create a toast
-      setIsLoading(false)
-    } finally {
-      setIsLoading(false)
-    }
+      await GoogleSignin.hasPlayServices()
+      console.log('jhaha')
+      const { user } = await GoogleSignin.signIn()
+      const { accessToken } = await GoogleSignin.getTokens()
+      console.log(user)
+      console.log(accessToken) // send to backend https://www.googleapis.com/oauth2/v1/userinfo?access_token=SEU_ACCESS_TOKEN
+    } catch (error) {}
   }
 
   return (
@@ -47,7 +45,7 @@ export function SignIn() {
       <View
         style={{ width: '100%', position: 'absolute', bottom: 60, zIndex: 1 }}
       >
-        <Button title="Entrar com Google" isLight />
+        <Button title="Entrar com Google" isLight onPress={handleSignIn} />
         {/* <GoogleSigninButton
           size={GoogleSigninButton.Size.Wide}
           color={GoogleSigninButton.Color.Dark}
