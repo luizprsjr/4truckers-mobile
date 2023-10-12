@@ -77,25 +77,10 @@ export function Profile() {
           }}
         >
           <Image
-            source={user.avatar ? { uri: user.avatar } : avatar}
+            source={user.avatarUrl ? { uri: user.avatarUrl } : avatar}
             alt="avatar"
             style={{ height: 120, width: 120, borderRadius: 999 }}
           />
-          <TouchableOpacity
-            style={{
-              zIndex: 1,
-              marginTop: -38,
-              marginRight: 4,
-              alignSelf: 'flex-end',
-            }}
-            onPress={() => Alert.alert('Funcionalidade ainda não implementada')}
-          >
-            <MaterialCommunityIcons
-              name="pencil-circle"
-              size={32}
-              color={colors.white}
-            />
-          </TouchableOpacity>
         </View>
 
         <Text

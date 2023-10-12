@@ -7,5 +7,5 @@ export type UserDTO = {
   phoneNumber: string
   type: 'USER' | 'TRUCKER'
   truck: TruckDTO | null
-  avatar?: string
+  avatarUrl?: string
 }

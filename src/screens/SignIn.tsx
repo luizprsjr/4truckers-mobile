@@ -1,16 +1,9 @@
 import { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { z } from 'zod'
 
 import { Button } from '@components/Button'
 import { useAuth } from '@hooks/useAuth'
-import {
-  GoogleSignin,
-  GoogleSigninButton,
-  statusCodes,
-} from '@react-native-google-signin/google-signin'
-import { useNavigation } from '@react-navigation/native'
-import { AuthNavigationRoutesProps } from '@routes/auth.routes'
+import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { colors, fonts } from '@theme/index'
 
 GoogleSignin.configure({
@@ -21,19 +14,23 @@ GoogleSignin.configure({
 })
 
 export function SignIn() {
-  // const { signIn } = useAuth()
+  const { googleSignIn } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
-  // const { navigate } = useNavigation<AuthNavigationRoutesProps>()
 
-  async function handleSignIn() {
+  async function handleGoogleSignIn() {
     try {
+      setIsLoading(true)
       await GoogleSignin.hasPlayServices()
-      console.log('jhaha')
-      const { user } = await GoogleSignin.signIn()
+      await GoogleSignin.signIn()
       const { accessToken } = await GoogleSignin.getTokens()
-      console.log(user)
-      console.log(accessToken) // send to backend https://www.googleapis.com/oauth2/v1/userinfo?access_token=SEU_ACCESS_TOKEN
-    } catch (error) {}
+
+      await googleSignIn(accessToken)
+    } catch (error) {
+      setIsLoading(false)
+    } finally {
+      await GoogleSignin.signOut()
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -45,7 +42,12 @@ export function SignIn() {
       <View
         style={{ width: '100%', position: 'absolute', bottom: 60, zIndex: 1 }}
       >
-        <Button title="Entrar com Google" isLight onPress={handleSignIn} />
+        <Button
+          title="Entrar com Google"
+          isLight
+          onPress={handleGoogleSignIn}
+          disabled={isLoading}
+        />
         {/* <GoogleSigninButton
           size={GoogleSigninButton.Size.Wide}
           color={GoogleSigninButton.Color.Dark}

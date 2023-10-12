@@ -22,6 +22,7 @@ export type AuthContextDataProps = {
   user: UserDTO
   updateUser: (userData: UserDTO) => void
   signIn: (email: string, password: string) => Promise<void>
+  googleSignIn: (accessToken: string) => Promise<void>
   signOut: () => Promise<void>
   isLoadingUserStorageData: boolean
 }
@@ -52,6 +53,24 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     try {
       setIsLoadingUserStorageData(true)
       const { data } = await api.post('/sessions', { email, password })
+
+      if (data.user && data.token && data.refreshToken) {
+        await storageSaveUser(data.user)
+        await storageSaveAuthToken(data.token)
+        await storageSaveRefreshToken(data.refreshToken)
+        updateUserAndTokens(data.user, data.token)
+      }
+    } catch (error) {
+      if (error) throw error
+    } finally {
+      setIsLoadingUserStorageData(false)
+    }
+  }
+
+  async function googleSignIn(accessToken: string) {
+    try {
+      setIsLoadingUserStorageData(true)
+      const { data } = await api.post('/google-session', { accessToken })
 
       if (data.user && data.token && data.refreshToken) {
         await storageSaveUser(data.user)
@@ -110,7 +129,14 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   return (
     <AuthContext.Provider
-      value={{ user, updateUser, signIn, signOut, isLoadingUserStorageData }}
+      value={{
+        user,
+        updateUser,
+        signIn,
+        googleSignIn,
+        signOut,
+        isLoadingUserStorageData,
+      }}
     >
       {children}
     </AuthContext.Provider>
