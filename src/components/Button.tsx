@@ -12,19 +12,39 @@ import { Loading } from './Loading'
 type Props = TouchableOpacityProps & {
   title: string
   isLoading?: boolean
+  isLight?: boolean
 }
 
-export function Button({ title, disabled, isLoading = false, ...rest }: Props) {
+export function Button({
+  title,
+  disabled,
+  isLoading = false,
+  isLight = false,
+  ...rest
+}: Props) {
   return (
     <TouchableOpacity
-      style={[styles.button, { opacity: isLoading || disabled ? 0.5 : 1 }]}
+      style={[
+        styles.button,
+        {
+          opacity: isLoading || disabled ? 0.5 : 1,
+          backgroundColor: isLight ? colors.white : colors.primary950,
+        },
+      ]}
       disabled={isLoading || disabled}
       {...rest}
     >
       {isLoading ? (
         <Loading color={colors.white} />
       ) : (
-        <Text style={styles.buttonTitle}>{title}</Text>
+        <Text
+          style={[
+            styles.buttonTitle,
+            { color: isLight ? colors.primary950 : colors.white },
+          ]}
+        >
+          {title}
+        </Text>
       )}
     </TouchableOpacity>
   )
@@ -36,12 +56,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: 60,
-    backgroundColor: colors.primary950,
     borderRadius: 8,
   },
   buttonTitle: {
     fontFamily: fonts.semiBold,
     fontSize: 16,
-    color: colors.white,
   },
 })
