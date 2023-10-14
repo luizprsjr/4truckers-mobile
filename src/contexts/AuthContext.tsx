@@ -40,8 +40,8 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [isLoadingUserStorageData, setIsLoadingUserStorageData] = useState(true)
 
   async function updateUser(userData: UserDTO) {
+    await storageSaveUser(userData)
     setUser(userData)
-    await storageSaveUser(user)
   }
 
   function updateUserAndTokens(userData: UserDTO, token: string) {
@@ -117,6 +117,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   useEffect(() => {
     loadUserData()
+    console.log('aqui')
   }, [])
 
   useEffect(() => {

@@ -67,8 +67,8 @@ export function TruckerAd() {
       <View style={styles.topWrapper}>
         <Image
           source={
-            announcement.user?.avatar
-              ? { uri: announcement.user.avatar }
+            announcement.user?.avatarUrl
+              ? { uri: announcement.user.avatarUrl }
               : avatar
           }
           alt="avatar"

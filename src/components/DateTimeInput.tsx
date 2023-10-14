@@ -76,6 +76,7 @@ export function DateTimeInput({
   function showAndroidPicker(currentMode: 'date' | 'time', currentDate?: Date) {
     DateTimePickerAndroid.open({
       value: currentDate || new Date(),
+      minimumDate: new Date(),
       onChange:
         currentMode === 'date'
           ? onChangeAndroidDatePicker
@@ -132,6 +133,7 @@ export function DateTimeInput({
         <>
           <DateTimePicker
             value={date || new Date()}
+            minimumDate={new Date()}
             mode={mode}
             display="spinner"
             onChange={onChangeIosDatePicker}

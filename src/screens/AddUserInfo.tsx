@@ -51,6 +51,7 @@ export function AddUserInfo() {
   const selectedUserType = watch('type', 'USER')
 
   async function handleSignUp({ phoneNumber, type }: SignUpFormData) {
+    console.log(type)
     try {
       setIsLoading(true)
       const { data, status } = await api.put('/users', {
@@ -116,6 +117,7 @@ export function AddUserInfo() {
 
           <BlankSpacer height={4} />
           <Text style={styles.textLabel}>Selecione o tipo de usuário:</Text>
+
           <Controller
             name="type"
             control={control}
@@ -137,6 +139,7 @@ export function AddUserInfo() {
                 Li e concordo com os termos e condições:
               </Text>
             </View>
+
             <Switch
               trackColor={{
                 false: colors.secondary400,

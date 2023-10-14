@@ -1,8 +1,10 @@
 import dayjs from 'dayjs'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
+import avatar from '@assets/avatar.png'
 import { AnnouncementDTO } from '@dtos/announcementDTO'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { useAuth } from '@hooks/useAuth'
 import { useNavigation } from '@react-navigation/native'
 import { AppNavigationRoutesProps } from '@routes/app.routes'
 import { colors, fonts } from '@theme/index'
@@ -12,6 +14,7 @@ type Props = {
 }
 
 export function AnnouncementCard({ item }: Props) {
+  const { user } = useAuth()
   const { navigate } = useNavigation<AppNavigationRoutesProps>()
 
   function handleOpenAd() {
@@ -212,10 +215,17 @@ export function AnnouncementCard({ item }: Props) {
               alignItems: 'center',
             }}
           >
-            <Ionicons
-              name="person-circle-sharp"
-              size={48}
-              color={colors.primary700}
+            <Image
+              source={
+                item.user.avatarUrl ? { uri: item.user.avatarUrl } : avatar
+              }
+              alt="avatar"
+              style={{
+                height: 48,
+                width: 48,
+                borderRadius: 999,
+                marginRight: 4,
+              }}
             />
             <View>
               <Text
