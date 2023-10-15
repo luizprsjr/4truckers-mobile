@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Alert, StyleSheet, Text, View } from 'react-native'
 
 import { Button } from '@components/Button'
 import { useAuth } from '@hooks/useAuth'
@@ -11,6 +11,8 @@ GoogleSignin.configure({
     'https://www.googleapis.com/auth/userinfo.email',
     'https://www.googleapis.com/auth/userinfo.profile',
   ],
+  webClientId:
+    '816122311851-5616c53npqnaboaiirftf6g3si723a7d.apps.googleusercontent.com',
 })
 
 export function SignIn() {
@@ -26,6 +28,10 @@ export function SignIn() {
 
       await googleSignIn(accessToken)
     } catch (error) {
+      if (error instanceof Error) {
+        Alert.alert(error.message)
+      }
+
       setIsLoading(false)
     } finally {
       await GoogleSignin.signOut()
@@ -48,14 +54,6 @@ export function SignIn() {
           onPress={handleGoogleSignIn}
           disabled={isLoading}
         />
-        {/* <GoogleSigninButton
-          size={GoogleSigninButton.Size.Wide}
-          color={GoogleSigninButton.Color.Dark}
-          onPress={() => {
-            console.log('fsdifsdu')
-          }}
-          disabled={false}
-        /> */}
       </View>
     </View>
   )

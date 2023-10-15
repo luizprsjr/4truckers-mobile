@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
+import { Alert } from 'react-native'
 
 import { UserDTO } from '@dtos/userDTO'
 import { api } from '@services/api'
@@ -79,6 +80,17 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         updateUserAndTokens(data.user, data.token)
       }
     } catch (error) {
+      if (error instanceof Error) {
+        console.warn(error.message)
+        console.log(error.message)
+        Alert.alert(
+          'AuthContext GoogleSign',
+          `
+        AccessToken: ${accessToken}
+        Error Message: ${error.message}
+        `,
+        )
+      }
       if (error) throw error
     } finally {
       setIsLoadingUserStorageData(false)
