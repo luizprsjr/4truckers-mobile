@@ -83,13 +83,13 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       if (error instanceof Error) {
         console.warn(error.message)
         console.log(error.message)
-        Alert.alert(
-          'AuthContext GoogleSign',
-          `
-        AccessToken: ${accessToken}
-        Error Message: ${error.message}
-        `,
-        )
+        // Alert.alert(
+        //   'AuthContext GoogleSign',
+        //   `
+        // AccessToken: ${accessToken}
+        // Error Message: ${error.message}
+        // `,
+        // )
       }
       if (error) throw error
     } finally {
@@ -129,7 +129,6 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   useEffect(() => {
     loadUserData()
-    console.log('aqui')
   }, [])
 
   useEffect(() => {

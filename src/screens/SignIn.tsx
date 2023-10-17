@@ -26,6 +26,7 @@ export function SignIn() {
       setIsLoading(true)
       await GoogleSignin.hasPlayServices()
       await GoogleSignin.signIn()
+
       const { accessToken } = await GoogleSignin.getTokens()
 
       await googleSignIn(accessToken)
