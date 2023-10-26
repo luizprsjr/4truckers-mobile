@@ -1,8 +1,8 @@
 import { AxiosError } from 'axios'
 import { useCallback, useState } from 'react'
-import { Alert, FlatList, View } from 'react-native'
+import { Alert, View } from 'react-native'
 
-import { AnnouncementCard } from '@components/AnnouncementCard'
+import { AnnouncementList } from '@components/announcement-list/list'
 import { Header } from '@components/Header'
 import { AnnouncementDTO } from '@dtos/announcementDTO'
 import { useFocusEffect } from '@react-navigation/native'
@@ -37,17 +37,10 @@ export function Home() {
     <View style={{ flex: 1 }}>
       <Header />
 
-      <FlatList
+      <AnnouncementList
         data={announcements}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <AnnouncementCard item={item} />}
-        refreshing={isRefreshing}
+        isRefreshing={isRefreshing}
         onRefresh={fetchAnnouncements}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          padding: 32,
-          gap: 16,
-        }}
       />
     </View>
   )
