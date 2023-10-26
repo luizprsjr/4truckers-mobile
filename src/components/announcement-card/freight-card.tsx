@@ -15,7 +15,7 @@ export function FreightCard({ item }: FreightCardProps) {
   const { navigate } = useNavigation<AppNavigationRoutesProps>()
 
   function handleOpenAd() {
-    navigate('truckerAd', { id: item.id })
+    navigate('userAd', { id: item.id })
   }
 
   return (
