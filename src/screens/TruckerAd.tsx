@@ -11,8 +11,8 @@ import {
 } from 'react-native'
 
 import avatar from '@assets/avatar.png'
-import WhatsApp from '@assets/wpp.svg'
 import { Header } from '@components/Header'
+import { WhatsAppLogo } from '@components/WhatsAppLogo'
 import { AnnouncementDTO } from '@dtos/announcementDTO'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { useRoute } from '@react-navigation/native'
@@ -99,7 +99,7 @@ export function TruckerAd() {
             style={styles.itemWrapper}
             onPress={() => handleOpenWpp(announcement.user.phoneNumber)}
           >
-            <WhatsApp />
+            <WhatsAppLogo />
           </TouchableOpacity>
         </View>
       </View>

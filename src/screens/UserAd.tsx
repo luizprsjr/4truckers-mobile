@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import {
   Alert,
   Linking,
@@ -10,8 +10,8 @@ import {
   View,
 } from 'react-native'
 
-import WhatsApp from '@assets/wpp.svg'
 import { Header } from '@components/Header'
+import { WhatsAppLogo } from '@components/WhatsAppLogo'
 import { AnnouncementDTO } from '@dtos/announcementDTO'
 import {
   AntDesign,
@@ -77,7 +77,7 @@ export function UserAd() {
         style={styles.wppButton}
         onPress={() => handleOpenWpp(announcement.user.phoneNumber)}
       >
-        <WhatsApp height={44} width={44} />
+        <WhatsAppLogo height={44} width={44} />
       </TouchableOpacity>
 
       <View style={{ flex: 1 }}>
