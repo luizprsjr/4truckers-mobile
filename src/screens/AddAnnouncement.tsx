@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import { z } from 'zod'
 
-import { BlankSpacer } from '@components/BlackSpacer'
+import { BlankSpacer } from '@components/BlankSpacer'
 import { Button } from '@components/Button'
 import { DateTimeInput } from '@components/DateTimeInput'
 import { Header } from '@components/Header'

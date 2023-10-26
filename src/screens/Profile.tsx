@@ -12,7 +12,7 @@ import {
 import { z } from 'zod'
 
 import avatar from '@assets/avatar.png'
-import { BlankSpacer } from '@components/BlackSpacer'
+import { BlankSpacer } from '@components/BlankSpacer'
 import { Button } from '@components/Button'
 import { Header } from '@components/Header'
 import { InputInfo } from '@components/InputInfo'
