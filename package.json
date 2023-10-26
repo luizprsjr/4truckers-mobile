@@ -40,6 +40,8 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@rocketseat/eslint-config": "^2.1.0",
+    "@testing-library/jest-native": "^5.4.3",
+    "@testing-library/react-native": "^12.3.1",
     "@types/react": "~18.2.14",
     "babel-plugin-module-resolver": "^5.0.0",
     "eslint": "^8.48.0",
