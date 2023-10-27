@@ -11,40 +11,49 @@ import { colors, fonts } from '@theme/index'
 type Props = TouchableOpacityProps & {
   title: string
   isLoading?: boolean
-  isLight?: boolean
+  variant?: 'default' | 'secondary'
 }
 
 export function Button({
   title,
   disabled,
   isLoading = false,
-  isLight = false,
+  variant = 'default',
   ...rest
 }: Props) {
+  const themeColors = {
+    default: {
+      backgroundColor: colors.primary950,
+      textColor: colors.white,
+    },
+    secondary: {
+      backgroundColor: colors.white,
+      textColor: colors.primary950,
+    },
+  }
+
+  const buttonStyle = {
+    ...styles.button,
+    opacity: isLoading || disabled ? 0.5 : 1,
+    backgroundColor: themeColors[variant].backgroundColor,
+  }
+
+  const titleStyle = {
+    ...styles.buttonTitle,
+    color: themeColors[variant].textColor,
+  }
+
   return (
     <TouchableOpacity
       testID="button"
-      style={[
-        styles.button,
-        {
-          opacity: isLoading || disabled ? 0.5 : 1,
-          backgroundColor: isLight ? colors.white : colors.primary950,
-        },
-      ]}
+      style={buttonStyle}
       disabled={true}
       {...rest}
     >
       {isLoading ? (
         <Loading color={colors.white} />
       ) : (
-        <Text
-          style={[
-            styles.buttonTitle,
-            { color: isLight ? colors.primary950 : colors.white },
-          ]}
-        >
-          {title}
-        </Text>
+        <Text style={titleStyle}>{title}</Text>
       )}
     </TouchableOpacity>
   )

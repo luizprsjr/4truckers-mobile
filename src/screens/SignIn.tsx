@@ -53,7 +53,7 @@ export function SignIn() {
       >
         <Button
           title="Entrar com Google"
-          isLight
+          variant="secondary"
           onPress={handleGoogleSignIn}
           disabled={isLoading}
         />
