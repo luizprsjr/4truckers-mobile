@@ -6,6 +6,7 @@ import {
   SafeAreaProvider,
 } from 'react-native-safe-area-context'
 
+import { APIProvider } from '@api/provider'
 import { Loading } from '@components/Loading'
 import { AuthContextProvider } from '@contexts/AuthContext'
 import {
@@ -63,9 +64,11 @@ export default function App() {
               backgroundColor: colors.primary950,
             }}
           >
-            <AuthContextProvider>
-              {fontsLoaded ? <Routes /> : <Loading />}
-            </AuthContextProvider>
+            <APIProvider>
+              <AuthContextProvider>
+                {fontsLoaded ? <Routes /> : <Loading />}
+              </AuthContextProvider>
+            </APIProvider>
           </View>
         )}
       </SafeAreaInsetsContext.Consumer>

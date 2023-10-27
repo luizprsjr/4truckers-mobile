@@ -10,13 +10,13 @@ import {
   View,
 } from 'react-native'
 
+import { api } from '@api/index'
 import avatar from '@assets/avatar.png'
 import { Header } from '@components/Header'
 import { WhatsAppLogo } from '@components/WhatsAppLogo'
 import { AnnouncementDTO } from '@dtos/announcementDTO'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { useRoute } from '@react-navigation/native'
-import { api } from '@services/api'
 import { colors, fonts } from '@theme/index'
 
 interface RouteParamsProps {

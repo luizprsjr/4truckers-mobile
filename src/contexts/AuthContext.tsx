@@ -1,8 +1,8 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
 import { Alert } from 'react-native'
 
+import { api } from '@api/index'
 import { UserDTO } from '@dtos/userDTO'
-import { api } from '@services/api'
 import {
   storageGetAuthToken,
   storageRemoveAuthToken,

@@ -4,6 +4,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { z } from 'zod'
 
+import { api } from '@api/index'
 import { BlankSpacer } from '@components/BlankSpacer'
 import { Button } from '@components/button'
 import { Header } from '@components/Header'
@@ -12,7 +13,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useAuth } from '@hooks/useAuth'
 import { CommonActions, useNavigation } from '@react-navigation/native'
 import { AppNavigationRoutesProps } from '@routes/app.routes'
-import { api } from '@services/api'
 import { colors, fonts } from '@theme/index'
 
 const addTruckFormSchema = z.object({

@@ -10,6 +10,7 @@ import {
 } from 'react-native'
 import { z } from 'zod'
 
+import { api } from '@api/index'
 import { BlankSpacer } from '@components/BlankSpacer'
 import { Button } from '@components/button'
 import { DateTimeInput } from '@components/DateTimeInput'
@@ -21,7 +22,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useAuth } from '@hooks/useAuth'
 import { useNavigation } from '@react-navigation/native'
 import { AppNavigationRoutesProps } from '@routes/app.routes'
-import { api } from '@services/api'
 import { colors, fonts } from '@theme/index'
 
 const addAnnouncementSchema = z.object({

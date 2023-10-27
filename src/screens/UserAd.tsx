@@ -10,6 +10,7 @@ import {
   View,
 } from 'react-native'
 
+import { api } from '@api/index'
 import { Header } from '@components/Header'
 import { WhatsAppLogo } from '@components/WhatsAppLogo'
 import { AnnouncementDTO } from '@dtos/announcementDTO'
@@ -20,7 +21,6 @@ import {
   Octicons,
 } from '@expo/vector-icons'
 import { useFocusEffect, useRoute } from '@react-navigation/native'
-import { api } from '@services/api'
 import { colors, fonts } from '@theme/index'
 
 interface RouteParamsProps {
