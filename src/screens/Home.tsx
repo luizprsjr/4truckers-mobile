@@ -2,7 +2,7 @@ import { AxiosError } from 'axios'
 import { useCallback, useState } from 'react'
 import { Alert, View } from 'react-native'
 
-import { AnnouncementList } from '@components/announcement-list/list'
+import { AnnouncementList } from '@components/announcement-list'
 import { Header } from '@components/Header'
 import { AnnouncementDTO } from '@dtos/announcementDTO'
 import { useFocusEffect } from '@react-navigation/native'
