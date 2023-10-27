@@ -5,9 +5,8 @@ import {
   TouchableOpacityProps,
 } from 'react-native'
 
+import { Loading } from '@components/Loading'
 import { colors, fonts } from '@theme/index'
-
-import { Loading } from './Loading'
 
 type Props = TouchableOpacityProps & {
   title: string
@@ -24,6 +23,7 @@ export function Button({
 }: Props) {
   return (
     <TouchableOpacity
+      testID="button"
       style={[
         styles.button,
         {
@@ -31,7 +31,7 @@ export function Button({
           backgroundColor: isLight ? colors.white : colors.primary950,
         },
       ]}
-      disabled={isLoading || disabled}
+      disabled={true}
       {...rest}
     >
       {isLoading ? (

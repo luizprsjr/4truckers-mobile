@@ -5,7 +5,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { z } from 'zod'
 
 import { BlankSpacer } from '@components/BlankSpacer'
-import { Button } from '@components/Button'
+import { Button } from '@components/button'
 import { Header } from '@components/Header'
 import { InputInfo } from '@components/InputInfo'
 import { zodResolver } from '@hookform/resolvers/zod'

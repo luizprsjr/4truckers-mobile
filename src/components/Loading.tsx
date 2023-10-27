@@ -9,6 +9,7 @@ type Props = {
 export function Loading({ color }: Props) {
   return (
     <View
+      testID="loading-component"
       style={{
         flex: 1,
         justifyContent: 'center',

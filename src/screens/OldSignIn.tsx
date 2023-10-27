@@ -4,7 +4,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { z } from 'zod'
 
 import { BlankSpacer } from '@components/BlankSpacer'
-import { Button } from '@components/Button'
+import { Button } from '@components/button'
 import { Header } from '@components/Header'
 import { Input } from '@components/Input'
 import { zodResolver } from '@hookform/resolvers/zod'

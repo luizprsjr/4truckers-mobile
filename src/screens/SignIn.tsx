@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Alert, StyleSheet, Text, View } from 'react-native'
 
-import { Button } from '@components/Button'
+import { Button } from '@components/button'
 import { useAuth } from '@hooks/useAuth'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { colors, fonts } from '@theme/index'
