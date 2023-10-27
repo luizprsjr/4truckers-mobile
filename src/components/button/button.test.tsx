@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react-native'
+import { fireEvent, render, screen } from '@testing-library/react-native'
 import { colors } from '@theme/index'
 
 import { Button } from './button'
@@ -8,6 +8,14 @@ describe('component: Button', () => {
     render(<Button title="test" isLoading />)
     const loading = screen.getByTestId('loading-component')
     expect(loading).toBeTruthy()
+  })
+
+  it('should call the onPress function when the button is clicked', () => {
+    const onPress = jest.fn()
+    render(<Button title="test" onPress={onPress} />)
+    const title = screen.getByText('test')
+    fireEvent.press(title)
+    expect(onPress).toBeCalledTimes(1)
   })
 
   it('should be disabled when disabled is true', () => {

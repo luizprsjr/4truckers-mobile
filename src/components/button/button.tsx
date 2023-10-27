@@ -47,7 +47,7 @@ export function Button({
     <TouchableOpacity
       testID="button"
       style={buttonStyle}
-      disabled={true}
+      disabled={disabled || isLoading}
       {...rest}
     >
       {isLoading ? (
