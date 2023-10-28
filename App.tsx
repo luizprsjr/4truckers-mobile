@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar'
 import { ComponentType } from 'react'
 import { View } from 'react-native'
+import FlashMessage from 'react-native-flash-message'
 import {
   SafeAreaInsetsContext,
   SafeAreaProvider,
@@ -68,6 +69,7 @@ export default function App() {
               <AuthContextProvider>
                 {fontsLoaded ? <Routes /> : <Loading />}
               </AuthContextProvider>
+              <FlashMessage position="top" />
             </APIProvider>
           </View>
         )}
