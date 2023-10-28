@@ -8,9 +8,10 @@ import {
   Text,
   View,
 } from 'react-native'
+import { showMessage } from 'react-native-flash-message'
 import { z } from 'zod'
 
-import { api } from '@api/index'
+import { useAddAnnouncements } from '@api/announcements/useAddAnnouncement'
 import { BlankSpacer } from '@components/BlankSpacer'
 import { Button } from '@components/button'
 import { DateTimeInput } from '@components/DateTimeInput'
@@ -141,7 +142,6 @@ export function AddAnnouncement() {
   const [resetDateTimeInputs, setResetDateTimeInputs] = useState(false)
 
   const [canStack, setCanStack] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
 
   const { navigate } = useNavigation<AppNavigationRoutesProps>()
   const { user } = useAuth()
@@ -159,23 +159,31 @@ export function AddAnnouncement() {
     navigate('addTruck')
   }
 
+  const { mutate, isPending } = useAddAnnouncements()
+
   async function handleAddNewAnnouncement(announcement: CreateAnnouncementDTo) {
-    try {
-      setIsLoading(true)
-      const add = {
-        ...announcement,
-        canStack,
-      }
-      await api.post('/announcements', add)
-      reset()
-      setResetDateTimeInputs(true)
-      navigate('home')
-    } catch (error) {
-      setIsLoading(false)
-      console.log(error)
-    } finally {
-      setIsLoading(false)
+    const add = {
+      ...announcement,
+      canStack,
     }
+    mutate(add, {
+      onSuccess: () => {
+        showMessage({
+          message: 'Post added successfully',
+          type: 'success',
+        })
+        setResetDateTimeInputs(true)
+        reset()
+        navigate('home')
+      },
+      onError: () => {
+        showMessage({
+          message: 'Error adding post',
+          type: 'danger',
+          duration: 4000,
+        })
+      },
+    })
   }
 
   if (user.type === 'TRUCKER' && !user.truck) {
@@ -443,7 +451,8 @@ export function AddAnnouncement() {
           <Button
             title="Cadastrar"
             onPress={handleSubmit(handleAddNewAnnouncement)}
-            isLoading={isLoading}
+            isLoading={isPending}
+            disabled={isPending}
           />
         </View>
       </ScrollView>
