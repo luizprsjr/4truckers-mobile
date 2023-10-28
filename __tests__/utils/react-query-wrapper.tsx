@@ -7,6 +7,10 @@ export function reactQueryWrapper() {
         retry: false,
         gcTime: 0,
       },
+      mutations: {
+        retry: false,
+        gcTime: 0,
+      },
     },
   })
   return function Wrapper({ children }: { children: React.ReactNode }) {
