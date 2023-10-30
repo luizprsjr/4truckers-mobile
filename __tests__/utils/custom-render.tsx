@@ -1,14 +1,12 @@
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { APIProvider } from '@api/provider'
 import { render, RenderOptions } from '@testing-library/react-native'
 
-export const queryClient = new QueryClient()
-
-function Providers({ children }: { children: React.ReactNode }) {
+const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
   return (
     <SafeAreaProvider>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      <APIProvider>{children}</APIProvider>
     </SafeAreaProvider>
   )
 }
@@ -16,7 +14,7 @@ function Providers({ children }: { children: React.ReactNode }) {
 const customRender = (
   ui: React.ReactElement,
   options?: Omit<RenderOptions, 'wrapper'>,
-) => render(ui, { wrapper: Providers, ...options })
+) => render(ui, { wrapper: AllTheProviders, ...options })
 
 export * from '@testing-library/react-native'
-export { customRender as render, Providers }
+export { customRender as render }
