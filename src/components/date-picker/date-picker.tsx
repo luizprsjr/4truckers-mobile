@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { UseFormStateReturn } from 'react-hook-form'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 import DateDatePicker, {
@@ -12,6 +13,7 @@ type DatePickerProps = {
   placeholder?: string
   errorMessage?: string
   onChange?: (date: Date | undefined) => void
+  formState?: UseFormStateReturn<any>
 }
 
 export function DatePicker({
@@ -19,6 +21,7 @@ export function DatePicker({
   placeholder,
   errorMessage,
   onChange,
+  formState,
 }: DatePickerProps) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>()
   const [showPicker, setShowPicker] = useState(false)
@@ -36,6 +39,12 @@ export function DatePicker({
       setShowPicker(false)
     }
   }
+
+  useEffect(() => {
+    if (formState?.isSubmitSuccessful) {
+      setSelectedDate(undefined)
+    }
+  }, [formState])
 
   return (
     <View style={{ gap: 4 }}>

@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { UseFormStateReturn } from 'react-hook-form'
 import {
   Platform,
   Pressable,
@@ -19,6 +20,7 @@ type TimePickerProps = {
   placeholder?: string
   errorMessage?: string
   onChange?: (date: Date | undefined) => void
+  formState?: UseFormStateReturn<any>
 }
 
 export function TimePicker({
@@ -26,6 +28,7 @@ export function TimePicker({
   placeholder,
   errorMessage,
   onChange,
+  formState,
 }: TimePickerProps) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>()
   const [showPicker, setShowPicker] = useState(false)
@@ -45,6 +48,12 @@ export function TimePicker({
       }
     }
   }
+
+  useEffect(() => {
+    if (formState?.isSubmitSuccessful) {
+      setSelectedDate(undefined)
+    }
+  }, [formState])
 
   return (
     <View style={{ gap: 4 }}>
