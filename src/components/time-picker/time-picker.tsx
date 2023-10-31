@@ -1,6 +1,5 @@
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
-import { UseFormStateReturn } from 'react-hook-form'
 import {
   Platform,
   Pressable,
@@ -15,33 +14,48 @@ import DateTimePicker, {
 } from '@react-native-community/datetimepicker'
 import { colors, fonts } from '@theme/index'
 
-type TimePickerProps = {
+export type TimePickerProps = {
   label: string
   placeholder?: string
   errorMessage?: string
-  onChange?: (date: Date | undefined) => void
-  formState?: UseFormStateReturn<any>
+  onControllerChange?: (date: Date | undefined) => void
+  reset?: boolean
 }
 
 export function TimePicker({
   label,
   placeholder,
   errorMessage,
-  onChange,
-  formState,
+  onControllerChange,
+  reset,
 }: TimePickerProps) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>()
   const [showPicker, setShowPicker] = useState(false)
 
-  function onPickerChange(
+  const labelStyle = {
+    ...styles.label,
+    color: errorMessage ? colors.darkRed : colors.secondary700,
+  }
+
+  const buttonContainerStyle = {
+    ...styles.buttonContainer,
+    borderColor: errorMessage ? colors.red : colors.secondary700,
+  }
+
+  const buttonTextStyle = {
+    ...styles.buttonText,
+    color: errorMessage ? colors.red : colors.secondary400,
+  }
+
+  function onChange(
     event: DateTimePickerEvent,
     selectedDate?: Date | undefined,
   ) {
     if (event.type === 'set') {
       const currentDate = selectedDate
       setSelectedDate(currentDate)
-      if (onChange) {
-        onChange(currentDate)
+      if (onControllerChange) {
+        onControllerChange(currentDate)
       }
       if (Platform.OS === 'android') {
         setShowPicker(false)
@@ -50,45 +64,32 @@ export function TimePicker({
   }
 
   useEffect(() => {
-    if (formState?.isSubmitSuccessful) {
+    if (reset) {
       setSelectedDate(undefined)
     }
-  }, [formState])
+  }, [reset])
 
   return (
     <View style={{ gap: 4 }}>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={labelStyle}>{label}</Text>
 
       {showPicker && (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <DateTimePicker
             testID="time-picker"
             value={selectedDate || new Date()}
-            minimumDate={new Date()}
+            // minimumDate={new Date()}
             mode="time"
             // is24Hour
             display="inline"
-            onChange={onPickerChange}
+            onChange={onChange}
           />
           {Platform.OS && (
             <TouchableOpacity
-              style={{
-                backgroundColor: colors.primary950,
-                paddingVertical: 8,
-                paddingHorizontal: 12,
-                borderRadius: 6,
-              }}
+              style={styles.iOSButton}
               onPress={() => setShowPicker(false)}
             >
-              <Text
-                style={{
-                  fontFamily: fonts.bold,
-                  fontSize: 14,
-                  color: colors.white,
-                }}
-              >
-                Confirmar
-              </Text>
+              <Text style={styles.iOSButtonText}>Confirmar</Text>
             </TouchableOpacity>
           )}
         </View>
@@ -96,10 +97,11 @@ export function TimePicker({
 
       {!showPicker && (
         <Pressable
+          testID="button-container"
           onPress={() => setShowPicker(true)}
-          style={styles.inputContainer}
+          style={buttonContainerStyle}
         >
-          <Text testID="text-date" style={styles.input}>
+          <Text testID="button-text" style={buttonTextStyle}>
             {selectedDate ? dayjs(selectedDate).format('HH:mm') : placeholder}
           </Text>
         </Pressable>
@@ -117,34 +119,33 @@ const styles = StyleSheet.create({
     color: colors.secondary700,
     textTransform: 'none',
   },
-  inputContainer: {
+  buttonContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderColor: colors.secondary700,
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 16,
     paddingVertical: 4,
   },
-  input: {
+  buttonText: {
     lineHeight: 44,
     fontFamily: fonts.medium,
     fontSize: 14,
-    color: colors.secondary400,
-  },
-  measurementUnit: {
-    fontFamily: fonts.regular,
-    fontSize: 14,
-    color: colors.secondary700,
   },
   errorMessage: {
     fontFamily: fonts.regular,
     fontSize: 14,
     color: colors.red,
   },
-  iosPickerButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
+  iOSButton: {
+    backgroundColor: colors.primary950,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 6,
+  },
+  iOSButtonText: {
+    fontFamily: fonts.bold,
+    fontSize: 14,
+    color: colors.white,
   },
 })

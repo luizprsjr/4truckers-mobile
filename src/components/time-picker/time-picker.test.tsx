@@ -7,6 +7,7 @@ import {
   waitFor,
 } from '@__tests__/utils/custom-render'
 import { DateTimePickerEvent } from '@react-native-community/datetimepicker'
+import { colors } from '@theme/index'
 
 import { TimePicker } from './time-picker'
 
@@ -34,7 +35,7 @@ describe('component: TimePicker', () => {
 
   it('should show picker if the button is pressed', async () => {
     render(<TimePicker label="test" />)
-    const showPickerButton = screen.getByTestId('text-date')
+    const showPickerButton = screen.getByTestId('button-text')
     fireEvent.press(showPickerButton)
     expect(screen.queryByTestId('time-picker')).toBeTruthy()
   })
@@ -42,7 +43,7 @@ describe('component: TimePicker', () => {
   it('should select the correct time on iOS', async () => {
     Platform.OS = 'ios'
     render(<TimePicker label="test" />)
-    const showPickerButton = screen.getByTestId('text-date')
+    const showPickerButton = screen.getByTestId('button-text')
     fireEvent.press(showPickerButton)
     waitFor(() =>
       fireEvent(
@@ -52,13 +53,13 @@ describe('component: TimePicker', () => {
       ),
     )
     fireEvent.press(screen.getByText(/confirmar/i))
-    expect(await screen.findByTestId('text-date')).toHaveTextContent('12:00')
+    expect(await screen.findByTestId('button-text')).toHaveTextContent('12:00')
   })
 
   it('should select the correct time on Android', async () => {
     Platform.OS = 'android'
     render(<TimePicker label="test" />)
-    const showPickerButton = screen.getByTestId('text-date')
+    const showPickerButton = screen.getByTestId('button-text')
     fireEvent.press(showPickerButton)
     waitFor(() =>
       fireEvent(
@@ -67,7 +68,7 @@ describe('component: TimePicker', () => {
         ...createDateTimeSetEvtParams(date),
       ),
     )
-    expect(await screen.findByTestId('text-date')).toHaveTextContent('12:00')
+    expect(await screen.findByTestId('button-text')).toHaveTextContent('12:00')
   })
 
   it('should show the placeholder text if the date is not selected', async () => {
@@ -78,5 +79,18 @@ describe('component: TimePicker', () => {
   it('should show the error message if an error is send', async () => {
     render(<TimePicker label="test" errorMessage="error message" />)
     expect(screen.getByText(/error message/i)).toBeTruthy()
+  })
+
+  it('should apply the correct styles when have an error', async () => {
+    render(<TimePicker label="test" errorMessage="error message" />)
+    expect(screen.getByText(/test/i)).toHaveStyle({
+      color: colors.darkRed,
+    })
+    expect(screen.getByTestId('button-container')).toHaveStyle({
+      borderColor: colors.red,
+    })
+    expect(screen.getByTestId('button-text')).toHaveStyle({
+      color: colors.red,
+    })
   })
 })
