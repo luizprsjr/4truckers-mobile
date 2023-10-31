@@ -5,6 +5,7 @@ import {
   waitFor,
 } from '@__tests__/utils/custom-render'
 import { DateTimePickerEvent } from '@react-native-community/datetimepicker'
+import { colors } from '@theme/index'
 
 import { DatePicker } from './date-picker'
 
@@ -32,14 +33,14 @@ describe('component: DatePicker', () => {
 
   it('should show picker if the button is pressed', async () => {
     render(<DatePicker label="test" />)
-    const showPickerButton = screen.getByTestId('text-date')
+    const showPickerButton = screen.getByTestId('button-text')
     fireEvent.press(showPickerButton)
     expect(screen.queryByTestId('date-picker')).toBeTruthy()
   })
 
   it('should select the correct date', async () => {
     render(<DatePicker label="test" />)
-    const showPickerButton = screen.getByTestId('text-date')
+    const showPickerButton = screen.getByTestId('button-text')
     fireEvent.press(showPickerButton)
     waitFor(() =>
       fireEvent(
@@ -48,7 +49,7 @@ describe('component: DatePicker', () => {
         ...createDateTimeSetEvtParams(date),
       ),
     )
-    expect(await screen.findByTestId('text-date')).toHaveTextContent(
+    expect(await screen.findByTestId('button-text')).toHaveTextContent(
       '12/12/2022',
     )
   })
@@ -61,5 +62,18 @@ describe('component: DatePicker', () => {
   it('should show the error message if an error is send', async () => {
     render(<DatePicker label="test" errorMessage="error message" />)
     expect(screen.getByText(/error message/i)).toBeTruthy()
+  })
+
+  it('should apply the correct styles when have an error', async () => {
+    render(<DatePicker label="test" errorMessage="error message" />)
+    expect(screen.getByText(/test/i)).toHaveStyle({
+      color: colors.darkRed,
+    })
+    expect(screen.getByTestId('button-container')).toHaveStyle({
+      borderColor: colors.red,
+    })
+    expect(screen.getByTestId('button-text')).toHaveStyle({
+      color: colors.red,
+    })
   })
 })
