@@ -9,6 +9,7 @@
     "no-useless-constructor": "off",
     "no-async-promise-executor": "off",
     "@typescript-eslint/no-explicit-any": "off",
+    "react/display-name": "off",
     "react/self-closing-comp": ["error", {
       "component": true,
       "html": true
