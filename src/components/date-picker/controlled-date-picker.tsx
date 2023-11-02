@@ -19,6 +19,7 @@ export function ControlledDatePicker<T extends FieldValues>(
 
   return (
     <DatePicker
+      ref={field.ref}
       onControllerChange={field.onChange}
       errorMessage={fieldState.error?.message}
       reset={formState.isSubmitSuccessful}

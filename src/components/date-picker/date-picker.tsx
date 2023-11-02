@@ -1,8 +1,8 @@
 import dayjs from 'dayjs'
-import { useEffect, useState } from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { forwardRef, useEffect, useState } from 'react'
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
 
-import DateDatePicker, {
+import RNDateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker'
 import { colors, fonts } from '@theme/index'
@@ -15,86 +15,94 @@ export type DatePickerProps = {
   reset?: boolean
 }
 
-export function DatePicker({
-  label,
-  placeholder,
-  errorMessage,
-  onControllerChange,
-  reset,
-}: DatePickerProps) {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>()
-  const [showPicker, setShowPicker] = useState(false)
+export const DatePicker = forwardRef<TextInput, DatePickerProps>(
+  ({ label, placeholder, errorMessage, onControllerChange, reset }, ref) => {
+    const [selectedDate, setSelectedDate] = useState<Date | undefined>()
+    const [showPicker, setShowPicker] = useState(false)
 
-  const labelStyle = {
-    ...styles.label,
-    color: errorMessage ? colors.red : colors.secondary400,
-  }
+    const labelStyle = {
+      ...styles.label,
+      color: errorMessage ? colors.red : colors.secondary400,
+    }
 
-  const buttonContainerStyle = {
-    ...styles.buttonContainer,
-    borderColor: errorMessage ? colors.red : colors.secondary400,
-  }
+    const buttonContainerStyle = {
+      ...styles.buttonContainer,
+      borderColor: errorMessage ? colors.red : colors.secondary400,
+    }
 
-  const buttonTextStyle = {
-    ...styles.buttonText,
-    color: errorMessage ? colors.red : colors.secondary400,
-  }
+    const buttonTextStyle = {
+      ...styles.buttonText,
+      color: errorMessage ? colors.red : colors.secondary400,
+    }
 
-  function onChange(
-    event: DateTimePickerEvent,
-    selectedDate?: Date | undefined,
-  ) {
-    if (event.type === 'set') {
-      const currentDate = selectedDate
-      setSelectedDate(currentDate)
-      if (onControllerChange) {
-        onControllerChange(currentDate)
+    function onChange(
+      event: DateTimePickerEvent,
+      selectedDate?: Date | undefined,
+    ) {
+      if (event.type === 'set') {
+        const currentDate = selectedDate
+        setSelectedDate(currentDate)
+        if (onControllerChange) {
+          onControllerChange(currentDate)
+        }
+        setShowPicker(false)
       }
-      setShowPicker(false)
     }
-  }
 
-  useEffect(() => {
-    if (reset) {
-      setSelectedDate(undefined)
-    }
-  }, [reset])
+    useEffect(() => {
+      if (reset) {
+        setSelectedDate(undefined)
+      }
+    }, [reset])
 
-  return (
-    <View style={{ gap: 4 }}>
-      <Text style={labelStyle}>{label}</Text>
-
-      {showPicker && (
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <DateDatePicker
-            testID="date-picker"
-            value={selectedDate || new Date()}
-            minimumDate={new Date()}
-            mode="date"
-            display="default"
-            onChange={onChange}
+    return (
+      <View style={{ gap: 4 }}>
+        <View style={{ flexDirection: 'row' }}>
+          {/* This is needed because only inputs can focus on hook form */}
+          <TextInput
+            ref={ref}
+            style={styles.fakeInput}
+            value=""
+            showSoftInputOnFocus={false}
+            caretHidden
           />
+          <Text style={labelStyle}>{label}</Text>
         </View>
-      )}
 
-      {!showPicker && (
-        <Pressable
-          testID="button-container"
-          onPress={() => setShowPicker(true)}
-          style={buttonContainerStyle}
-        >
-          <Text testID="button-text" style={buttonTextStyle}>
-            {selectedDate
-              ? dayjs(selectedDate).format('DD/MM/YYYY')
-              : placeholder}
-          </Text>
-        </Pressable>
-      )}
+        {showPicker && (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <RNDateTimePicker
+              testID="date-picker"
+              value={selectedDate || new Date()}
+              minimumDate={new Date()}
+              mode="date"
+              display="default"
+              onChange={onChange}
+            />
+          </View>
+        )}
 
-      {errorMessage && <Text style={styles.errorMessage}>{errorMessage}</Text>}
-    </View>
-  )
-}
+        {!showPicker && (
+          <Pressable
+            testID="button-container"
+            onPress={() => setShowPicker(true)}
+            style={buttonContainerStyle}
+          >
+            <Text testID="button-text" style={buttonTextStyle}>
+              {selectedDate
+                ? dayjs(selectedDate).format('DD/MM/YYYY')
+                : placeholder}
+            </Text>
+          </Pressable>
+        )}
+
+        {errorMessage && (
+          <Text style={styles.errorMessage}>{errorMessage}</Text>
+        )}
+      </View>
+    )
+  },
+)
 
 const styles = StyleSheet.create({
   label: {
@@ -121,5 +129,9 @@ const styles = StyleSheet.create({
     fontFamily: fonts.regular,
     fontSize: 14,
     color: colors.red,
+  },
+  fakeInput: {
+    width: 1,
+    marginRight: -1,
   },
 })

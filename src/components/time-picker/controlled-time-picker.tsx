@@ -19,6 +19,7 @@ export function ControlledTimePicker<T extends FieldValues>(
 
   return (
     <TimePicker
+      ref={field.ref}
       onControllerChange={field.onChange}
       errorMessage={fieldState.error?.message}
       reset={formState.isSubmitSuccessful}
