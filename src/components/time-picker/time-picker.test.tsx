@@ -84,7 +84,7 @@ describe('component: TimePicker', () => {
   it('should apply the correct styles when have an error', async () => {
     render(<TimePicker label="test" errorMessage="error message" />)
     expect(screen.getByText(/test/i)).toHaveStyle({
-      color: colors.darkRed,
+      color: colors.red,
     })
     expect(screen.getByTestId('button-container')).toHaveStyle({
       borderColor: colors.red,
