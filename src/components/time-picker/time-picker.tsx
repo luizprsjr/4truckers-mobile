@@ -34,12 +34,12 @@ export function TimePicker({
 
   const labelStyle = {
     ...styles.label,
-    color: errorMessage ? colors.darkRed : colors.secondary700,
+    color: errorMessage ? colors.red : colors.secondary400,
   }
 
   const buttonContainerStyle = {
     ...styles.buttonContainer,
-    borderColor: errorMessage ? colors.red : colors.secondary700,
+    borderColor: errorMessage ? colors.red : colors.secondary400,
   }
 
   const buttonTextStyle = {
@@ -78,9 +78,7 @@ export function TimePicker({
           <DateTimePicker
             testID="time-picker"
             value={selectedDate || new Date()}
-            // minimumDate={new Date()}
             mode="time"
-            // is24Hour
             display="inline"
             onChange={onChange}
           />

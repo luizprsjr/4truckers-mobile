@@ -27,12 +27,12 @@ export function DatePicker({
 
   const labelStyle = {
     ...styles.label,
-    color: errorMessage ? colors.darkRed : colors.secondary700,
+    color: errorMessage ? colors.red : colors.secondary400,
   }
 
   const buttonContainerStyle = {
     ...styles.buttonContainer,
-    borderColor: errorMessage ? colors.red : colors.secondary700,
+    borderColor: errorMessage ? colors.red : colors.secondary400,
   }
 
   const buttonTextStyle = {
@@ -71,7 +71,6 @@ export function DatePicker({
             value={selectedDate || new Date()}
             minimumDate={new Date()}
             mode="date"
-            // is24Hour
             display="default"
             onChange={onChange}
           />
