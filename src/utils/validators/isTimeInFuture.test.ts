@@ -1,31 +1,31 @@
 import { isTimeInFuture } from './isTimeInFuture'
 
 describe('isTimeInFuture Function', () => {
-  it('should return false if destinationDate is defined and destinationTime is not', () => {
+  it('should return false if date is defined and time is not', () => {
     const inputData = {
-      destinationDate: new Date(),
-      destinationTime: undefined,
+      date: new Date(),
+      time: undefined,
     }
 
-    expect(isTimeInFuture(inputData)).toBe(false)
+    expect(isTimeInFuture(inputData, 'date', 'time')).toBe(false)
   })
 
-  it('should return true if destinationDate is undefined', () => {
+  it('should return true if date is undefined', () => {
     const inputData = {
-      destinationDate: undefined,
-      destinationTime: new Date(),
+      date: undefined,
+      time: new Date(),
     }
 
-    expect(isTimeInFuture(inputData)).toBe(true)
+    expect(isTimeInFuture(inputData, 'date', 'time')).toBe(true)
   })
 
-  it('should return true if both destinationDate and destinationTime are undefined', () => {
+  it('should return true if both date and time are undefined', () => {
     const inputData = {
-      destinationDate: undefined,
-      destinationTime: undefined,
+      date: undefined,
+      time: undefined,
     }
 
-    expect(isTimeInFuture(inputData)).toBe(true)
+    expect(isTimeInFuture(inputData, 'date', 'time')).toBe(true)
   })
 
   it('should return true if combinedDate is in the future', () => {
@@ -35,11 +35,11 @@ describe('isTimeInFuture Function', () => {
     futureTime.setHours(futureTime.getHours() + 1)
 
     const inputData = {
-      destinationDate: futureDate,
-      destinationTime: futureTime,
+      date: futureDate,
+      time: futureTime,
     }
 
-    expect(isTimeInFuture(inputData)).toBe(true)
+    expect(isTimeInFuture(inputData, 'date', 'time')).toBe(true)
   })
 
   it('should return false if combinedDate is in the past', () => {
@@ -49,10 +49,10 @@ describe('isTimeInFuture Function', () => {
     pastTime.setHours(pastTime.getHours() - 1)
 
     const inputData = {
-      destinationDate: pastDate,
-      destinationTime: pastTime,
+      date: pastDate,
+      time: pastTime,
     }
 
-    expect(isTimeInFuture(inputData)).toBe(false)
+    expect(isTimeInFuture(inputData, 'date', 'time')).toBe(false)
   })
 })

@@ -1,21 +1,17 @@
-interface Props {
-  destinationDate?: Date
-  destinationTime?: Date
-}
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+export function isTimeInFuture(data: any, dateKey: string, timeKey: string) {
+  if (data[dateKey] && !data[timeKey]) return false
+  if (!data[dateKey] || !data[timeKey]) return true
 
-export function isTimeInFuture(data: Props) {
-  if (data.destinationDate && !data.destinationTime) return false
-  if (!data.destinationDate || !data.destinationTime) return true
-
-  const destinationDay = new Date(data.destinationDate)
-  const destinationHour = new Date(data.destinationTime)
+  const date = new Date(data[dateKey]!)
+  const time = new Date(data[timeKey]!)
 
   const combinedDate = new Date(
-    destinationDay.getFullYear(),
-    destinationDay.getMonth(),
-    destinationDay.getDate(),
-    destinationHour.getHours(),
-    destinationHour.getMinutes(),
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+    time.getHours(),
+    time.getMinutes(),
   )
 
   return combinedDate > new Date()
