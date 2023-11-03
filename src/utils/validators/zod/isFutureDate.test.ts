@@ -1,13 +1,13 @@
-import { isTimeInFuture } from './isTimeInFuture'
+import { isFutureDate } from './isFutureDate'
 
-describe('isTimeInFuture Function', () => {
+describe('isFutureDate Function', () => {
   it('should return false if date is defined and time is not', () => {
     const inputData = {
       date: new Date(),
       time: undefined,
     }
 
-    expect(isTimeInFuture(inputData, 'date', 'time')).toBe(false)
+    expect(isFutureDate(inputData, 'date', 'time')).toBe(false)
   })
 
   it('should return true if date is undefined', () => {
@@ -16,7 +16,7 @@ describe('isTimeInFuture Function', () => {
       time: new Date(),
     }
 
-    expect(isTimeInFuture(inputData, 'date', 'time')).toBe(true)
+    expect(isFutureDate(inputData, 'date', 'time')).toBe(true)
   })
 
   it('should return true if both date and time are undefined', () => {
@@ -25,7 +25,7 @@ describe('isTimeInFuture Function', () => {
       time: undefined,
     }
 
-    expect(isTimeInFuture(inputData, 'date', 'time')).toBe(true)
+    expect(isFutureDate(inputData, 'date', 'time')).toBe(true)
   })
 
   it('should return true if combinedDate is in the future', () => {
@@ -39,7 +39,7 @@ describe('isTimeInFuture Function', () => {
       time: futureTime,
     }
 
-    expect(isTimeInFuture(inputData, 'date', 'time')).toBe(true)
+    expect(isFutureDate(inputData, 'date', 'time')).toBe(true)
   })
 
   it('should return false if combinedDate is in the past', () => {
@@ -53,6 +53,6 @@ describe('isTimeInFuture Function', () => {
       time: pastTime,
     }
 
-    expect(isTimeInFuture(inputData, 'date', 'time')).toBe(false)
+    expect(isFutureDate(inputData, 'date', 'time')).toBe(false)
   })
 })
