@@ -4,7 +4,7 @@ import { showMessage } from 'react-native-flash-message'
 import { z } from 'zod'
 
 import { useAddUserAnnouncement } from '@api/announcements/use-add-user-announcement'
-import { BlankSpacer } from '@components/BlankSpacer'
+import { BlankSpacer } from '@components/blank-spacer'
 import { Button } from '@components/button'
 import { ControlledDatePicker } from '@components/date-picker/controlled-date-picker'
 import { Header } from '@components/Header'

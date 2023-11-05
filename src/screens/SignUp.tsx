@@ -11,7 +11,7 @@ import {
 import { z } from 'zod'
 
 import { api } from '@api/index'
-import { BlankSpacer } from '@components/BlankSpacer'
+import { BlankSpacer } from '@components/blank-spacer'
 import { Button } from '@components/button'
 import { Header } from '@components/Header'
 import { Input } from '@components/Input'

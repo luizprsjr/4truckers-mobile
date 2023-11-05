@@ -3,7 +3,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { z } from 'zod'
 
-import { BlankSpacer } from '@components/BlankSpacer'
+import { BlankSpacer } from '@components/blank-spacer'
 import { Button } from '@components/button'
 import { Header } from '@components/Header'
 import { Input } from '@components/Input'

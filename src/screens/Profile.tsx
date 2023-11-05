@@ -13,7 +13,7 @@ import { z } from 'zod'
 
 import { api } from '@api/index'
 import avatar from '@assets/avatar.png'
-import { BlankSpacer } from '@components/BlankSpacer'
+import { BlankSpacer } from '@components/blank-spacer'
 import { Button } from '@components/button'
 import { Header } from '@components/Header'
 import { InputInfo } from '@components/InputInfo'
