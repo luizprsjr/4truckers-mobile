@@ -48,7 +48,9 @@ export const InputInfo = forwardRef<TextInput, InputInfoProps>(
             {...rest}
           />
           {measurementUnit && (
-            <Text style={styles.measurementUnit}>{measurementUnit}</Text>
+            <Text style={[styles.measurementUnit, { color: inputColor }]}>
+              {measurementUnit}
+            </Text>
           )}
         </View>
         {errorMessage && (
