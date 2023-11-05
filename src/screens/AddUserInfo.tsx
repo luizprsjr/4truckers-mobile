@@ -15,7 +15,7 @@ import { BlankSpacer } from '@components/blank-spacer'
 import { Button } from '@components/button'
 import { Header } from '@components/header'
 import { Input } from '@components/Input'
-import { SelectButtons } from '@components/SelectButtons'
+import { ControlledSelectButtons } from '@components/select-buttons/controlled-select-buttons'
 import { TermsModal } from '@components/terms-modal'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useAuth } from '@hooks/useAuth'
@@ -29,7 +29,7 @@ const signUpFormSchema = z.object({
   phoneNumber: z
     .string()
     .regex(phoneRegex, 'Número inválido. Informe o DDD + número.'),
-  type: z.enum(['USER', 'TRUCKER']).optional(),
+  type: z.enum(['USER', 'TRUCKER']).default('USER'),
 })
 
 type SignUpFormData = z.infer<typeof signUpFormSchema>
@@ -48,10 +48,8 @@ export function AddUserInfo() {
   } = useForm<SignUpFormData>({
     resolver: zodResolver(signUpFormSchema),
   })
-  const selectedUserType = watch('type', 'USER')
 
   async function handleSignUp({ phoneNumber, type }: SignUpFormData) {
-    console.log(type)
     try {
       setIsLoading(true)
       const { data, status } = await api.put('/users', {
@@ -118,16 +116,10 @@ export function AddUserInfo() {
           <BlankSpacer height={4} />
           <Text style={styles.textLabel}>Selecione o tipo de usuário:</Text>
 
-          <Controller
-            name="type"
+          <ControlledSelectButtons
             control={control}
-            defaultValue="USER"
-            render={({ field: { onChange } }) => (
-              <SelectButtons
-                selectedUserType={selectedUserType}
-                onChange={onChange}
-              />
-            )}
+            name="type"
+            watch={watch}
           />
 
           <View style={styles.termsContainer}>

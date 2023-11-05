@@ -15,7 +15,7 @@ import { BlankSpacer } from '@components/blank-spacer'
 import { Button } from '@components/button'
 import { Header } from '@components/header'
 import { Input } from '@components/Input'
-import { SelectButtons } from '@components/SelectButtons'
+import { ControlledSelectButtons } from '@components/select-buttons/controlled-select-buttons'
 import { TermsModal } from '@components/terms-modal'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useAuth } from '@hooks/useAuth'
@@ -67,7 +67,6 @@ export function SignUp() {
   } = useForm<SignUpFormData>({
     resolver: zodResolver(signUpFormSchema),
   })
-  const selectedUserType = watch('type', 'USER')
 
   async function handleSignUp({
     name,
@@ -206,16 +205,10 @@ export function SignUp() {
 
           <BlankSpacer height={4} />
           <Text style={styles.textLabel}>Selecione o tipo de usuário:</Text>
-          <Controller
-            name="type"
+          <ControlledSelectButtons
             control={control}
-            defaultValue="USER"
-            render={({ field: { onChange } }) => (
-              <SelectButtons
-                selectedUserType={selectedUserType}
-                onChange={onChange}
-              />
-            )}
+            name="type"
+            watch={watch}
           />
 
           <View style={styles.termsContainer}>
