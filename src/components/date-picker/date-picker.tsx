@@ -41,6 +41,8 @@ export const DatePicker = forwardRef<TextInput, DatePickerProps>(
     ) {
       if (event.type === 'set') {
         const currentDate = selectedDate
+        currentDate?.setHours(23)
+        currentDate?.setMinutes(59)
         setSelectedDate(currentDate)
         if (onControllerChange) {
           onControllerChange(currentDate)
