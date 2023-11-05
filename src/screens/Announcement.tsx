@@ -1,6 +1,6 @@
 import { Text, TouchableOpacity, View } from 'react-native'
 
-import { Header } from '@components/Header'
+import { Header } from '@components/header'
 import { useNavigation } from '@react-navigation/native'
 
 export function Announcement() {

@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 
 import { api } from '@api/index'
-import { Header } from '@components/Header'
+import { Header } from '@components/header'
 import { WhatsAppLogo } from '@components/WhatsAppLogo'
 import { AnnouncementDTO } from '@dtos/announcementDTO'
 import {

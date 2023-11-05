@@ -8,7 +8,7 @@ import { useAddTruckerAnnouncement } from '@api/announcements/use-add-trucker-an
 import { BlankSpacer } from '@components/blank-spacer'
 import { Button } from '@components/button'
 import { ControlledDatePicker } from '@components/date-picker/controlled-date-picker'
-import { Header } from '@components/Header'
+import { Header } from '@components/header'
 import { ControlledInputInfo } from '@components/input-info/controlled-input-info'
 import { ControlledTimePicker } from '@components/time-picker/controlled-time-picker'
 import { CreateTruckerAnnouncementDTO } from '@dtos/announcementDTO'

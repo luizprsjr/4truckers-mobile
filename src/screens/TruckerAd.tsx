@@ -12,7 +12,7 @@ import {
 
 import { api } from '@api/index'
 import avatar from '@assets/avatar.png'
-import { Header } from '@components/Header'
+import { Header } from '@components/header'
 import { WhatsAppLogo } from '@components/WhatsAppLogo'
 import { AnnouncementDTO } from '@dtos/announcementDTO'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'

@@ -16,10 +16,19 @@ const marginLeft = 32
 export function Header({ hasBackButton = false, isLarge = false }: Props) {
   const { goBack } = useNavigation()
 
+  const containerStyle = {
+    ...styles.container,
+    paddingVertical: isLarge ? 86 : 32,
+  }
+
   return (
-    <View style={[styles.container, isLarge && { paddingVertical: 86 }]}>
+    <View testID="container" style={containerStyle}>
       {hasBackButton && (
-        <TouchableOpacity style={styles.backButton} onPress={() => goBack()}>
+        <TouchableOpacity
+          testID="back-button"
+          style={styles.backButton}
+          onPress={() => goBack()}
+        >
           <Ionicons name="arrow-back" size={iconSize} color={colors.white} />
         </TouchableOpacity>
       )}
@@ -37,7 +46,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: colors.primary950,
     alignItems: 'center',
-    paddingVertical: 32,
   },
   backButton: {
     marginLeft,

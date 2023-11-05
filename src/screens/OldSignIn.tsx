@@ -5,7 +5,7 @@ import { z } from 'zod'
 
 import { BlankSpacer } from '@components/blank-spacer'
 import { Button } from '@components/button'
-import { Header } from '@components/Header'
+import { Header } from '@components/header'
 import { Input } from '@components/Input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useAuth } from '@hooks/useAuth'

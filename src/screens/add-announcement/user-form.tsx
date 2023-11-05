@@ -7,7 +7,7 @@ import { useAddUserAnnouncement } from '@api/announcements/use-add-user-announce
 import { BlankSpacer } from '@components/blank-spacer'
 import { Button } from '@components/button'
 import { ControlledDatePicker } from '@components/date-picker/controlled-date-picker'
-import { Header } from '@components/Header'
+import { Header } from '@components/header'
 import { ControlledInputInfo } from '@components/input-info/controlled-input-info'
 import { ControlledSwitch } from '@components/switch/controlled-switch'
 import { CreateUserAnnouncementDTO } from '@dtos/announcementDTO'
