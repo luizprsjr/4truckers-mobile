@@ -12,7 +12,7 @@ const mockProps = {
   onChangeText: jest.fn(),
 }
 
-describe('Input', () => {
+describe('component: Input', () => {
   beforeAll(() => Font.loadAsync(Ionicons.font))
 
   it('should render correctly with default props', () => {

@@ -11,7 +11,7 @@ const mockProps = {
   onChangeText: jest.fn(),
 }
 
-describe('InputInfo', () => {
+describe('component: InputInfo', () => {
   it('should render correctly with default props', () => {
     render(<InputInfo {...mockProps} />)
     const labelElement = screen.getByText('Test Label')
