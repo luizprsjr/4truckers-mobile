@@ -1,20 +1,25 @@
 import dayjs from 'dayjs'
 
 export function isTimeAheadByOneHour(
-  originDate: Date,
+  pickupOrDepartureDate: Date,
   originTime: Date,
-  destinationDate: Date | undefined,
+  arrivalOrDeliveryDate: Date | undefined,
   destinationTime: Date | undefined,
 ): boolean {
-  if (originDate && originTime && destinationDate && destinationTime) {
-    const originDateTime = dayjs(originDate)
+  if (
+    pickupOrDepartureDate &&
+    originTime &&
+    arrivalOrDeliveryDate &&
+    destinationTime
+  ) {
+    const pickupOrDepartureDateTime = dayjs(pickupOrDepartureDate)
       .set('hour', originTime.getHours())
       .set('minutes', originTime.getMinutes())
-    const destinationDateTime = dayjs(destinationDate)
+    const arrivalOrDeliveryDateTime = dayjs(arrivalOrDeliveryDate)
       .set('hour', destinationTime.getHours() - 1)
       .set('minutes', destinationTime.getMinutes())
 
-    return destinationDateTime.isAfter(originDateTime)
+    return arrivalOrDeliveryDateTime.isAfter(pickupOrDepartureDateTime)
   }
   return true
 }

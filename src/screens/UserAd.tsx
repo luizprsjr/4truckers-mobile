@@ -100,9 +100,9 @@ export function UserAd() {
             <Feather name="calendar" size={32} color={colors.primary500} />
 
             <Text style={styles.text}>
-              {dayjs(announcement.originDate).format('DD/MM')}{' '}
-              {announcement.originEndDate &&
-                `a ${dayjs(announcement.originEndDate).format('DD/MM')}`}
+              {dayjs(announcement.pickupOrDepartureDate).format('DD/MM')}{' '}
+              {announcement.pickUpMaxDate &&
+                `a ${dayjs(announcement.pickUpMaxDate).format('DD/MM')}`}
             </Text>
           </View>
 
@@ -117,11 +117,11 @@ export function UserAd() {
             <Text style={styles.text}>{announcement.destinationCity}</Text>
           </View>
 
-          {announcement.destinationEndDate && (
+          {announcement.deliveryMaxDate && (
             <View style={styles.itemWrapper}>
               <Feather name="calendar" size={32} color={colors.primary500} />
               <Text style={styles.text}>{`até ${dayjs(
-                announcement.destinationEndDate,
+                announcement.deliveryMaxDate,
               ).format('DD/MM')}`}</Text>
             </View>
           )}

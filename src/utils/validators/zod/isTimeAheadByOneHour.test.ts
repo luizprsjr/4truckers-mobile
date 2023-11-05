@@ -4,15 +4,15 @@ import { isTimeAheadByOneHour } from './isTimeAheadByOneHour'
 
 describe('isTimeAheadByOneHour', () => {
   it('should return true when destination time is at least 1 hour ahead', () => {
-    const originDate = dayjs('2023-11-03')
+    const pickupOrDepartureDate = dayjs('2023-11-03')
     const originTime = dayjs('2023-11-03T10:00:00')
-    const destinationDate = dayjs('2023-11-03')
+    const arrivalOrDeliveryDate = dayjs('2023-11-03')
     const destinationTime = dayjs('2023-11-03T11:30:00')
 
     const result = isTimeAheadByOneHour(
-      originDate.toDate(),
+      pickupOrDepartureDate.toDate(),
       originTime.toDate(),
-      destinationDate.toDate(),
+      arrivalOrDeliveryDate.toDate(),
       destinationTime.toDate(),
     )
 
@@ -20,15 +20,15 @@ describe('isTimeAheadByOneHour', () => {
   })
 
   it('should return false when destination time is less than 1 hour ahead', () => {
-    const originDate = dayjs('2023-11-03')
+    const pickupOrDepartureDate = dayjs('2023-11-03')
     const originTime = dayjs('2023-11-03T10:00:00')
-    const destinationDate = dayjs('2023-11-03')
+    const arrivalOrDeliveryDate = dayjs('2023-11-03')
     const destinationTime = dayjs('2023-11-03T10:30:00')
 
     const result = isTimeAheadByOneHour(
-      originDate.toDate(),
+      pickupOrDepartureDate.toDate(),
       originTime.toDate(),
-      destinationDate.toDate(),
+      arrivalOrDeliveryDate.toDate(),
       destinationTime.toDate(),
     )
 
@@ -36,15 +36,15 @@ describe('isTimeAheadByOneHour', () => {
   })
 
   it('should return true when destination time is not provided', () => {
-    const originDate = dayjs('2023-11-03')
+    const pickupOrDepartureDate = dayjs('2023-11-03')
     const originTime = dayjs('2023-11-03T10:00:00')
-    const destinationDate = undefined
+    const arrivalOrDeliveryDate = undefined
     const destinationTime = undefined
 
     const result = isTimeAheadByOneHour(
-      originDate.toDate(),
+      pickupOrDepartureDate.toDate(),
       originTime.toDate(),
-      destinationDate,
+      arrivalOrDeliveryDate,
       destinationTime,
     )
 

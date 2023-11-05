@@ -6,7 +6,7 @@ import {
   BottomTabNavigationProp,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs'
-import { AddAnnouncement } from '@screens/AddAnnouncement'
+import { AddAnnouncement } from '@screens/add-announcement'
 import { AddTruck } from '@screens/AddTruck'
 import { Announcement } from '@screens/Announcement'
 import { Home } from '@screens/Home'

@@ -7,11 +7,11 @@ export type AnnouncementDTO = {
   userId: string
   type?: AnnouncementType
   originCity?: string
-  originDate?: Date
-  originEndDate?: Date
+  pickupOrDepartureDate?: Date
+  pickUpMaxDate?: Date
   destinationCity?: string
-  destinationDate?: Date
-  destinationEndDate?: Date
+  arrivalOrDeliveryDate?: Date
+  deliveryMaxDate?: Date
   weight?: number
   length?: number
   width?: number
@@ -27,11 +27,11 @@ export type CreateAnnouncementDTo = {
   userId?: string
   type?: AnnouncementType
   originCity?: string
-  originDate?: Date
-  originEndDate?: Date
+  pickupOrDepartureDate?: Date
+  pickUpMaxDate?: Date
   destinationCity?: string
-  destinationDate?: Date
-  destinationEndDate?: Date
+  arrivalOrDeliveryDate?: Date
+  deliveryMaxDate?: Date
   weight?: number
   length?: number
   width?: number
@@ -40,4 +40,27 @@ export type CreateAnnouncementDTo = {
   description?: string
   createdAt?: string
   user?: UserDTO
+}
+
+export interface CreateTruckerAnnouncementDTO {
+  originCity: string
+  departureDate: Date
+  departureTime?: Date
+  destinationCity: string
+  arrivalDate?: Date
+  arrivalTime?: Date
+}
+
+export interface CreateUserAnnouncementDTO {
+  originCity: string
+  pickupOrDepartureDate: Date
+  pickUpMaxDate?: Date
+  destinationCity: string
+  deliveryMaxDate?: Date
+  weight: number
+  length?: number
+  width?: number
+  height?: number
+  canStack: boolean
+  description?: string
 }

@@ -58,9 +58,9 @@ export function FreightCard({ item }: FreightCardProps) {
         <View>
           <Text style={styles.darkText}>Data de coleta</Text>
           <Text style={styles.lightText}>
-            {dayjs(item.originDate).format('DD/MM')}{' '}
-            {item.originEndDate &&
-              `a ${dayjs(item.originEndDate).format('DD/MM')}`}
+            {dayjs(item.pickupOrDepartureDate).format('DD/MM')}{' '}
+            {item.pickUpMaxDate &&
+              `a ${dayjs(item.pickUpMaxDate).format('DD/MM')}`}
           </Text>
         </View>
 

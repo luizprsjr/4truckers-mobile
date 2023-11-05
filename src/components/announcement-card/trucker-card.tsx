@@ -22,9 +22,9 @@ export function TruckerCard({ item }: TruckerCardProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.date}>
-        {dayjs(item.originDate).format('DD/MM/YYYY')}
-        {item.destinationDate
-          ? ` - ${dayjs(item.destinationDate).format('DD/MM/YYYY')}`
+        {dayjs(item.pickupOrDepartureDate).format('DD/MM/YYYY')}
+        {item.arrivalOrDeliveryDate
+          ? ` - ${dayjs(item.arrivalOrDeliveryDate).format('DD/MM/YYYY')}`
           : null}
       </Text>
 
@@ -50,15 +50,15 @@ export function TruckerCard({ item }: TruckerCardProps) {
           <View style={styles.citiesAndTimesRow}>
             <Text style={styles.darkText}>{item.originCity}</Text>
             <Text style={styles.darkText}>
-              {dayjs(item.originDate).format('HH:mm')}
+              {dayjs(item.pickupOrDepartureDate).format('HH:mm')}
             </Text>
           </View>
 
           <View style={styles.citiesAndTimesRow}>
             <Text style={styles.lightText}>{item.destinationCity}</Text>
             <Text style={styles.lightText}>
-              {item.destinationDate
-                ? dayjs(item.destinationDate).format('HH:mm')
+              {item.arrivalOrDeliveryDate
+                ? dayjs(item.arrivalOrDeliveryDate).format('HH:mm')
                 : null}
             </Text>
           </View>

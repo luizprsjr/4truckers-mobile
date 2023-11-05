@@ -1,18 +1,18 @@
-import { CreateAnnouncementDTo } from '@dtos/announcementDTO'
+import { CreateUserAnnouncementDTO } from '@dtos/announcementDTO'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { api } from '../'
 
-export async function addAnnouncements(
-  add: CreateAnnouncementDTo,
+export async function addUserAnnouncement(
+  data: CreateUserAnnouncementDTO,
 ): Promise<void> {
-  await api.post<void>('/announcements', add)
+  await api.post<void>('/announcements', data)
 }
 
-export function useAddAnnouncements() {
+export function useAddUserAnnouncement() {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: addAnnouncements,
+    mutationFn: addUserAnnouncement,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['get-announcements'] })
     },
