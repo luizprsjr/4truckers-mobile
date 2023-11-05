@@ -8,7 +8,7 @@ import {
 } from 'react-native-safe-area-context'
 
 import { APIProvider } from '@api/provider'
-import { Loading } from '@components/Loading'
+import { Loading } from '@components/loading'
 import { AuthContextProvider } from '@contexts/AuthContext'
 import {
   Inter_400Regular,

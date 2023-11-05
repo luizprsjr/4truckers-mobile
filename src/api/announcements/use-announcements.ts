@@ -1,4 +1,4 @@
-import { AnnouncementDTO } from '@dtos/announcementDTO'
+import { AnnouncementDTO } from '@dtos/AnnouncementDTO'
 import { useQuery } from '@tanstack/react-query'
 
 import { api } from '../'

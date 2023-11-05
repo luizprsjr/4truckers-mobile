@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 
 import { Header } from '@components/header'
-import { SimpleButton } from '@components/SimpleButton'
+import { SimpleButton } from '@components/simple-button'
 import { useNavigation } from '@react-navigation/native'
 import { AppNavigationRoutesProps } from '@routes/app.routes'
 import { colors, fonts } from '@theme/index'

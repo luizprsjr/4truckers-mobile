@@ -1,4 +1,4 @@
-import { TruckDTO } from './truckDTO'
+import { TruckDTO } from './TruckDTO'
 
 export type UserDTO = {
   id: string

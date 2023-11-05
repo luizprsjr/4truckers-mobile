@@ -12,8 +12,8 @@ import {
 
 import { api } from '@api/index'
 import { Header } from '@components/header'
-import { WhatsAppLogo } from '@components/WhatsAppLogo'
-import { AnnouncementDTO } from '@dtos/announcementDTO'
+import { WhatsAppLogo } from '@components/wpp-logo'
+import { AnnouncementDTO } from '@dtos/AnnouncementDTO'
 import {
   AntDesign,
   Feather,

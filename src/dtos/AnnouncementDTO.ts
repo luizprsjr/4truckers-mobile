@@ -1,4 +1,4 @@
-import { UserDTO } from './userDTO'
+import { UserDTO } from './UserDTO'
 
 export type AnnouncementType = 'FREIGHT' | 'FREE_DRIVER'
 

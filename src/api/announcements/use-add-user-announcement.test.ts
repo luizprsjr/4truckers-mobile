@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from '@__tests__/utils/custom-render'
 import { reactQueryWrapper } from '@__tests__/utils/react-query-wrapper'
-import { CreateUserAnnouncementDTO } from '@dtos/announcementDTO'
+import { CreateUserAnnouncementDTO } from '@dtos/AnnouncementDTO'
 
 import { api } from '../'
 import {

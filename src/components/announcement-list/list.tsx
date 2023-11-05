@@ -1,7 +1,7 @@
 import { FlatList } from 'react-native'
 
 import { FreightCard, TruckerCard } from '@components/announcement-card'
-import { AnnouncementDTO } from '@dtos/announcementDTO'
+import { AnnouncementDTO } from '@dtos/AnnouncementDTO'
 
 import { EmptyList } from './empty-list'
 

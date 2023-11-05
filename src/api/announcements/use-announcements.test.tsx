@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from '@__tests__/utils/custom-render'
 import { reactQueryWrapper } from '@__tests__/utils/react-query-wrapper'
-import { AnnouncementDTO } from '@dtos/announcementDTO'
+import { AnnouncementDTO } from '@dtos/AnnouncementDTO'
 
 import { api } from '../'
 import { fetchAnnouncements, useAnnouncements } from './use-announcements'

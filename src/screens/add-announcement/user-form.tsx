@@ -10,7 +10,7 @@ import { ControlledDatePicker } from '@components/date-picker/controlled-date-pi
 import { Header } from '@components/header'
 import { ControlledInputInfo } from '@components/input-info/controlled-input-info'
 import { ControlledSwitch } from '@components/switch/controlled-switch'
-import { CreateUserAnnouncementDTO } from '@dtos/announcementDTO'
+import { CreateUserAnnouncementDTO } from '@dtos/AnnouncementDTO'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigation } from '@react-navigation/native'
 import { AppNavigationRoutesProps } from '@routes/app.routes'

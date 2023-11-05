@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import avatar from '@assets/avatar.png'
-import { AnnouncementDTO } from '@dtos/announcementDTO'
+import { AnnouncementDTO } from '@dtos/AnnouncementDTO'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { AppNavigationRoutesProps } from '@routes/app.routes'

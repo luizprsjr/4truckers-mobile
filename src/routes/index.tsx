@@ -1,6 +1,6 @@
 import { View } from 'react-native'
 
-import { Loading } from '@components/Loading'
+import { Loading } from '@components/loading'
 import { useAuth } from '@hooks/useAuth'
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native'
 import { colors } from '@theme/index'

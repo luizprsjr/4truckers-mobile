@@ -1,4 +1,4 @@
-import { CreateUserAnnouncementDTO } from '@dtos/announcementDTO'
+import { CreateUserAnnouncementDTO } from '@dtos/AnnouncementDTO'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { api } from '../'

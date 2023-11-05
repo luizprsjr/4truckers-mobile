@@ -6,7 +6,7 @@ import { reactQueryWrapper } from '@__tests__/utils/react-query-wrapper'
 import {
   CreateAnnouncementDTo,
   CreateTruckerAnnouncementDTO,
-} from '@dtos/announcementDTO'
+} from '@dtos/AnnouncementDTO'
 
 import { api } from '../'
 import {

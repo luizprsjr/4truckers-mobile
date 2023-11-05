@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import {
   CreateAnnouncementDTo,
   CreateTruckerAnnouncementDTO,
-} from '@dtos/announcementDTO'
+} from '@dtos/AnnouncementDTO'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { api } from '../'

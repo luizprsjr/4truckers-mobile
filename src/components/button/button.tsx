@@ -5,7 +5,7 @@ import {
   TouchableOpacityProps,
 } from 'react-native'
 
-import { Loading } from '@components/Loading'
+import { Loading } from '@components/loading'
 import { colors, fonts } from '@theme/index'
 
 type Props = TouchableOpacityProps & {

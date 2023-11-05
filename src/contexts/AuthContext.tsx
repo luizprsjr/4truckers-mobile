@@ -2,7 +2,7 @@ import { createContext, ReactNode, useEffect, useState } from 'react'
 import { Alert } from 'react-native'
 
 import { api } from '@api/index'
-import { UserDTO } from '@dtos/userDTO'
+import { UserDTO } from '@dtos/UserDTO'
 import {
   storageGetAuthToken,
   storageRemoveAuthToken,
