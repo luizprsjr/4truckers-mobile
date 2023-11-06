@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import {
   Alert,
   Image,
@@ -16,7 +16,8 @@ import avatar from '@assets/avatar.png'
 import { BlankSpacer } from '@components/blank-spacer'
 import { Button } from '@components/button'
 import { Header } from '@components/header'
-import { InputInfo } from '@components/InputInfo'
+import { ControlledInputInfo } from '@components/input-info/controlled-input-info'
+import { InputInfo } from '@components/input-info/input-info'
 import { Ionicons } from '@expo/vector-icons'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useAuth } from '@hooks/useAuth'
@@ -49,7 +50,6 @@ export function Profile() {
   const {
     control,
     handleSubmit,
-    formState: { errors },
     // watch,
   } = useForm<UpdateUserFormData>({
     resolver: zodResolver(updateUserFormSchema),
@@ -169,60 +169,24 @@ export function Profile() {
           >
             Informações pessoais
           </Text>
-          <Controller
+
+          <ControlledInputInfo
             control={control}
             name="name"
-            render={({ field: { onChange, value } }) => (
-              <InputInfo
-                label="Nome"
-                placeholder={user.name}
-                onChangeText={onChange}
-                value={value}
-                errorMessage={errors.name?.message}
-              />
-            )}
+            label="Nome"
+            placeholder={user.name}
           />
 
           <InputInfo label="E-mail" placeholder={user.email} editable={false} />
 
-          <Controller
+          <ControlledInputInfo
             control={control}
             name="phoneNumber"
-            render={({ field: { onChange } }) => (
-              <InputInfo
-                label="Celular"
-                placeholder={formatPhoneNumber(user.phoneNumber)}
-                keyboardType="number-pad"
-                onChangeText={(text) => {
-                  const formattedText = formatPhoneNumber(text)
-                  onChange(formattedText)
-                }}
-                errorMessage={errors.phoneNumber?.message}
-              />
-            )}
+            label="Celular"
+            placeholder={user.name}
+            keyboardType="number-pad"
+            maskFunc={formatPhoneNumber}
           />
-
-          {/* <Text
-            style={{
-              fontFamily: fonts.bold,
-              fontSize: 16,
-              color: colors.primary700,
-              marginTop: 16,
-            }}
-          >
-            Mudar tipo de usuário
-          </Text>
-          <Controller
-            name="type"
-            control={control}
-            // defaultValue={user.type}
-            render={({ field: { onChange } }) => (
-              <SelectButtons
-                selectedUserType={selectedUserType}
-                onChange={onChange}
-              />
-            )}
-          /> */}
 
           {user.truck && (
             <>
@@ -237,94 +201,59 @@ export function Profile() {
                 Informações do caminhão
               </Text>
 
-              <Controller
+              <ControlledInputInfo
                 control={control}
                 name="truckModel"
-                render={({ field: { onChange, value } }) => (
-                  <InputInfo
-                    label="Modelo"
-                    placeholder={user.truck?.truckModel}
-                    onChangeText={onChange}
-                    value={value}
-                    errorMessage={errors.truckModel?.message}
-                  />
-                )}
+                label="Modelo"
+                placeholder={user.truck?.truckModel}
               />
 
-              <Controller
+              <ControlledInputInfo
                 control={control}
                 name="capacity"
-                render={({ field: { onChange, value } }) => (
-                  <InputInfo
-                    label="Capacidade"
-                    placeholder={
-                      user.truck?.capacity
-                        ? String(user.truck.capacity)
-                        : '______________'
-                    }
-                    keyboardType="number-pad"
-                    onChangeText={onChange}
-                    value={value}
-                    errorMessage={errors.capacity?.message}
-                  />
-                )}
+                label="Capacidade"
+                placeholder={
+                  user.truck?.capacity
+                    ? String(user.truck.capacity)
+                    : '______________'
+                }
+                keyboardType="number-pad"
               />
 
-              <Controller
+              <ControlledInputInfo
                 control={control}
                 name="length"
-                render={({ field: { onChange, value } }) => (
-                  <InputInfo
-                    label="Comprimento"
-                    placeholder={
-                      user.truck?.length
-                        ? String(user.truck.length)
-                        : '______________'
-                    }
-                    keyboardType="number-pad"
-                    onChangeText={onChange}
-                    value={value}
-                    errorMessage={errors.length?.message}
-                  />
-                )}
+                label="Comprimento"
+                placeholder={
+                  user.truck?.length
+                    ? String(user.truck.length)
+                    : '______________'
+                }
+                keyboardType="number-pad"
               />
 
-              <Controller
+              <ControlledInputInfo
                 control={control}
                 name="width"
-                render={({ field: { onChange, value } }) => (
-                  <InputInfo
-                    label="Largura"
-                    placeholder={
-                      user.truck?.width
-                        ? String(user.truck.width)
-                        : '______________'
-                    }
-                    keyboardType="number-pad"
-                    onChangeText={onChange}
-                    value={value}
-                    errorMessage={errors.width?.message}
-                  />
-                )}
+                label="Largura"
+                placeholder={
+                  user.truck?.width
+                    ? String(user.truck.width)
+                    : '______________'
+                }
+                keyboardType="number-pad"
               />
 
-              <Controller
+              <ControlledInputInfo
                 control={control}
                 name="height"
-                render={({ field: { onChange, value } }) => (
-                  <InputInfo
-                    label="Altura"
-                    placeholder={
-                      user.truck?.height
-                        ? String(user.truck.height)
-                        : '______________'
-                    }
-                    keyboardType="number-pad"
-                    onChangeText={onChange}
-                    value={value}
-                    errorMessage={errors.height?.message}
-                  />
-                )}
+                label="Altura"
+                placeholder={
+                  user.truck?.height
+                    ? String(user.truck.height)
+                    : '______________'
+                }
+                keyboardType="number-pad"
               />
             </>
           )}

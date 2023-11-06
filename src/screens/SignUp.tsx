@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import {
   ScrollView,
   StyleSheet,
@@ -14,7 +14,7 @@ import { api } from '@api/index'
 import { BlankSpacer } from '@components/blank-spacer'
 import { Button } from '@components/button'
 import { Header } from '@components/header'
-import { Input } from '@components/Input'
+import { ControlledInput } from '@components/input/controlled-input'
 import { ControlledSelectButtons } from '@components/select-buttons/controlled-select-buttons'
 import { TermsModal } from '@components/terms-modal'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -59,12 +59,7 @@ export function SignUp() {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const { signIn } = useAuth()
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    watch,
-  } = useForm<SignUpFormData>({
+  const { control, handleSubmit, watch } = useForm<SignUpFormData>({
     resolver: zodResolver(signUpFormSchema),
   })
 
@@ -119,88 +114,52 @@ export function SignUp() {
       >
         <View style={styles.form}>
           <Text style={styles.title}>Criar conta</Text>
-          <Controller
+
+          <ControlledInput
             control={control}
             name="name"
-            render={({ field: { onChange, value } }) => (
-              <Input
-                leftIcon="ios-person-outline"
-                placeholder="Nome"
-                onChangeText={onChange}
-                value={value}
-                errorMessage={errors.name?.message}
-              />
-            )}
+            leftIcon="ios-person-outline"
+            placeholder="Nome"
           />
 
-          <Controller
+          <ControlledInput
             control={control}
             name="email"
-            render={({ field: { onChange, value } }) => (
-              <Input
-                leftIcon="mail-outline"
-                placeholder="E-mail"
-                keyboardType="email-address"
-                autoCapitalize="none"
-                onChangeText={onChange}
-                value={value}
-                errorMessage={errors.email?.message}
-              />
-            )}
+            leftIcon="mail-outline"
+            placeholder="E-mail"
+            keyboardType="email-address"
+            autoCapitalize="none"
           />
 
-          <Controller
+          <ControlledInput
             control={control}
             name="password"
-            render={({ field: { onChange, value } }) => (
-              <Input
-                leftIcon="lock-closed-outline"
-                placeholder="Senha"
-                secureTextEntry={isPasswordHidden}
-                autoCapitalize="none"
-                onChangeText={onChange}
-                rightIcon={isPasswordHidden ? 'eye-off-outline' : 'eye-outline'}
-                rightIconOnPress={() => setIsPasswordHidden((prev) => !prev)}
-                value={value}
-                errorMessage={errors.password?.message}
-              />
-            )}
+            leftIcon="lock-closed-outline"
+            placeholder="Senha"
+            secureTextEntry={isPasswordHidden}
+            autoCapitalize="none"
+            rightIcon={isPasswordHidden ? 'eye-off-outline' : 'eye-outline'}
+            rightIconOnPress={() => setIsPasswordHidden((prev) => !prev)}
           />
 
-          <Controller
+          <ControlledInput
             control={control}
             name="confirmPassword"
-            render={({ field: { onChange, value } }) => (
-              <Input
-                leftIcon="lock-closed-outline"
-                placeholder="Confirme a senha"
-                secureTextEntry={isPasswordHidden}
-                autoCapitalize="none"
-                onChangeText={onChange}
-                rightIcon={isPasswordHidden ? 'eye-off-outline' : 'eye-outline'}
-                rightIconOnPress={() => setIsPasswordHidden((prev) => !prev)}
-                value={value}
-                errorMessage={errors.confirmPassword?.message}
-              />
-            )}
+            leftIcon="lock-closed-outline"
+            placeholder="Confirme a senha"
+            secureTextEntry={isPasswordHidden}
+            autoCapitalize="none"
+            rightIcon={isPasswordHidden ? 'eye-off-outline' : 'eye-outline'}
+            rightIconOnPress={() => setIsPasswordHidden((prev) => !prev)}
           />
 
-          <Controller
+          <ControlledInput
             control={control}
             name="phoneNumber"
-            render={({ field: { onChange, value } }) => (
-              <Input
-                leftIcon="phone-portrait-outline"
-                placeholder="Celular + DDD"
-                keyboardType="number-pad"
-                onChangeText={(text) => {
-                  const formattedText = formatPhoneNumber(text)
-                  onChange(formattedText)
-                }}
-                value={value}
-                errorMessage={errors.phoneNumber?.message}
-              />
-            )}
+            leftIcon="phone-portrait-outline"
+            placeholder="Celular + DDD"
+            keyboardType="number-pad"
+            maskFunc={formatPhoneNumber}
           />
 
           <BlankSpacer height={4} />

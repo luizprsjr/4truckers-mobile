@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import {
   ScrollView,
   StyleSheet,
@@ -14,7 +14,7 @@ import { api } from '@api/index'
 import { BlankSpacer } from '@components/blank-spacer'
 import { Button } from '@components/button'
 import { Header } from '@components/header'
-import { Input } from '@components/Input'
+import { ControlledInput } from '@components/input/controlled-input'
 import { ControlledSelectButtons } from '@components/select-buttons/controlled-select-buttons'
 import { TermsModal } from '@components/terms-modal'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -40,12 +40,7 @@ export function AddUserInfo() {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const { updateUser, user } = useAuth()
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    watch,
-  } = useForm<SignUpFormData>({
+  const { control, handleSubmit, watch } = useForm<SignUpFormData>({
     resolver: zodResolver(signUpFormSchema),
   })
 
@@ -95,22 +90,13 @@ export function AddUserInfo() {
             para aprimorar sua experiência ao usar o aplicativo.
           </Text>
 
-          <Controller
+          <ControlledInput
             control={control}
             name="phoneNumber"
-            render={({ field: { onChange, value } }) => (
-              <Input
-                leftIcon="phone-portrait-outline"
-                placeholder="DDD + Celular"
-                keyboardType="number-pad"
-                onChangeText={(text) => {
-                  const formattedText = formatPhoneNumber(text)
-                  onChange(formattedText)
-                }}
-                value={value}
-                errorMessage={errors.phoneNumber?.message}
-              />
-            )}
+            leftIcon="phone-portrait-outline"
+            placeholder="DDD + Celular"
+            keyboardType="number-pad"
+            maskFunc={formatPhoneNumber}
           />
 
           <BlankSpacer height={4} />

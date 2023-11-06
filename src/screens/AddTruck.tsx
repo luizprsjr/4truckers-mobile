@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios'
 import { useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { z } from 'zod'
 
@@ -8,7 +8,7 @@ import { api } from '@api/index'
 import { BlankSpacer } from '@components/blank-spacer'
 import { Button } from '@components/button'
 import { Header } from '@components/header'
-import { InputInfo } from '@components/InputInfo'
+import { ControlledInputInfo } from '@components/input-info/controlled-input-info'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useAuth } from '@hooks/useAuth'
 import { CommonActions, useNavigation } from '@react-navigation/native'
@@ -17,10 +17,12 @@ import { colors, fonts } from '@theme/index'
 
 const addTruckFormSchema = z.object({
   truckModel: z.string().min(2, 'O modelo deve ter pelo menos 2 caracteres.'),
-  capacity: z.number().min(1, 'Por favor, informe a capacidade do caminhão.'),
-  length: z.number().optional(),
-  width: z.number().optional(),
-  height: z.number().optional(),
+  capacity: z
+    .string({ required_error: 'Campo obrigatório.' })
+    .transform(Number),
+  length: z.string().transform(Number).optional(),
+  width: z.string().transform(Number).optional(),
+  height: z.string().transform(Number).optional(),
 })
 
 type AddTruckFormData = z.infer<typeof addTruckFormSchema>
@@ -30,11 +32,7 @@ export function AddTruck() {
   const { dispatch } = useNavigation<AppNavigationRoutesProps>()
   const { user, updateUser } = useAuth()
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<AddTruckFormData>({
+  const { control, handleSubmit } = useForm<AddTruckFormData>({
     resolver: zodResolver(addTruckFormSchema),
   })
 
@@ -80,89 +78,42 @@ export function AddTruck() {
         <View style={styles.form}>
           <Text style={styles.title}>ADICIONAR DADOS DO CAMINHÃO</Text>
 
-          <Controller
+          <ControlledInputInfo
             control={control}
             name="truckModel"
-            render={({ field: { onChange, value } }) => (
-              <InputInfo
-                label="Modelo do caminhão"
-                onChangeText={onChange}
-                value={value}
-                errorMessage={errors.truckModel?.message}
-              />
-            )}
+            label="Modelo do caminhão"
           />
 
-          <Controller
+          <ControlledInputInfo
             control={control}
             name="capacity"
-            render={({ field: { onChange, value } }) => (
-              <InputInfo
-                label="Capacidade"
-                keyboardType="numeric"
-                measurementUnit="Kg"
-                onChangeText={(text) => {
-                  const formattedText = Number(text)
-                  onChange(formattedText)
-                }}
-                value={value ? String(value) : ''}
-                errorMessage={errors.capacity?.message}
-              />
-            )}
+            label="Capacidade"
+            measurementUnit="Kg"
+            keyboardType="numeric"
           />
 
-          <Controller
+          <ControlledInputInfo
             control={control}
             name="length"
-            render={({ field: { onChange, value } }) => (
-              <InputInfo
-                label="Comprimento (opcional)"
-                keyboardType="numeric"
-                measurementUnit="cm"
-                onChangeText={(text) => {
-                  const formattedText = Number(text)
-                  onChange(formattedText)
-                }}
-                value={value ? String(value) : ''}
-                errorMessage={errors.length?.message}
-              />
-            )}
+            label="Comprimento (opcional)"
+            measurementUnit="cm"
+            keyboardType="numeric"
           />
 
-          <Controller
+          <ControlledInputInfo
             control={control}
             name="width"
-            render={({ field: { onChange, value } }) => (
-              <InputInfo
-                label="Largura (opcional)"
-                keyboardType="numeric"
-                measurementUnit="cm"
-                onChangeText={(text) => {
-                  const formattedText = Number(text)
-                  onChange(formattedText)
-                }}
-                value={value ? String(value) : ''}
-                errorMessage={errors.width?.message}
-              />
-            )}
+            label="Largura (opcional)"
+            measurementUnit="cm"
+            keyboardType="numeric"
           />
 
-          <Controller
+          <ControlledInputInfo
             control={control}
             name="height"
-            render={({ field: { onChange, value } }) => (
-              <InputInfo
-                label="Altura (opcional)"
-                keyboardType="numeric"
-                measurementUnit="cm"
-                onChangeText={(text) => {
-                  const formattedText = Number(text)
-                  onChange(formattedText)
-                }}
-                value={value ? String(value) : ''}
-                errorMessage={errors.height?.message}
-              />
-            )}
+            label="Altura (opcional)"
+            measurementUnit="cm"
+            keyboardType="numeric"
           />
 
           <BlankSpacer height={12} />

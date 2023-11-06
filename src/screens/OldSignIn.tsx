@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { z } from 'zod'
 
 import { BlankSpacer } from '@components/blank-spacer'
 import { Button } from '@components/button'
 import { Header } from '@components/header'
-import { Input } from '@components/Input'
+import { ControlledInput } from '@components/input/controlled-input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useAuth } from '@hooks/useAuth'
 import { useNavigation } from '@react-navigation/native'
@@ -32,11 +32,7 @@ export function OldSignIn() {
 
   const { navigate } = useNavigation<AuthNavigationRoutesProps>()
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormData>({
+  const { control, handleSubmit } = useForm<LoginFormData>({
     resolver: zodResolver(loginFormSchema),
   })
 
@@ -66,38 +62,25 @@ export function OldSignIn() {
       <View style={styles.wrapper}>
         <View style={styles.form}>
           <Text style={styles.title}>Login</Text>
-          <Controller
+
+          <ControlledInput
             control={control}
             name="email"
-            render={({ field: { onChange, value } }) => (
-              <Input
-                leftIcon="ios-person-outline"
-                placeholder="E-mail"
-                keyboardType="email-address"
-                autoCapitalize="none"
-                onChangeText={onChange}
-                value={value}
-                errorMessage={errors.email?.message}
-              />
-            )}
+            leftIcon="ios-person-outline"
+            placeholder="E-mail"
+            keyboardType="email-address"
+            autoCapitalize="none"
           />
 
-          <Controller
+          <ControlledInput
             control={control}
             name="password"
-            render={({ field: { onChange, value } }) => (
-              <Input
-                leftIcon="lock-closed-outline"
-                placeholder="Senha"
-                secureTextEntry={isPasswordHidden}
-                autoCapitalize="none"
-                onChangeText={onChange}
-                rightIcon={isPasswordHidden ? 'eye-off-outline' : 'eye-outline'}
-                rightIconOnPress={() => setIsPasswordHidden((prev) => !prev)}
-                value={value}
-                errorMessage={errors.password?.message}
-              />
-            )}
+            leftIcon="lock-closed-outline"
+            placeholder="Senha"
+            autoCapitalize="none"
+            secureTextEntry={isPasswordHidden}
+            rightIcon={isPasswordHidden ? 'eye-off-outline' : 'eye-outline'}
+            rightIconOnPress={() => setIsPasswordHidden((prev) => !prev)}
           />
 
           <BlankSpacer height={12} />
