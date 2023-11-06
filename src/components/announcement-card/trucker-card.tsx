@@ -24,7 +24,7 @@ export function TruckerCard({ item }: TruckerCardProps) {
   const isSameDay = departureDate.isSame(arrivalDate, 'day')
 
   return (
-    <View style={styles.container}>
+    <View testID="trucker-card" style={styles.container}>
       <Text style={styles.date}>
         {departureDate.format('DD/MM/YYYY')}
         {item.arrivalOrDeliveryDate &&

@@ -26,6 +26,7 @@ export function AnnouncementList({
 
   return (
     <FlatList
+      testID="list"
       data={data}
       keyExtractor={(item) => item.id}
       renderItem={renderItem}

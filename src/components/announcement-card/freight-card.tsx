@@ -19,7 +19,7 @@ export function FreightCard({ item }: FreightCardProps) {
   }
 
   return (
-    <View style={styles.container}>
+    <View testID="freight-card" style={styles.container}>
       <View style={styles.infoWrapper}>
         <View>
           <View style={styles.bigCircle}>
