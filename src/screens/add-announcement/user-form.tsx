@@ -155,7 +155,7 @@ export function UserForm() {
           <ControlledInputInfo
             control={control}
             name="length"
-            label="Cumprimento (opcional)"
+            label="Comprimento (opcional)"
             measurementUnit="cm"
             keyboardType="numeric"
           />
