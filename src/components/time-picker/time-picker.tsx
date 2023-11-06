@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native'
 
-import { DatePickerProps } from '@components/date-picker/date-picker'
+import { DatePickerProps } from '@components/date-picker'
 import DateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker'
