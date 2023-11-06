@@ -13,6 +13,7 @@ const userAnnouncement: CreateUserAnnouncementDTO = {
   pickupOrDepartureDate: new Date(),
   destinationCity: 'City Y',
   weight: 500,
+  canStack: true,
   description: 'Sample description',
 }
 
