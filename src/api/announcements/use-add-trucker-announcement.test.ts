@@ -1,12 +1,10 @@
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
+import { mockedCreateTruckerAnnouncement } from '@__tests__/__mocks__/announcements/mocked-create-trucker-announceement'
+import { mockedFormattedAnnouncement } from '@__tests__/__mocks__/announcements/mocked-formated-tucker-announcement'
 import { renderHook, waitFor } from '@__tests__/utils/custom-render'
 import { reactQueryWrapper } from '@__tests__/utils/react-query-wrapper'
-import {
-  CreateAnnouncementDTo,
-  CreateTruckerAnnouncementDTO,
-} from '@dtos/AnnouncementDTO'
 
 import { api } from '../'
 import {
@@ -17,36 +15,23 @@ import {
 
 dayjs.extend(utc)
 
-const announcement: CreateTruckerAnnouncementDTO = {
-  originCity: 'City A',
-  departureDate: dayjs('2023-11-01').toDate(),
-  departureTime: dayjs('2023-11-01T08:00:00').toDate(),
-  destinationCity: 'City B',
-  arrivalDate: dayjs('2023-11-02').toDate(),
-  arrivalTime: dayjs('2023-11-02T10:00:00').toDate(),
-}
-const formattedAnnouncement: CreateAnnouncementDTo = {
-  originCity: 'City A',
-  pickupOrDepartureDate: dayjs('2023-11-01T08:00:00').toDate(),
-  destinationCity: 'City B',
-  arrivalOrDeliveryDate: dayjs('2023-11-02T10:00:00').toDate(),
-}
-
 describe('api: useAddTruckerAnnouncement', () => {
   beforeEach(() => {
     jest.spyOn(api, 'post').mockResolvedValue(Promise.resolve())
   })
 
   it('should format the announcement correctly', () => {
-    const formattedAnnouncement = formatAnnouncement(announcement)
-    expect(formattedAnnouncement).toEqual(formattedAnnouncement)
+    const formattedAnnouncement = formatAnnouncement(
+      mockedCreateTruckerAnnouncement,
+    )
+    expect(formattedAnnouncement).toEqual(mockedFormattedAnnouncement)
   })
 
   it('should use addTruckerAnnouncement function and call the API with the correct data', async () => {
-    await addTruckerAnnouncement(announcement)
+    await addTruckerAnnouncement(mockedCreateTruckerAnnouncement)
     expect(api.post).toHaveBeenCalledWith(
       '/announcements',
-      formattedAnnouncement,
+      mockedFormattedAnnouncement,
     )
   })
 
@@ -56,12 +41,12 @@ describe('api: useAddTruckerAnnouncement', () => {
     })
 
     await waitFor(() => {
-      result.current.mutate(announcement)
+      result.current.mutate(mockedCreateTruckerAnnouncement)
     })
 
     expect(api.post).toHaveBeenCalledWith(
       '/announcements',
-      formattedAnnouncement,
+      mockedFormattedAnnouncement,
     )
   })
 })

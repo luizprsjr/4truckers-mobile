@@ -1,6 +1,6 @@
+import { mockedCreateUserAnnouncement } from '@__tests__/__mocks__/announcements/mocked-create-user-announcement'
 import { renderHook, waitFor } from '@__tests__/utils/custom-render'
 import { reactQueryWrapper } from '@__tests__/utils/react-query-wrapper'
-import { CreateUserAnnouncementDTO } from '@dtos/AnnouncementDTO'
 
 import { api } from '../'
 import {
@@ -8,23 +8,17 @@ import {
   useAddUserAnnouncement,
 } from './use-add-user-announcement'
 
-const userAnnouncement: CreateUserAnnouncementDTO = {
-  originCity: 'City X',
-  pickupOrDepartureDate: new Date(),
-  destinationCity: 'City Y',
-  weight: 500,
-  canStack: true,
-  description: 'Sample description',
-}
-
 describe('api: useAddUserAnnouncement', () => {
   beforeEach(() => {
     jest.spyOn(api, 'post').mockResolvedValue(Promise.resolve())
   })
 
   it('should use addUserAnnouncement function and call the API with the correct data', async () => {
-    await addUserAnnouncement(userAnnouncement)
-    expect(api.post).toHaveBeenCalledWith('/announcements', userAnnouncement)
+    await addUserAnnouncement(mockedCreateUserAnnouncement)
+    expect(api.post).toHaveBeenCalledWith(
+      '/announcements',
+      mockedCreateUserAnnouncement,
+    )
   })
 
   it('should use the useAddUserAnnouncement hook and call the API with the correct data', async () => {
@@ -33,9 +27,12 @@ describe('api: useAddUserAnnouncement', () => {
     })
 
     await waitFor(() => {
-      result.current.mutate(userAnnouncement)
+      result.current.mutate(mockedCreateUserAnnouncement)
     })
 
-    expect(api.post).toHaveBeenCalledWith('/announcements', userAnnouncement)
+    expect(api.post).toHaveBeenCalledWith(
+      '/announcements',
+      mockedCreateUserAnnouncement,
+    )
   })
 })
