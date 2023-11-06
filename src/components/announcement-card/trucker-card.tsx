@@ -19,13 +19,17 @@ export function TruckerCard({ item }: TruckerCardProps) {
     navigate('truckerAd', { id: item.id })
   }
 
+  const departureDate = dayjs(item.pickupOrDepartureDate)
+  const arrivalDate = dayjs(item.arrivalOrDeliveryDate)
+  const isSameDay = departureDate.isSame(arrivalDate, 'day')
+
   return (
     <View style={styles.container}>
       <Text style={styles.date}>
-        {dayjs(item.pickupOrDepartureDate).format('DD/MM/YYYY')}
-        {item.arrivalOrDeliveryDate
-          ? ` - ${dayjs(item.arrivalOrDeliveryDate).format('DD/MM/YYYY')}`
-          : null}
+        {departureDate.format('DD/MM/YYYY')}
+        {item.arrivalOrDeliveryDate &&
+          !isSameDay &&
+          ` - ${arrivalDate.format('DD/MM/YYYY')}`}
       </Text>
 
       <View style={styles.infoWrapper}>
