@@ -12,5 +12,9 @@
   "setupFiles": [
     "./__tests__/__mocks__/libs/async-storage.js",
     "./__tests__/__mocks__/libs/react-native-safe-area-context.js"
-  ]
+  ],
+  "transform": {
+    "^.+\\.jsx?$": "babel-jest",
+    "^.+\\.svg$": "jest-transformer-svg"
+  }
 }
