@@ -74,6 +74,7 @@ export function TruckerCard({ item }: TruckerCardProps) {
       <View style={styles.bottomWrapper}>
         <View style={styles.userInfoWrapper}>
           <Image
+            testID="avatar"
             source={item.user.avatarUrl ? { uri: item.user.avatarUrl } : avatar}
             style={styles.avatar}
             alt="avatar"
