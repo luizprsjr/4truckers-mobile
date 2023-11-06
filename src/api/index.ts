@@ -4,7 +4,7 @@ import { Alert } from 'react-native'
 import {
   storageGetRefreshToken,
   storageSaveRefreshToken,
-} from '@storage/storageRefreshToken'
+} from '@storage/storage-refresh-token'
 import { AppError } from '@utils/AppError'
 
 type SignOut = () => void

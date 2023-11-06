@@ -1,5 +1,4 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
-import { Alert } from 'react-native'
 
 import { api } from '@api/index'
 import { UserDTO } from '@dtos/UserDTO'
@@ -7,17 +6,17 @@ import {
   storageGetAuthToken,
   storageRemoveAuthToken,
   storageSaveAuthToken,
-} from '@storage/storageAuthToken'
+} from '@storage/storage-auth-token'
 import {
   storageGetRefreshToken,
   storageRemoveRefreshToken,
   storageSaveRefreshToken,
-} from '@storage/storageRefreshToken'
+} from '@storage/storage-refresh-token'
 import {
   storageGetUser,
   storageRemoveUser,
   storageSaveUser,
-} from '@storage/storageUser'
+} from '@storage/stored-user'
 
 export type AuthContextDataProps = {
   user: UserDTO

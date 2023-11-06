@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-import { REFRESH_TOKEN_STORAGE } from './storageConfig'
+import { REFRESH_TOKEN_STORAGE } from './storage-config'
 
 export async function storageSaveRefreshToken(token: string) {
   await AsyncStorage.setItem(REFRESH_TOKEN_STORAGE, token)
