@@ -3,7 +3,7 @@ import { UserDTO } from '@dtos/UserDTO'
 export const mockedUser: UserDTO = {
   id: '1',
   name: 'user-1',
-  email: 'any-email',
+  email: 'any-email@mail.com',
   phoneNumber: '999999999',
   type: 'USER',
   truck: null,
