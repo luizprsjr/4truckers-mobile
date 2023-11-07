@@ -1,9 +1,7 @@
 import { mockedUser } from '@__tests__/__mocks__/user/mocked-user'
+import { act, renderHook, waitFor } from '@__tests__/utils/custom-render'
 import { api } from '@api/index'
 import { useAuth } from '@hooks/useAuth'
-import { act, renderHook, waitFor } from '@testing-library/react-native'
-
-import { AuthContextProvider } from './auth'
 
 const mockedResponse = {
   user: mockedUser,
@@ -13,17 +11,13 @@ const mockedResponse = {
 
 describe('context: AuthContext', () => {
   it('should return an empty user objet by default', async () => {
-    const { result } = renderHook(() => useAuth(), {
-      wrapper: AuthContextProvider,
-    })
+    const { result } = renderHook(() => useAuth())
 
     await waitFor(() => act(() => expect(result.current.user).toEqual({})))
   })
 
   it('should update user when updateUser is called', async () => {
-    const { result } = renderHook(() => useAuth(), {
-      wrapper: AuthContextProvider,
-    })
+    const { result } = renderHook(() => useAuth())
 
     await waitFor(() => act(() => result.current.updateUser(mockedUser)))
 
@@ -31,9 +25,7 @@ describe('context: AuthContext', () => {
   })
 
   it('should update user when signIn is called', async () => {
-    const { result } = renderHook(() => useAuth(), {
-      wrapper: AuthContextProvider,
-    })
+    const { result } = renderHook(() => useAuth())
 
     jest.spyOn(api, 'post').mockResolvedValue({ data: mockedResponse })
 
@@ -46,9 +38,7 @@ describe('context: AuthContext', () => {
   })
 
   it('should update user when googleSignIn is called', async () => {
-    const { result } = renderHook(() => useAuth(), {
-      wrapper: AuthContextProvider,
-    })
+    const { result } = renderHook(() => useAuth())
 
     jest.spyOn(api, 'post').mockResolvedValue({ data: mockedResponse })
 
@@ -60,9 +50,7 @@ describe('context: AuthContext', () => {
   })
 
   it('should remove user when signOut is called', async () => {
-    const { result } = renderHook(() => useAuth(), {
-      wrapper: AuthContextProvider,
-    })
+    const { result } = renderHook(() => useAuth())
 
     await waitFor(() => act(() => result.current.updateUser(mockedUser)))
 
