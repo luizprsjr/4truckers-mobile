@@ -9,7 +9,7 @@ import {
 
 import { APIProvider } from '@api/provider'
 import { Loading } from '@components/loading'
-import { AuthContextProvider } from '@contexts/AuthContext'
+import { AuthContextProvider } from '@contexts/auth'
 import {
   Inter_400Regular,
   Inter_500Medium,

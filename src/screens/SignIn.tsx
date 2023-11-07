@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Alert, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
+import { showMessage } from 'react-native-flash-message'
 
 import { Button } from '@components/button'
 import { useAuth } from '@hooks/useAuth'
@@ -31,10 +32,12 @@ export function SignIn() {
 
       await googleSignIn(accessToken)
     } catch (error) {
-      if (error instanceof Error) {
-        Alert.alert(error.message)
-      }
-
+      showMessage({
+        message:
+          'Ops, algo deu errado durante o processo. Tente novamente mais tarde. ',
+        type: 'danger',
+        duration: 5000,
+      })
       setIsLoading(false)
     } finally {
       await GoogleSignin.signOut()
