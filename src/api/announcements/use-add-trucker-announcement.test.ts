@@ -39,11 +39,10 @@ describe('api: useAddTruckerAnnouncement', () => {
 
     await waitFor(() => {
       result.current.mutate(mockedCreateTruckerAnnouncement)
+      expect(api.post).toHaveBeenCalledWith(
+        '/announcements',
+        mockedFormattedAnnouncement,
+      )
     })
-
-    expect(api.post).toHaveBeenCalledWith(
-      '/announcements',
-      mockedFormattedAnnouncement,
-    )
   })
 })

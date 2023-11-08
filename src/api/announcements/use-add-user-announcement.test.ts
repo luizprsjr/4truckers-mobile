@@ -25,11 +25,10 @@ describe('api: useAddUserAnnouncement', () => {
 
     await waitFor(() => {
       result.current.mutate(mockedCreateUserAnnouncement)
+      expect(api.post).toHaveBeenCalledWith(
+        '/announcements',
+        mockedCreateUserAnnouncement,
+      )
     })
-
-    expect(api.post).toHaveBeenCalledWith(
-      '/announcements',
-      mockedCreateUserAnnouncement,
-    )
   })
 })
