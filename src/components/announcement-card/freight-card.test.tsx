@@ -1,21 +1,10 @@
 import { mockedAnnouncement } from '@__tests__/__mocks__/announcements/mocked-announcement'
+import { mockedNavigate } from '@__tests__/__mocks__/libs/react-navigation-native'
 import { fireEvent, render, screen } from '@__tests__/utils/custom-render'
 
 import { FreightCard } from './freight-card'
 
-const mockedNavigate = jest.fn()
-
-jest.mock('@react-navigation/native', () => ({
-  useNavigation: () => ({
-    navigate: mockedNavigate,
-  }),
-}))
-
 describe('component: FreightCard', () => {
-  beforeEach(() => {
-    mockedNavigate.mockClear()
-  })
-
   it('should render correctly', () => {
     render(<FreightCard item={mockedAnnouncement} />)
 

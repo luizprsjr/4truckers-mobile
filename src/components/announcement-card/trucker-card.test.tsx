@@ -1,21 +1,10 @@
 import { mockedAnnouncement } from '@__tests__/__mocks__/announcements/mocked-announcement'
+import { mockedNavigate } from '@__tests__/__mocks__/libs/react-navigation-native'
 import { fireEvent, render, screen } from '@__tests__/utils/custom-render'
 
 import { TruckerCard } from './trucker-card'
 
-const mockedGoBack = jest.fn()
-
-jest.mock('@react-navigation/native', () => ({
-  useNavigation: () => ({
-    navigate: mockedGoBack,
-  }),
-}))
-
 describe('component: TruckerCard', () => {
-  beforeEach(() => {
-    mockedGoBack.mockClear()
-  })
-
   it('should render correctly', () => {
     render(<TruckerCard item={mockedAnnouncement} />)
 
@@ -31,6 +20,6 @@ describe('component: TruckerCard', () => {
     const button = getByText('ver mais')
     fireEvent.press(button)
 
-    expect(mockedGoBack).toHaveBeenCalled()
+    expect(mockedNavigate).toHaveBeenCalled()
   })
 })

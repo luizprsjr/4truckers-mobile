@@ -12,7 +12,8 @@
   "setupFiles": [
     "./__tests__/__mocks__/libs/async-storage.js",
     "./__tests__/__mocks__/libs/react-native-safe-area-context.js",
-    "./node_modules/@react-native-google-signin/google-signin/jest/build/setup.js"
+    "./node_modules/@react-native-google-signin/google-signin/jest/build/setup.js",
+    "./__tests__/__mocks__/libs/react-navigation-native.js"
   ],
   "transform": {
     "^.+\\.jsx?$": "babel-jest",

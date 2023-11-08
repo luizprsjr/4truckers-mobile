@@ -1,16 +1,9 @@
 import React from 'react'
 
+import { mockedGoBack } from '@__tests__/__mocks__/libs/react-navigation-native'
 import { fireEvent, render, screen } from '@__tests__/utils/custom-render'
 
 import { Header } from './header'
-
-const mockedGoBack = jest.fn()
-
-jest.mock('@react-navigation/native', () => ({
-  useNavigation: () => ({
-    goBack: mockedGoBack,
-  }),
-}))
 
 describe('Header Component', () => {
   beforeEach(() => {

@@ -8,14 +8,6 @@ import {
 
 import { AnnouncementList } from './list'
 
-const mockedNavigate = jest.fn()
-
-jest.mock('@react-navigation/native', () => ({
-  useNavigation: () => ({
-    navigate: mockedNavigate,
-  }),
-}))
-
 describe('component: AnnouncementList', () => {
   it('should render a list of TruckerCard and FreightCard components', () => {
     render(
