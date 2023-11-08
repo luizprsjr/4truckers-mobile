@@ -65,10 +65,10 @@ const schema = z
     },
   )
 
-export type FormType = z.infer<typeof schema>
+export type UserFormType = z.infer<typeof schema>
 
 export function UserForm() {
-  const { handleSubmit, control, reset } = useForm<FormType>({
+  const { handleSubmit, control, reset } = useForm<UserFormType>({
     resolver: zodResolver(schema),
   })
   const { navigate } = useNavigation<AppNavigationRoutesProps>()

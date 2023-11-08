@@ -75,10 +75,10 @@ const schema = z
     },
   )
 
-export type FormType = z.infer<typeof schema>
+export type TruckerFormType = z.infer<typeof schema>
 
 export function TruckerForm() {
-  const { handleSubmit, control, reset } = useForm<FormType>({
+  const { handleSubmit, control, reset } = useForm<TruckerFormType>({
     resolver: zodResolver(schema),
   })
 
