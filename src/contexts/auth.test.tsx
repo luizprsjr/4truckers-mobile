@@ -1,5 +1,9 @@
 import { mockedUser } from '@__tests__/__mocks__/user/mocked-user'
-import { act, renderHook, waitFor } from '@__tests__/utils/custom-render'
+import {
+  act,
+  renderHookWithAuth,
+  waitFor,
+} from '@__tests__/utils/custom-render'
 import { api } from '@api/index'
 import { useAuth } from '@hooks/useAuth'
 
@@ -11,13 +15,13 @@ const mockedResponse = {
 
 describe('context: AuthContext', () => {
   it('should return an empty user objet by default', async () => {
-    const { result } = renderHook(() => useAuth())
+    const { result } = renderHookWithAuth(() => useAuth())
 
     await waitFor(() => act(() => expect(result.current.user).toEqual({})))
   })
 
   it('should update user when updateUser is called', async () => {
-    const { result } = renderHook(() => useAuth())
+    const { result } = renderHookWithAuth(() => useAuth())
 
     await waitFor(() => act(() => result.current.updateUser(mockedUser)))
 
@@ -25,7 +29,7 @@ describe('context: AuthContext', () => {
   })
 
   it('should update user when signIn is called', async () => {
-    const { result } = renderHook(() => useAuth())
+    const { result } = renderHookWithAuth(() => useAuth())
 
     jest.spyOn(api, 'post').mockResolvedValue({ data: mockedResponse })
 
@@ -38,7 +42,7 @@ describe('context: AuthContext', () => {
   })
 
   it('should update user when googleSignIn is called', async () => {
-    const { result } = renderHook(() => useAuth())
+    const { result } = renderHookWithAuth(() => useAuth())
 
     jest.spyOn(api, 'post').mockResolvedValue({ data: mockedResponse })
 
@@ -50,7 +54,7 @@ describe('context: AuthContext', () => {
   })
 
   it('should remove user when signOut is called', async () => {
-    const { result } = renderHook(() => useAuth())
+    const { result } = renderHookWithAuth(() => useAuth())
 
     await waitFor(() => act(() => result.current.updateUser(mockedUser)))
 

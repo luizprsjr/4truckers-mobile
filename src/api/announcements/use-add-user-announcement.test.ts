@@ -1,6 +1,5 @@
 import { mockedCreateUserAnnouncement } from '@__tests__/__mocks__/announcements/mocked-create-user-announcement'
 import { renderHook, waitFor } from '@__tests__/utils/custom-render'
-import { reactQueryWrapper } from '@__tests__/utils/react-query-wrapper'
 
 import { api } from '../'
 import {
@@ -22,9 +21,7 @@ describe('api: useAddUserAnnouncement', () => {
   })
 
   it('should use the useAddUserAnnouncement hook and call the API with the correct data', async () => {
-    const { result } = renderHook(() => useAddUserAnnouncement(), {
-      wrapper: reactQueryWrapper(),
-    })
+    const { result } = renderHook(() => useAddUserAnnouncement())
 
     await waitFor(() => {
       result.current.mutate(mockedCreateUserAnnouncement)

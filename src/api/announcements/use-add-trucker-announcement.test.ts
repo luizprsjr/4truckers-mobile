@@ -4,7 +4,6 @@ import utc from 'dayjs/plugin/utc'
 import { mockedCreateTruckerAnnouncement } from '@__tests__/__mocks__/announcements/mocked-create-trucker-announceement'
 import { mockedFormattedAnnouncement } from '@__tests__/__mocks__/announcements/mocked-formated-tucker-announcement'
 import { renderHook, waitFor } from '@__tests__/utils/custom-render'
-import { reactQueryWrapper } from '@__tests__/utils/react-query-wrapper'
 
 import { api } from '../'
 import {
@@ -36,9 +35,7 @@ describe('api: useAddTruckerAnnouncement', () => {
   })
 
   it('should use the useAddTruckerAnnouncement hook and call the API with the correct data', async () => {
-    const { result } = renderHook(() => useAddTruckerAnnouncement(), {
-      wrapper: reactQueryWrapper(),
-    })
+    const { result } = renderHook(() => useAddTruckerAnnouncement())
 
     await waitFor(() => {
       result.current.mutate(mockedCreateTruckerAnnouncement)

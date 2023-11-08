@@ -1,5 +1,5 @@
 import { mockedUser } from '@__tests__/__mocks__/user/mocked-user'
-import { render, screen, waitFor } from '@__tests__/utils/custom-render'
+import { renderWithAuth, screen, waitFor } from '@__tests__/utils/custom-render'
 import { storageSaveAuthToken } from '@storage/storage-auth-token'
 import { storageSaveRefreshToken } from '@storage/storage-refresh-token'
 import { storageSaveUser } from '@storage/stored-user'
@@ -10,7 +10,7 @@ describe('routes', () => {
   beforeEach(() => jest.useFakeTimers())
 
   it('should render sign-in screen when the user does not have an id and phone', async () => {
-    render(<Routes />)
+    renderWithAuth(<Routes />)
 
     const buttonText = await waitFor(() =>
       screen.findByText(/Entrar com Google/i),
@@ -24,7 +24,7 @@ describe('routes', () => {
     await storageSaveAuthToken('any-token')
     await storageSaveRefreshToken('any-token')
 
-    render(<Routes />)
+    renderWithAuth(<Routes />)
 
     // act(() => {
     //   jest.advanceTimersByTime(1000)
@@ -44,7 +44,7 @@ describe('routes', () => {
     await storageSaveAuthToken('any-token')
     await storageSaveRefreshToken('any-token')
 
-    render(<Routes />)
+    renderWithAuth(<Routes />)
 
     await waitFor(() => {
       expect(screen.getByText(/Selecione o tipo de usuário/i)).toBeOnTheScreen()
