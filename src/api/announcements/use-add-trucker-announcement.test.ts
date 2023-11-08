@@ -1,8 +1,8 @@
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
-import { mockedCreateTruckerAnnouncement } from '@__tests__/__mocks__/announcements/mocked-create-trucker-announceement'
-import { mockedFormattedAnnouncement } from '@__tests__/__mocks__/announcements/mocked-formated-tucker-announcement'
+import { mockedCreateTruckerAnnouncement } from '@__tests__/mocks/announcements/mocked-create-trucker-announceement'
+import { mockedFormattedAnnouncement } from '@__tests__/mocks/announcements/mocked-formated-tucker-announcement'
 import { renderHook, waitFor } from '@__tests__/utils/custom-render'
 
 import { api } from '../'

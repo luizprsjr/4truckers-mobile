@@ -1,5 +1,5 @@
-import { mockedAnnouncement } from '@__tests__/__mocks__/announcements/mocked-announcement'
-import { mockedNavigate } from '@__tests__/__mocks__/libs/react-navigation-native'
+import { mockedAnnouncement } from '@__tests__/mocks/announcements/mocked-announcement'
+import { mockedNavigate } from '@__tests__/mocks/libs/react-navigation-native'
 import { fireEvent, render, screen } from '@__tests__/utils/custom-render'
 
 import { FreightCard } from './freight-card'

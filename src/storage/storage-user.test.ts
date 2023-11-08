@@ -1,4 +1,4 @@
-import { mockedUser } from '@__tests__/__mocks__/user/mocked-user'
+import { mockedUser } from '@__tests__/mocks/user/mocked-user'
 
 import {
   storageGetUser,

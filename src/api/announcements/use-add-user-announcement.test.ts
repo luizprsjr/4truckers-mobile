@@ -1,4 +1,4 @@
-import { mockedCreateUserAnnouncement } from '@__tests__/__mocks__/announcements/mocked-create-user-announcement'
+import { mockedCreateUserAnnouncement } from '@__tests__/mocks/announcements/mocked-create-user-announcement'
 import { renderHook, waitFor } from '@__tests__/utils/custom-render'
 
 import { api } from '../'

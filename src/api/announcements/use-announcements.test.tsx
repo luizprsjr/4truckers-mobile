@@ -1,4 +1,4 @@
-import { mockedAnnouncementList } from '@__tests__/__mocks__/announcements/mocked-announcement-list'
+import { mockedAnnouncementList } from '@__tests__/mocks/announcements/mocked-announcement-list'
 import { renderHook, waitFor } from '@__tests__/utils/custom-render'
 
 import { api } from '../'

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { mockedGoBack } from '@__tests__/__mocks__/libs/react-navigation-native'
+import { mockedGoBack } from '@__tests__/mocks/libs/react-navigation-native'
 import { fireEvent, render, screen } from '@__tests__/utils/custom-render'
 
 import { Header } from './header'

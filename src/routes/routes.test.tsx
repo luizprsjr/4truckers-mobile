@@ -1,4 +1,4 @@
-import { mockedUser } from '@__tests__/__mocks__/user/mocked-user'
+import { mockedUser } from '@__tests__/mocks/user/mocked-user'
 import { renderWithAuth, screen, waitFor } from '@__tests__/utils/custom-render'
 import { storageSaveAuthToken } from '@storage/storage-auth-token'
 import { storageSaveRefreshToken } from '@storage/storage-refresh-token'
