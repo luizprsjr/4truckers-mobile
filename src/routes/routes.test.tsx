@@ -7,8 +7,6 @@ import { storageSaveUser } from '@storage/stored-user'
 import { Routes } from './'
 
 describe('routes', () => {
-  beforeEach(() => jest.useFakeTimers())
-
   it('should render sign-in screen when the user does not have an id and phone', async () => {
     renderWithAuth(<Routes />)
 
@@ -20,15 +18,12 @@ describe('routes', () => {
   })
 
   it('should render home screen when have a user in storage', async () => {
+    jest.useFakeTimers()
     await storageSaveUser(mockedUser)
     await storageSaveAuthToken('any-token')
     await storageSaveRefreshToken('any-token')
 
     renderWithAuth(<Routes />)
-
-    // act(() => {
-    //   jest.advanceTimersByTime(1000)
-    // })
 
     await waitFor(() => {
       expect(
