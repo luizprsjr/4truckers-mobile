@@ -17,5 +17,15 @@
   "transform": {
     "^.+\\.jsx?$": "babel-jest",
     "^.+\\.svg$": "jest-transformer-svg"
-  }
+  },
+  "collectCoverageFrom": [
+    "./src/**/*.{ts,tsx}"
+  ],
+  "coveragePathIgnorePatterns": [
+    "./src/@types",
+    "./src/assets",
+    "./src/dtos",
+    "./src/theme"
+  ],
+  "coverageDirectory": "./__tests__/coverage"
 }

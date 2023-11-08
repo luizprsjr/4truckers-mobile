@@ -1,5 +1,6 @@
 node_modules
 .expo/
+__tests__/coverage
 
 # macOS
 .DS_Store
