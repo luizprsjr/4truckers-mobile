@@ -22,10 +22,14 @@ export type TimePickerProps = {
   errorMessage?: string
   onControllerChange?: (date: Date | undefined) => void
   reset?: boolean
+  testID?: string
 }
 
 export const TimePicker = forwardRef<TextInput, DatePickerProps>(
-  ({ label, placeholder, errorMessage, onControllerChange, reset }, ref) => {
+  (
+    { label, placeholder, errorMessage, onControllerChange, reset, testID },
+    ref,
+  ) => {
     const [selectedDate, setSelectedDate] = useState<Date | undefined>()
     const [showPicker, setShowPicker] = useState(false)
 
@@ -83,7 +87,7 @@ export const TimePicker = forwardRef<TextInput, DatePickerProps>(
         {showPicker && (
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <DateTimePicker
-              testID="time-picker"
+              testID={testID || 'time-picker'}
               value={selectedDate || new Date()}
               mode="time"
               display="inline"
@@ -102,7 +106,7 @@ export const TimePicker = forwardRef<TextInput, DatePickerProps>(
 
         {!showPicker && (
           <Pressable
-            testID="button-container"
+            testID={testID ? `${testID}-button` : 'button'}
             onPress={() => setShowPicker(true)}
             style={buttonContainerStyle}
           >

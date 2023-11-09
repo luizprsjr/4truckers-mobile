@@ -13,10 +13,14 @@ export type DatePickerProps = {
   errorMessage?: string
   onControllerChange?: (date: Date | undefined) => void
   reset?: boolean
+  testID?: string
 }
 
 export const DatePicker = forwardRef<TextInput, DatePickerProps>(
-  ({ label, placeholder, errorMessage, onControllerChange, reset }, ref) => {
+  (
+    { label, placeholder, errorMessage, onControllerChange, reset, testID },
+    ref,
+  ) => {
     const [selectedDate, setSelectedDate] = useState<Date | undefined>()
     const [showPicker, setShowPicker] = useState(false)
 
@@ -74,7 +78,7 @@ export const DatePicker = forwardRef<TextInput, DatePickerProps>(
         {showPicker && (
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <RNDateTimePicker
-              testID="date-picker"
+              testID={testID || 'date-picker'}
               value={selectedDate || new Date()}
               minimumDate={new Date()}
               mode="date"
@@ -86,7 +90,7 @@ export const DatePicker = forwardRef<TextInput, DatePickerProps>(
 
         {!showPicker && (
           <Pressable
-            testID="button-container"
+            testID={testID ? `${testID}-button` : 'button'}
             onPress={() => setShowPicker(true)}
             style={buttonContainerStyle}
           >

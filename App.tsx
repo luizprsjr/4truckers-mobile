@@ -1,3 +1,5 @@
+import '@utils/dayjs'
+
 import { StatusBar } from 'expo-status-bar'
 import { ComponentType } from 'react'
 import { View } from 'react-native'

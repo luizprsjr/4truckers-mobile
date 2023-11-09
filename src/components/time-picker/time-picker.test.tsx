@@ -1,29 +1,15 @@
 import { Platform } from 'react-native'
 
+import { createDateTimeSetEvtParams } from '@__tests__/mocks/libs/date-time-picker-event'
 import {
   fireEvent,
   render,
   screen,
   waitFor,
 } from '@__tests__/utils/custom-render'
-import { DateTimePickerEvent } from '@react-native-community/datetimepicker'
 import { colors } from '@theme/index'
 
 import { TimePicker } from './time-picker'
-
-export const createDateTimeSetEvtParams = (
-  date: Date,
-): [DateTimePickerEvent, Date] => {
-  return [
-    {
-      type: 'set',
-      nativeEvent: {
-        timestamp: date.getTime(),
-      },
-    },
-    date,
-  ]
-}
 
 const date = new Date('2022-12-12T12:00:00.000-03:00')
 
@@ -86,7 +72,7 @@ describe('component: TimePicker', () => {
     expect(screen.getByText(/test/i)).toHaveStyle({
       color: colors.red,
     })
-    expect(screen.getByTestId('button-container')).toHaveStyle({
+    expect(screen.getByTestId('button')).toHaveStyle({
       borderColor: colors.red,
     })
     expect(screen.getByTestId('button-text')).toHaveStyle({
