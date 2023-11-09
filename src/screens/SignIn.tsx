@@ -12,10 +12,8 @@ GoogleSignin.configure({
     'https://www.googleapis.com/auth/userinfo.email',
     'https://www.googleapis.com/auth/userinfo.profile',
   ],
-  webClientId:
-    '816122311851-5616c53npqnaboaiirftf6g3si723a7d.apps.googleusercontent.com',
-  iosClientId:
-    '816122311851-h74r05he1vv92r465ihs5q7gmntfku5m.apps.googleusercontent.com',
+  webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,
+  iosClientId: process.env.EXPO_PUBLIC_IOS_CLIENT_ID,
 })
 
 export function SignIn() {
