@@ -23,14 +23,14 @@ import { isTimeAheadByOneHour } from '@utils/validators/zod/isTimeAheadByOneHour
 const schema = z
   .object({
     originCity: z
-      .string({ required_error: 'Campo obrigatório.' })
+      .string({ required_error: 'Informe a cidade de partida.' })
       .min(2, 'O nome da cidade deve ter pelo menos 2 caracteres.'),
     departureDate: z
-      .date({ required_error: 'Campo obrigatório.' })
+      .date({ required_error: 'Informe a data de partida.' })
       .min(new Date(), 'Você não pode escolher uma data no passado.'),
-    departureTime: z.date({ required_error: 'Campo obrigatório.' }),
+    departureTime: z.date({ required_error: 'Informe a hora de partida.' }),
     destinationCity: z
-      .string({ required_error: 'Campo obrigatório.' })
+      .string({ required_error: 'Informe a cidade de destino.' })
       .min(2, 'O nome da cidade deve ter pelo menos 2 caracteres.'),
     arrivalDate: z
       .date()
@@ -119,12 +119,14 @@ export function TruckerForm() {
           <Text style={styles.subtitle}>Partida</Text>
 
           <ControlledInputInfo
+            testID="origin-city"
             control={control}
             name="originCity"
             label="Cidade de partida"
           />
 
           <ControlledDatePicker
+            testID="origin-date"
             control={control}
             name="departureDate"
             label="Data de partida"
@@ -132,6 +134,7 @@ export function TruckerForm() {
           />
 
           <ControlledTimePicker
+            testID="origin-time"
             control={control}
             name="departureTime"
             label="Hora da partida"
@@ -141,6 +144,7 @@ export function TruckerForm() {
           <Text style={styles.subtitle}>Destino</Text>
 
           <ControlledInputInfo
+            testID="destination-city"
             control={control}
             name="destinationCity"
             label="Cidade de destino"
@@ -162,6 +166,7 @@ export function TruckerForm() {
 
           <BlankSpacer height={12} />
           <Button
+            testID="submit-button"
             title="Cadastrar"
             onPress={handleSubmit(onSubmit)}
             isLoading={isPending}
