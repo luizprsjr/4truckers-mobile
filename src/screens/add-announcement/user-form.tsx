@@ -20,25 +20,23 @@ import { isSecondDateInFuture } from '@utils/validators/zod/isSecondDateInFuture
 const schema = z
   .object({
     originCity: z
-      .string({ required_error: 'Campo obrigatório.' })
+      .string({ required_error: 'Informe a cidade de coleta.' })
       .min(2, 'O nome da cidade deve ter pelo menos 2 caracteres.'),
     pickupOrDepartureDate: z
-      .date({ required_error: 'Campo obrigatório.' })
+      .date({ required_error: 'Informe a data de coleta.' })
       .min(new Date(), 'Você não pode escolher uma data no passado.'),
     pickUpMaxDate: z
       .date({ required_error: 'Campo obrigatório.' })
       .min(new Date(), 'Você não pode escolher uma data no passado.')
       .optional(),
     destinationCity: z
-      .string({ required_error: 'Campo obrigatório.' })
+      .string({ required_error: 'Informe a cidade de entrega.' })
       .min(2, 'O nome da cidade deve ter pelo menos 2 caracteres.'),
     deliveryMaxDate: z
       .date()
       .min(new Date(), 'Você não pode escolher uma data no passado.')
       .optional(),
-    weight: z
-      .string({ required_error: 'Campo obrigatório.' })
-      .transform(Number),
+    weight: z.string({ required_error: 'Informe o peso.' }).transform(Number),
     length: z.string().transform(Number).optional(),
     width: z.string().transform(Number).optional(),
     height: z.string().transform(Number).optional(),
@@ -108,12 +106,14 @@ export function UserForm() {
           <Text style={styles.subtitle}>Coleta</Text>
 
           <ControlledInputInfo
+            testID="origin-city"
             control={control}
             name="originCity"
             label="Cidade de coleta"
           />
 
           <ControlledDatePicker
+            testID="pick-up-date"
             control={control}
             name="pickupOrDepartureDate"
             label="Data inicial da janela de coleta"
@@ -130,6 +130,7 @@ export function UserForm() {
           <Text style={styles.subtitle}>Entrega</Text>
 
           <ControlledInputInfo
+            testID="destination-city"
             control={control}
             name="destinationCity"
             label="Cidade de entrega"
@@ -145,6 +146,7 @@ export function UserForm() {
           <Text style={styles.subtitle}>Informações da carga</Text>
 
           <ControlledInputInfo
+            testID="weight"
             control={control}
             name="weight"
             label="Peso"
@@ -193,6 +195,7 @@ export function UserForm() {
 
           <BlankSpacer height={12} />
           <Button
+            testID="submit-button"
             title="Cadastrar"
             onPress={handleSubmit(onSubmit)}
             isLoading={isPending}
