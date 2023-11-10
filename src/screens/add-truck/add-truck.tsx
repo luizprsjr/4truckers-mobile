@@ -1,10 +1,9 @@
-import { AxiosError } from 'axios'
-import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { showMessage } from 'react-native-flash-message'
 import { z } from 'zod'
 
-import { api } from '@api/index'
+import { useAddTruck } from '@api/truck/use-add-truck'
 import { BlankSpacer } from '@components/blank-spacer'
 import { Button } from '@components/button'
 import { Header } from '@components/header'
@@ -16,56 +15,53 @@ import { AppNavigationRoutesProps } from '@routes/app.routes'
 import { colors, fonts } from '@theme/index'
 
 const addTruckFormSchema = z.object({
-  truckModel: z.string().min(2, 'O modelo deve ter pelo menos 2 caracteres.'),
+  truckModel: z.string({ required_error: 'Informe o modelo.' }),
   capacity: z
-    .string({ required_error: 'Campo obrigatório.' })
+    .string({ required_error: 'Informe a capacidade.' })
     .transform(Number),
   length: z.string().transform(Number).optional(),
   width: z.string().transform(Number).optional(),
   height: z.string().transform(Number).optional(),
 })
 
-type AddTruckFormData = z.infer<typeof addTruckFormSchema>
+export type AddTruckFormData = z.infer<typeof addTruckFormSchema>
 
 export function AddTruck() {
-  const [isLoading, setIsLoading] = useState(false)
   const { dispatch } = useNavigation<AppNavigationRoutesProps>()
   const { user, updateUser } = useAuth()
 
-  const { control, handleSubmit } = useForm<AddTruckFormData>({
+  const { control, handleSubmit, reset } = useForm<AddTruckFormData>({
     resolver: zodResolver(addTruckFormSchema),
   })
 
-  async function handleAddNewTruck({
-    truckModel,
-    capacity,
-    length,
-    width,
-    height,
-  }: AddTruckFormData) {
-    try {
-      setIsLoading(true)
-      const updatedUser = user
-      const { data } = await api.post('/trucks', {
-        truckModel,
-        capacity,
-        length,
-        width,
-        height,
-      })
-      updatedUser.truck = data.truck
-      await updateUser(updatedUser)
-      dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: 'addAnnouncement' }],
-        }),
-      )
-    } catch (error) {
-      if (error instanceof AxiosError) console.log(error.message)
-    } finally {
-      setIsLoading(false)
-    }
+  const { mutate, isPending } = useAddTruck()
+
+  async function handleAddNewTruck(formData: AddTruckFormData) {
+    mutate(formData, {
+      onSuccess: async (data) => {
+        reset()
+        const updatedUser = user
+        updatedUser.truck = data
+        await updateUser(updatedUser)
+        dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: 'addAnnouncement' }],
+          }),
+        )
+        showMessage({
+          message: 'Caminhão adicionado com sucesso',
+          type: 'success',
+        })
+      },
+      onError: () => {
+        showMessage({
+          message: 'Erro ao adicionar caminhão',
+          type: 'danger',
+          duration: 4000,
+        })
+      },
+    })
   }
 
   return (
@@ -79,12 +75,14 @@ export function AddTruck() {
           <Text style={styles.title}>ADICIONAR DADOS DO CAMINHÃO</Text>
 
           <ControlledInputInfo
+            testID="truck-model"
             control={control}
             name="truckModel"
             label="Modelo do caminhão"
           />
 
           <ControlledInputInfo
+            testID="capacity"
             control={control}
             name="capacity"
             label="Capacidade"
@@ -118,9 +116,10 @@ export function AddTruck() {
 
           <BlankSpacer height={12} />
           <Button
+            testID="submit-button"
             title="Salvar"
             onPress={handleSubmit(handleAddNewTruck)}
-            isLoading={isLoading}
+            isLoading={isPending}
           />
         </View>
       </ScrollView>

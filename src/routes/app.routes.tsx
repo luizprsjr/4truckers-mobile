@@ -7,7 +7,7 @@ import {
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs'
 import { AddAnnouncement } from '@screens/add-announcement'
-import { AddTruck } from '@screens/AddTruck'
+import { AddTruck } from '@screens/add-truck'
 import { Announcement } from '@screens/Announcement'
 import { Home } from '@screens/Home'
 import { Profile } from '@screens/Profile'
