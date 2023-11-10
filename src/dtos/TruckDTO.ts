@@ -7,3 +7,11 @@ export type TruckDTO = {
   width?: number
   height?: number
 }
+
+export type CreateTruckDTO = {
+  truckModel: string
+  capacity: number
+  length?: number | undefined
+  width?: number | undefined
+  height?: number | undefined
+}
