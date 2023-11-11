@@ -26,7 +26,8 @@
     "./src/@types",
     "./src/assets",
     "./src/dtos",
-    "./src/theme"
+    "./src/theme",
+    "./src/utils/dayjs.ts"
   ],
   "coverageDirectory": "./__tests__/coverage"
 }

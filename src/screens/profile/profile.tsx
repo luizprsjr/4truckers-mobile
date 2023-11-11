@@ -1,7 +1,5 @@
-import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import {
-  Alert,
   Image,
   ScrollView,
   StyleSheet,
@@ -9,9 +7,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import { showMessage } from 'react-native-flash-message'
 import { z } from 'zod'
 
-import { api } from '@api/index'
+import { useSaveUser } from '@api/user/save-user'
 import avatar from '@assets/avatar.png'
 import { BlankSpacer } from '@components/blank-spacer'
 import { Button } from '@components/button'
@@ -21,7 +20,6 @@ import { Ionicons } from '@expo/vector-icons'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useAuth } from '@hooks/useAuth'
 import { colors, fonts } from '@theme/index'
-import { AppError } from '@utils/AppError'
 import { formatPhoneNumber } from '@utils/formatPhoneNumber'
 
 const phoneRegex = /^\(\d{2}\) \d \d{4}-\d{4}$/
@@ -32,7 +30,6 @@ const updateUserFormSchema = z.object({
     .string()
     .regex(phoneRegex, 'Número inválido. Informe o DDD + número.')
     .optional(),
-  // type: z.enum(['USER', 'TRUCKER']).optional(),
   truckModel: z.string().optional(),
   capacity: z.string().optional(),
   length: z.string().optional(),
@@ -40,61 +37,35 @@ const updateUserFormSchema = z.object({
   height: z.string().optional(),
 })
 
-type UpdateUserFormData = z.infer<typeof updateUserFormSchema>
+export type UpdateUserFormData = z.infer<typeof updateUserFormSchema>
 
 export function Profile() {
   const { user, signOut, updateUser } = useAuth()
-  const [isLoading, setIsLoading] = useState(false)
 
-  const {
-    control,
-    handleSubmit,
-    // watch,
-  } = useForm<UpdateUserFormData>({
+  const { control, handleSubmit } = useForm<UpdateUserFormData>({
     resolver: zodResolver(updateUserFormSchema),
   })
-  // const selectedUserType = watch('type', user.type)
 
-  async function handleSaveUser({
-    name,
-    phoneNumber,
-    // type,
-    truckModel,
-    capacity,
-    length,
-    width,
-    height,
-  }: UpdateUserFormData) {
-    try {
-      setIsLoading(true)
+  const { mutate, isPending } = useSaveUser()
 
-      const { data, status } = await api.put('/users', {
-        name: name || user.name,
-        phoneNumber: phoneNumber
-          ? phoneNumber.replace(/\D/g, '')
-          : user.phoneNumber,
-        // type: type || user.type,
-        truckModel,
-        capacity: capacity ? Number(capacity) : undefined,
-        length: length ? Number(length) : undefined,
-        width: width ? Number(width) : undefined,
-        height: height ? Number(height) : undefined,
-      })
-
-      if (status === 200) {
-        await updateUser(data.user)
-        Alert.alert('Perfil alterado com sucesso!')
-      }
-    } catch (error) {
-      setIsLoading(false)
-      const isAppError = error instanceof AppError
-      const message = isAppError
-        ? error.message
-        : 'Não foi possível criar a conta. Tente novamente mais tarde.'
-      console.warn(message)
-    } finally {
-      setIsLoading(false)
-    }
+  async function handleSaveUser(formData: UpdateUserFormData) {
+    const newInfos = { formData, user }
+    mutate(newInfos, {
+      onSuccess: async (data) => {
+        await updateUser(data)
+        showMessage({
+          message: 'Perfil alterado com sucesso.',
+          type: 'success',
+        })
+      },
+      onError: () => {
+        showMessage({
+          message: 'Erro ao editar perfil.',
+          type: 'danger',
+          duration: 4000,
+        })
+      },
+    })
   }
 
   function handleWithSignOut() {
@@ -182,7 +153,7 @@ export function Profile() {
             control={control}
             name="phoneNumber"
             label="Celular"
-            placeholder={user.name}
+            placeholder={formatPhoneNumber(user.phoneNumber)}
             keyboardType="number-pad"
             maskFunc={formatPhoneNumber}
           />
@@ -260,7 +231,7 @@ export function Profile() {
           <Button
             title="Salvar"
             onPress={handleSubmit(handleSaveUser)}
-            disabled={isLoading}
+            disabled={isPending}
           />
         </View>
       </ScrollView>
