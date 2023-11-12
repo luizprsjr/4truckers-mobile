@@ -9,7 +9,7 @@ import {
 import { AddAnnouncement } from '@screens/add-announcement'
 import { AddTruck } from '@screens/add-truck'
 import { Announcement } from '@screens/announcement'
-import { Home } from '@screens/Home'
+import { Home } from '@screens/home'
 import { Profile } from '@screens/profile'
 import { colors, fonts } from '@theme/index'
 
