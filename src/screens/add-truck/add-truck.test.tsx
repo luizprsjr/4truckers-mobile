@@ -16,9 +16,7 @@ describe('screen: AddAnnouncement(AddTruck)', () => {
     const submitButton = screen.getByTestId('submit-button')
     await waitFor(() => fireEvent.press(submitButton))
 
-    await waitFor(() => {
-      expect(axios).not.toHaveBeenCalled()
-    })
+    expect(axios).not.toHaveBeenCalled()
   })
 
   it('should not return an error message if truck model is provided', async () => {

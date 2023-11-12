@@ -19,9 +19,7 @@ describe('screen: AddAnnouncement(TruckerForm)', () => {
     const submitButton = screen.getByTestId('submit-button')
     await waitFor(() => fireEvent.press(submitButton))
 
-    await waitFor(() => {
-      expect(axios).not.toHaveBeenCalled()
-    })
+    expect(axios).not.toHaveBeenCalled()
   })
 
   it('should not return an error message if origin city is send', async () => {
