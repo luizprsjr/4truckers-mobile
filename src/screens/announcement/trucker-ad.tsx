@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react'
 import {
-  Alert,
   Image,
   Linking,
   ScrollView,
@@ -10,37 +8,18 @@ import {
   View,
 } from 'react-native'
 
-import { api } from '@api/index'
 import avatar from '@assets/avatar.png'
 import { Header } from '@components/header'
 import { WhatsAppLogo } from '@components/wpp-logo'
 import { AnnouncementDTO } from '@dtos/AnnouncementDTO'
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
-import { useRoute } from '@react-navigation/native'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { colors, fonts } from '@theme/index'
 
-interface RouteParamsProps {
-  id: string
+type TruckerAdProps = {
+  announcement: AnnouncementDTO
 }
 
-export function TruckerAd() {
-  const [announcement, setAnnouncement] = useState<AnnouncementDTO>(
-    {} as AnnouncementDTO,
-  )
-
-  const route = useRoute()
-  const { id } = route.params as RouteParamsProps
-
-  async function getAd() {
-    try {
-      const { data } = await api.get<AnnouncementDTO>(`/announcements/${id}`)
-      setAnnouncement(data)
-      console.log(data)
-    } catch (error) {
-      Alert.alert('Erro ao carregar o anúncio', 'Tente novamente mais tarde.')
-    }
-  }
-
+export function TruckerAd({ announcement }: TruckerAdProps) {
   function handleOpenWpp(phoneNumber: string) {
     const deepLink = `whatsapp://send?phone=${phoneNumber}`
     Linking.canOpenURL(deepLink)
@@ -55,10 +34,6 @@ export function TruckerAd() {
         console.error(error)
       })
   }
-
-  useEffect(() => {
-    getAd()
-  }, [id])
 
   return (
     <View style={{ flex: 1 }}>
@@ -88,12 +63,12 @@ export function TruckerAd() {
             <Text style={styles.infoLabel}>Capacidade</Text>
           </View>
 
-          <View style={styles.itemWrapper}>
+          {/* <View style={styles.itemWrapper}>
             <Text style={styles.infoText}>
               4.5 <Ionicons name="star" size={16} color={colors.white} />
             </Text>
             <Text style={styles.infoLabel}>Nota</Text>
-          </View>
+          </View> */}
 
           <TouchableOpacity
             style={styles.itemWrapper}

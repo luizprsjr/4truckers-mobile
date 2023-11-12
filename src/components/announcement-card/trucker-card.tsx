@@ -16,7 +16,7 @@ export function TruckerCard({ item }: TruckerCardProps) {
   const { navigate } = useNavigation<AppNavigationRoutesProps>()
 
   function handleOpenAd() {
-    navigate('truckerAd', { id: item.id })
+    navigate('announcement', { id: item.id })
   }
 
   const departureDate = dayjs(item.pickupOrDepartureDate)

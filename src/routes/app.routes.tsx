@@ -8,11 +8,9 @@ import {
 } from '@react-navigation/bottom-tabs'
 import { AddAnnouncement } from '@screens/add-announcement'
 import { AddTruck } from '@screens/add-truck'
-import { Announcement } from '@screens/Announcement'
+import { Announcement } from '@screens/announcement'
 import { Home } from '@screens/Home'
 import { Profile } from '@screens/profile'
-import { TruckerAd } from '@screens/TruckerAd'
-import { UserAd } from '@screens/UserAd'
 import { colors, fonts } from '@theme/index'
 
 type AppRoutes = {
@@ -20,11 +18,7 @@ type AppRoutes = {
   addAnnouncement: undefined
   addTruck: undefined
   profile: undefined
-  announcement: undefined
-  truckerAd: {
-    id: string
-  }
-  userAd: {
+  announcement: {
     id: string
   }
 }
@@ -109,21 +103,6 @@ export function AppRoutes() {
         name="addTruck"
         component={AddTruck}
         options={{ tabBarButton: () => null }}
-      />
-
-      <Screen
-        name="truckerAd"
-        component={TruckerAd}
-        options={{ tabBarButton: () => null }}
-      />
-
-      <Screen
-        name="userAd"
-        component={UserAd}
-        options={{
-          tabBarButton: () => null,
-          // tabBarStyle: { display: 'none' },
-        }}
       />
     </Navigator>
   )

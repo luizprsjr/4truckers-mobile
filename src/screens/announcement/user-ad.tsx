@@ -1,7 +1,5 @@
 import dayjs from 'dayjs'
-import { useCallback, useState } from 'react'
 import {
-  Alert,
   Linking,
   ScrollView,
   StyleSheet,
@@ -10,7 +8,6 @@ import {
   View,
 } from 'react-native'
 
-import { api } from '@api/index'
 import { Header } from '@components/header'
 import { WhatsAppLogo } from '@components/wpp-logo'
 import { AnnouncementDTO } from '@dtos/AnnouncementDTO'
@@ -20,36 +17,15 @@ import {
   MaterialCommunityIcons,
   Octicons,
 } from '@expo/vector-icons'
-import { useFocusEffect, useRoute } from '@react-navigation/native'
 import { colors, fonts } from '@theme/index'
 
-interface RouteParamsProps {
-  id: string
+type UserAdProps = {
+  announcement: AnnouncementDTO
 }
 
-export function UserAd() {
-  const [announcement, setAnnouncement] = useState<AnnouncementDTO>(
-    {} as AnnouncementDTO,
-  )
-
-  const route = useRoute()
-  const { id } = route.params as RouteParamsProps
-
-  async function getAd() {
-    try {
-      const { data } = await api.get<AnnouncementDTO>(`/announcements/${id}`)
-      setAnnouncement(data)
-    } catch (error) {
-      Alert.alert('Erro ao carregar o anúncio', 'Tente novamente mais tarde.')
-    }
-  }
-
+export function UserAd({ announcement }: UserAdProps) {
   function handleOpenWpp(phoneNumber: string) {
-    // Replace '1234567890' with the recipient's phone number including the country code
-
-    // Create the WhatsApp deep link
     const deepLink = `whatsapp://send?phone=${phoneNumber}`
-    // Try to open the WhatsApp deep link
     Linking.canOpenURL(deepLink)
       .then((supported) => {
         if (supported) {
@@ -62,12 +38,6 @@ export function UserAd() {
         console.error(error)
       })
   }
-
-  useFocusEffect(
-    useCallback(() => {
-      getAd()
-    }, [id]),
-  )
 
   return (
     <View style={{ flex: 1 }}>
