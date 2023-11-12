@@ -9,6 +9,7 @@ type WhatsAppLogoProps = SvgProps & {
 export function WhatsAppLogo({ width, height, ...rest }: WhatsAppLogoProps) {
   return (
     <Svg
+      testID="whatsapp-logo"
       width={width || 34}
       height={height || 34}
       viewBox="0 0 34 34"
