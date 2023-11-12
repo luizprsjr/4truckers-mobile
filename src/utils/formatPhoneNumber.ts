@@ -1,4 +1,6 @@
 export function formatPhoneNumber(inputText: string) {
+  if (!inputText) return ''
+
   const cleanedText = inputText.replace(/\D/g, '')
   const limitedText = cleanedText.slice(0, 11)
   let formattedText = ''

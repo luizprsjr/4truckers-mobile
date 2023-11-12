@@ -10,4 +10,9 @@ describe('function: formatPhoneNumber', () => {
     const formattedNumber = formatPhoneNumber('xxxxxxxxxxx')
     expect(formattedNumber).toBeFalsy()
   })
+
+  it('should return empty if phone number is empty', () => {
+    const formattedNumber = formatPhoneNumber('')
+    expect(formattedNumber).toBe('')
+  })
 })
