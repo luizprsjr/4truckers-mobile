@@ -1,5 +1,4 @@
-import { UserDTO } from '@dtos/UserDTO'
-import { UpdateUserFormData } from '@screens/profile'
+import { UpdateUserDTO, UserDTO } from '@dtos/UserDTO'
 import { useMutation } from '@tanstack/react-query'
 
 import { api } from '../'
@@ -9,7 +8,7 @@ type Response = {
 }
 
 type Params = {
-  formData: UpdateUserFormData
+  formData: UpdateUserDTO
   user: UserDTO
 }
 
