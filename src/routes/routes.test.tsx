@@ -1,8 +1,7 @@
+import { mockUseAuthReturn } from '@__tests__/mocks/hooks/use-auth'
 import { mockedUser } from '@__tests__/mocks/user/mocked-user'
 import { renderWithAuth, screen, waitFor } from '@__tests__/utils/custom-render'
-import { storageSaveAuthToken } from '@storage/storage-auth-token'
-import { storageSaveRefreshToken } from '@storage/storage-refresh-token'
-import { storageSaveUser } from '@storage/stored-user'
+import * as useAuthModule from '@hooks/useAuth'
 
 import { Routes } from './'
 
@@ -20,9 +19,9 @@ describe('routes', () => {
   })
 
   it('should render home screen when have a user in storage', async () => {
-    await storageSaveUser(mockedUser)
-    await storageSaveAuthToken('any-token')
-    await storageSaveRefreshToken('any-token')
+    jest
+      .spyOn(useAuthModule, 'useAuth')
+      .mockReturnValue(mockUseAuthReturn(mockedUser))
 
     renderWithAuth(<Routes />)
 
@@ -36,9 +35,9 @@ describe('routes', () => {
   it('should render add user info screen when the user does not have a phone number', async () => {
     const user = mockedUser
     user.phoneNumber = ''
-    await storageSaveUser(user)
-    await storageSaveAuthToken('any-token')
-    await storageSaveRefreshToken('any-token')
+    jest
+      .spyOn(useAuthModule, 'useAuth')
+      .mockReturnValue(mockUseAuthReturn(user))
 
     renderWithAuth(<Routes />)
 
