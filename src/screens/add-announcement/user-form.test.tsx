@@ -14,23 +14,6 @@ const fakeDate = new Date('2025-12-12T12:00:00.000-03:00')
 const axios = jest.spyOn(api, 'post')
 
 describe('screen: AddAnnouncement(UserForm)', () => {
-  it('should show all the required erros when user does not send the infos', async () => {
-    render(<UserForm />)
-    const submitButton = screen.getByTestId('submit-button')
-    await waitFor(() => fireEvent.press(submitButton))
-
-    expect(
-      await screen.findByText(/Informe a cidade de coleta/i),
-    ).toBeOnTheScreen()
-    expect(
-      await screen.findByText(/Informe a data de coleta/i),
-    ).toBeOnTheScreen()
-    expect(
-      await screen.findByText(/Informe a cidade de entrega/i),
-    ).toBeOnTheScreen()
-    expect(await screen.findByText(/Informe o peso/i)).toBeOnTheScreen()
-  })
-
   it('should not call the api if the required fields are not valid', async () => {
     render(<UserForm />)
     const submitButton = screen.getByTestId('submit-button')

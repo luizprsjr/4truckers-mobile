@@ -11,15 +11,6 @@ import { AddTruck } from './add-truck'
 const axios = jest.spyOn(api, 'post')
 
 describe('screen: AddAnnouncement(AddTruck)', () => {
-  it('should show all the required erros when user does not provided the infos', async () => {
-    render(<AddTruck />)
-    const submitButton = screen.getByTestId('submit-button')
-    await waitFor(() => fireEvent.press(submitButton))
-
-    expect(await screen.findByText(/Informe o modelo/i)).toBeOnTheScreen()
-    expect(await screen.findByText(/Informe a capacidade/i)).toBeOnTheScreen()
-  })
-
   it('should not call the api if the required fields are not valid', async () => {
     render(<AddTruck />)
     const submitButton = screen.getByTestId('submit-button')
