@@ -26,20 +26,30 @@ export const InputInfo = forwardRef<TextInput, InputInfoProps>(
       ? colors.primary700
       : colors.secondary400
 
+    const borderStyle = {
+      ...styles.inputContainer,
+      borderColor: errorMessage
+        ? colors.red
+        : isFocused
+        ? colors.primary700
+        : colors.secondary400,
+      borderWidth: errorMessage ? 2 : 1,
+    }
+
     return (
       <View style={{ gap: 4 }}>
-        <Text style={[styles.label, { color: inputColor }]}>{label}</Text>
+        <Text style={[styles.label]}>{label}</Text>
 
         <View
           testID="container"
           style={[
             multiline ? styles.multilineContainer : styles.inputContainer,
-            { borderColor: inputColor },
+            borderStyle,
           ]}
         >
           <TextInput
             ref={ref}
-            style={[styles.input, { color: inputColor }]}
+            style={styles.input}
             placeholder={placeholder || '______________'}
             placeholderTextColor={inputColor}
             multiline={multiline}
@@ -48,9 +58,7 @@ export const InputInfo = forwardRef<TextInput, InputInfoProps>(
             {...rest}
           />
           {measurementUnit && (
-            <Text style={[styles.measurementUnit, { color: inputColor }]}>
-              {measurementUnit}
-            </Text>
+            <Text style={styles.measurementUnit}>{measurementUnit}</Text>
           )}
         </View>
         {errorMessage && (
@@ -65,41 +73,41 @@ const styles = StyleSheet.create({
   label: {
     fontFamily: fonts.medium,
     fontSize: 14,
-    color: colors.secondary700,
+    color: colors.secondary400,
     textTransform: 'none',
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderColor: colors.secondary700,
+    borderColor: colors.secondary400,
     borderWidth: 1,
     borderRadius: 8,
-    paddingHorizontal: 16,
-    paddingVertical: 4,
   },
   multilineContainer: {
-    borderColor: colors.secondary700,
+    borderColor: colors.secondary400,
     borderWidth: 1,
     borderRadius: 8,
-    paddingHorizontal: 16,
-    paddingVertical: 4,
+    paddingTop: 12,
     width: '100%',
     minHeight: 100,
   },
   input: {
     flex: 1,
-    height: 44,
+    height: 52,
     fontFamily: fonts.medium,
     fontSize: 14,
-    color: colors.secondary700,
+    color: colors.secondary400,
+    paddingHorizontal: 16,
+    paddingVertical: 4,
   },
   measurementUnit: {
     fontFamily: fonts.regular,
     fontSize: 14,
-    color: colors.secondary700,
+    color: colors.secondary400,
+    marginRight: 16,
   },
   errorMessage: {
-    fontFamily: fonts.regular,
+    fontFamily: fonts.bold,
     fontSize: 14,
     color: colors.red,
   },

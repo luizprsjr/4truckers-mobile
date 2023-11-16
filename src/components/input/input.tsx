@@ -21,11 +21,16 @@ export type InputProps = TextInputProps & {
 export const Input = forwardRef<TextInput, InputProps>(
   ({ leftIcon, rightIcon, rightIconOnPress, errorMessage, ...rest }, ref) => {
     const [isFocused, setIsFocused] = useState(false)
-    const inputColor = errorMessage
-      ? colors.red
-      : isFocused
-      ? colors.primary700
-      : colors.secondary400
+
+    const borderStyle = {
+      ...styles.inputContainer,
+      borderColor: errorMessage
+        ? colors.red
+        : isFocused
+        ? colors.primary700
+        : colors.secondary400,
+      borderWidth: errorMessage ? 2 : 1,
+    }
 
     const handleFocus = () => {
       setIsFocused(true)
@@ -37,23 +42,20 @@ export const Input = forwardRef<TextInput, InputProps>(
 
     return (
       <>
-        <View
-          testID="container"
-          style={[styles.inputContainer, { borderColor: inputColor }]}
-        >
+        <View testID="container" style={borderStyle}>
           {leftIcon && (
             <Ionicons
               testID="left-icon"
               style={{ paddingLeft: 16 }}
               name={leftIcon}
               size={24}
-              color={inputColor}
+              color={colors.secondary400}
             />
           )}
           <TextInput
             ref={ref}
-            style={[styles.input, { color: inputColor }]}
-            placeholderTextColor={inputColor}
+            style={styles.input}
+            placeholderTextColor={colors.secondary400}
             onFocus={handleFocus}
             onBlur={handleBlur}
             {...rest}
@@ -81,8 +83,6 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderColor: colors.primary700,
-    borderWidth: 1,
     borderRadius: 8,
   },
   input: {
@@ -92,11 +92,11 @@ const styles = StyleSheet.create({
     minHeight: 60,
     fontFamily: fonts.medium,
     fontSize: 14,
-    color: colors.secondary700,
+    color: colors.secondary400,
   },
   errorMessage: {
     color: colors.red,
-    fontFamily: fonts.regular,
+    fontFamily: fonts.bold,
     fontSize: 14,
   },
 })
