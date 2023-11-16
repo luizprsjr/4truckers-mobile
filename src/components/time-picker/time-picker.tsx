@@ -52,14 +52,19 @@ export const TimePicker = forwardRef<TextInput, DatePickerProps>(
       event: DateTimePickerEvent,
       selectedDate?: Date | undefined,
     ) {
+      if (event.type === 'dismissed') {
+        if (Platform.OS === 'android') {
+          setShowPicker(false)
+        }
+      }
       if (event.type === 'set') {
+        if (Platform.OS === 'android') {
+          setShowPicker(false)
+        }
         const currentDate = selectedDate
         setSelectedDate(currentDate)
         if (onControllerChange) {
           onControllerChange(currentDate)
-        }
-        if (Platform.OS === 'android') {
-          setShowPicker(false)
         }
       }
     }
@@ -93,7 +98,7 @@ export const TimePicker = forwardRef<TextInput, DatePickerProps>(
               display="inline"
               onChange={onChange}
             />
-            {Platform.OS && (
+            {Platform.OS === 'ios' && (
               <TouchableOpacity
                 style={styles.iOSButton}
                 onPress={() => setShowPicker(false)}
