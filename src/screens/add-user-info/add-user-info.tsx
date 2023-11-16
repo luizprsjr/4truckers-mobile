@@ -13,6 +13,7 @@ import { z } from 'zod'
 import { api } from '@api/index'
 import { BlankSpacer } from '@components/blank-spacer'
 import { Button } from '@components/button'
+import { FormScreen } from '@components/form-screen'
 import { Header } from '@components/header'
 import { ControlledInput } from '@components/input'
 import { ControlledSelectButtons } from '@components/select-buttons'
@@ -29,7 +30,7 @@ const signUpFormSchema = z.object({
   phoneNumber: z
     .string()
     .regex(phoneRegex, 'Número inválido. Informe o DDD + número.'),
-  type: z.enum(['USER', 'TRUCKER']).default('USER'),
+  type: z.enum(['USER', 'TRUCKER']),
 })
 
 type SignUpFormData = z.infer<typeof signUpFormSchema>
@@ -40,8 +41,9 @@ export function AddUserInfo() {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const { updateUser, user } = useAuth()
 
-  const { control, handleSubmit, watch } = useForm<SignUpFormData>({
+  const { control, handleSubmit, formState, watch } = useForm<SignUpFormData>({
     resolver: zodResolver(signUpFormSchema),
+    mode: 'onChange',
   })
 
   async function handleSignUp({ phoneNumber, type }: SignUpFormData) {
@@ -76,7 +78,7 @@ export function AddUserInfo() {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <FormScreen>
       <Header isLarge />
 
       <ScrollView
@@ -139,12 +141,12 @@ export function AddUserInfo() {
           <Button
             title={hasAcceptedTerms ? 'Criar conta' : 'Aceite os termos'}
             onPress={handleSubmit(handleSignUp)}
-            disabled={!hasAcceptedTerms}
+            disabled={!formState.isValid || !hasAcceptedTerms}
             isLoading={isLoading}
           />
         </View>
       </ScrollView>
-    </View>
+    </FormScreen>
   )
 }
 

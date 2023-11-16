@@ -6,6 +6,7 @@ import { z } from 'zod'
 import { useAddTruck } from '@api/truck/use-add-truck'
 import { BlankSpacer } from '@components/blank-spacer'
 import { Button } from '@components/button'
+import { FormScreen } from '@components/form-screen'
 import { Header } from '@components/header'
 import { ControlledInputInfo } from '@components/input-info'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -13,15 +14,29 @@ import { useAuth } from '@hooks/useAuth'
 import { CommonActions, useNavigation } from '@react-navigation/native'
 import { AppNavigationRoutesProps } from '@routes/app.routes'
 import { colors, fonts } from '@theme/index'
+import { isNumber } from '@utils/isNumber'
 
 const addTruckFormSchema = z.object({
-  truckModel: z.string({ required_error: 'Informe o modelo.' }),
+  truckModel: z.string().min(2, { message: 'Mínimo 2 caracteres.' }),
   capacity: z
     .string({ required_error: 'Informe a capacidade.' })
+    .refine(isNumber, { message: 'Deve ser um número.' })
     .transform(Number),
-  length: z.string().transform(Number).optional(),
-  width: z.string().transform(Number).optional(),
-  height: z.string().transform(Number).optional(),
+  length: z
+    .string()
+    .refine(isNumber, { message: 'Deve ser um número.' })
+    .transform(Number)
+    .optional(),
+  width: z
+    .string()
+    .refine(isNumber, { message: 'Deve ser um número.' })
+    .transform(Number)
+    .optional(),
+  height: z
+    .string()
+    .refine(isNumber, { message: 'Deve ser um número.' })
+    .transform(Number)
+    .optional(),
 })
 
 export type AddTruckFormData = z.infer<typeof addTruckFormSchema>
@@ -30,9 +45,12 @@ export function AddTruck() {
   const { dispatch } = useNavigation<AppNavigationRoutesProps>()
   const { user, updateUser } = useAuth()
 
-  const { control, handleSubmit, reset } = useForm<AddTruckFormData>({
-    resolver: zodResolver(addTruckFormSchema),
-  })
+  const { control, handleSubmit, formState, reset } = useForm<AddTruckFormData>(
+    {
+      resolver: zodResolver(addTruckFormSchema),
+      mode: 'onChange',
+    },
+  )
 
   const { mutate, isPending } = useAddTruck()
 
@@ -65,7 +83,7 @@ export function AddTruck() {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <FormScreen>
       <Header />
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -73,19 +91,18 @@ export function AddTruck() {
       >
         <View style={styles.form}>
           <Text style={styles.title}>ADICIONAR DADOS DO CAMINHÃO</Text>
-
           <ControlledInputInfo
             testID="truck-model"
             control={control}
             name="truckModel"
-            label="Modelo do caminhão"
+            label="Modelo do caminhão*"
           />
 
           <ControlledInputInfo
             testID="capacity"
             control={control}
             name="capacity"
-            label="Capacidade"
+            label="Capacidade*"
             measurementUnit="Kg"
             keyboardType="numeric"
           />
@@ -120,10 +137,11 @@ export function AddTruck() {
             title="Salvar"
             onPress={handleSubmit(handleAddNewTruck)}
             isLoading={isPending}
+            disabled={!formState.isValid}
           />
         </View>
       </ScrollView>
-    </View>
+    </FormScreen>
   )
 }
 
@@ -138,7 +156,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderRadius: 8,
     padding: 32,
-    gap: 8,
+    gap: 16,
   },
   title: {
     fontFamily: fonts.bold,

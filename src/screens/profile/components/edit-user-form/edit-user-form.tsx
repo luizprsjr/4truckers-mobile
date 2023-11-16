@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { showMessage } from 'react-native-flash-message'
@@ -12,20 +13,33 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useAuth } from '@hooks/useAuth'
 import { colors, fonts } from '@theme/index'
 import { formatPhoneNumber } from '@utils/formatPhoneNumber'
+import { isNumber } from '@utils/isNumber'
 
 const phoneRegex = /^\(\d{2}\) \d \d{4}-\d{4}$/
 
 const updateUserFormSchema = z.object({
-  name: z.string().optional(),
+  name: z.string().min(3, { message: 'Mínimo 3 caracteres.' }).optional(),
   phoneNumber: z
     .string()
     .regex(phoneRegex, 'Número inválido. Informe o DDD + número.')
     .optional(),
   truckModel: z.string().optional(),
-  capacity: z.string().optional(),
-  length: z.string().optional(),
-  width: z.string().optional(),
-  height: z.string().optional(),
+  capacity: z
+    .string()
+    .refine(isNumber, { message: 'Deve ser um número.' })
+    .optional(),
+  length: z
+    .string()
+    .refine(isNumber, { message: 'Deve ser um número.' })
+    .optional(),
+  width: z
+    .string()
+    .refine(isNumber, { message: 'Deve ser um número.' })
+    .optional(),
+  height: z
+    .string()
+    .refine(isNumber, { message: 'Deve ser um número.' })
+    .optional(),
 })
 
 export type UpdateUserFormData = z.infer<typeof updateUserFormSchema>
@@ -48,9 +62,23 @@ export function errorMessage(message: string) {
 export function EditUserForm() {
   const { user, updateUser } = useAuth()
 
-  const { control, handleSubmit } = useForm<UpdateUserFormData>({
-    resolver: zodResolver(updateUserFormSchema),
-  })
+  const defaultValues = {
+    name: user.name,
+    phoneNumber: formatPhoneNumber(user.phoneNumber),
+    truckModel: user.truck?.truckModel ? user.truck.truckModel : undefined,
+    capacity: user.truck?.capacity ? String(user.truck.capacity) : undefined,
+    length: user.truck?.length ? String(user.truck.length) : undefined,
+    width: user.truck?.width ? String(user.truck.width) : undefined,
+    height: user.truck?.height ? String(user.truck.height) : undefined,
+  }
+
+  const { control, handleSubmit, formState, reset } =
+    useForm<UpdateUserFormData>({
+      resolver: zodResolver(updateUserFormSchema),
+      defaultValues,
+      mode: 'onChange',
+    })
+  const { isDirty, dirtyFields, touchedFields } = formState
 
   const { mutate, isPending } = useSaveUser()
 
@@ -67,6 +95,18 @@ export function EditUserForm() {
     const newInfos = { formData, user }
     mutate(newInfos, { onSuccess, onError })
   }
+
+  const isFormStateChanged = () => {
+    return (
+      isDirty ||
+      Object.keys(dirtyFields).length > 0 ||
+      Object.keys(touchedFields).length > 0
+    )
+  }
+
+  useEffect(() => {
+    reset(defaultValues)
+  }, [user])
 
   return (
     <ScrollView
@@ -125,18 +165,18 @@ export function EditUserForm() {
               control={control}
               name="truckModel"
               label="Modelo"
-              placeholder={user.truck?.truckModel}
+              // placeholder={user.truck?.truckModel}
             />
 
             <ControlledInputInfo
               control={control}
               name="capacity"
               label="Capacidade"
-              placeholder={
-                user.truck?.capacity
-                  ? String(user.truck.capacity)
-                  : '______________'
-              }
+              // placeholder={
+              //   user.truck?.capacity
+              //     ? String(user.truck.capacity)
+              //     : '______________'
+              // }
               keyboardType="number-pad"
             />
 
@@ -144,11 +184,11 @@ export function EditUserForm() {
               control={control}
               name="length"
               label="Comprimento"
-              placeholder={
-                user.truck?.length
-                  ? String(user.truck.length)
-                  : '______________'
-              }
+              // placeholder={
+              //   user.truck?.length
+              //     ? String(user.truck.length)
+              //     : '______________'
+              // }
               keyboardType="number-pad"
             />
 
@@ -156,9 +196,9 @@ export function EditUserForm() {
               control={control}
               name="width"
               label="Largura"
-              placeholder={
-                user.truck?.width ? String(user.truck.width) : '______________'
-              }
+              // placeholder={
+              //   user.truck?.width ? String(user.truck.width) : '______________'
+              // }
               keyboardType="number-pad"
             />
 
@@ -166,11 +206,11 @@ export function EditUserForm() {
               control={control}
               name="height"
               label="Altura"
-              placeholder={
-                user.truck?.height
-                  ? String(user.truck.height)
-                  : '______________'
-              }
+              // placeholder={
+              //   user.truck?.height
+              //     ? String(user.truck.height)
+              //     : '______________'
+              // }
               keyboardType="number-pad"
             />
           </>
@@ -180,7 +220,7 @@ export function EditUserForm() {
           testID="submit-button"
           title="Salvar"
           onPress={handleSubmit(handleSaveUser)}
-          disabled={isPending}
+          disabled={isPending || !formState.isValid || !isFormStateChanged()}
         />
       </View>
     </ScrollView>

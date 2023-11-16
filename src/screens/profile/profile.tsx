@@ -1,6 +1,7 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import avatar from '@assets/avatar.png'
+import { FormScreen } from '@components/form-screen'
 import { Header } from '@components/header'
 import { Ionicons } from '@expo/vector-icons'
 import { useAuth } from '@hooks/useAuth'
@@ -16,7 +17,7 @@ export function Profile() {
   }
 
   return (
-    <View style={styles.container}>
+    <FormScreen>
       <TouchableOpacity
         testID="logout-button"
         style={styles.logoutButton}
@@ -47,14 +48,11 @@ export function Profile() {
       </View>
 
       <EditUserForm />
-    </View>
+    </FormScreen>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   logoutButton: {
     zIndex: 1,
     position: 'absolute',

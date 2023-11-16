@@ -7,10 +7,7 @@ export type SelectButtonsProps = {
   onChange: (...event: any[]) => void
 }
 
-export function SelectButtons({
-  selected = 'USER',
-  onChange,
-}: SelectButtonsProps) {
+export function SelectButtons({ selected, onChange }: SelectButtonsProps) {
   const userButtonStyle = {
     ...styles.button,
     backgroundColor: selected === 'USER' ? colors.primary700 : 'transparent',

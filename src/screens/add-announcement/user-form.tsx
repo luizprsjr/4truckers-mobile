@@ -15,6 +15,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigation } from '@react-navigation/native'
 import { AppNavigationRoutesProps } from '@routes/app.routes'
 import { colors, fonts } from '@theme/index'
+import { isNumber } from '@utils/isNumber'
 import { isSecondDateInFuture } from '@utils/validators/zod/isSecondDateInFuture'
 
 const schema = z
@@ -36,10 +37,25 @@ const schema = z
       .date()
       .min(new Date(), 'Você não pode escolher uma data no passado.')
       .optional(),
-    weight: z.string({ required_error: 'Informe o peso.' }).transform(Number),
-    length: z.string().transform(Number).optional(),
-    width: z.string().transform(Number).optional(),
-    height: z.string().transform(Number).optional(),
+    weight: z
+      .string({ required_error: 'Informe o peso.' })
+      .refine(isNumber, { message: 'Deve ser um número.' })
+      .transform(Number),
+    length: z
+      .string()
+      .refine(isNumber, { message: 'Deve ser um número.' })
+      .transform(Number)
+      .optional(),
+    width: z
+      .string()
+      .refine(isNumber, { message: 'Deve ser um número.' })
+      .transform(Number)
+      .optional(),
+    height: z
+      .string()
+      .refine(isNumber, { message: 'Deve ser um número.' })
+      .transform(Number)
+      .optional(),
     canStack: z.boolean().default(false),
     description: z
       .string()
@@ -68,6 +84,7 @@ export type UserFormType = z.infer<typeof schema>
 export function UserForm() {
   const { handleSubmit, control, reset } = useForm<UserFormType>({
     resolver: zodResolver(schema),
+    mode: 'onChange',
   })
   const { navigate } = useNavigation<AppNavigationRoutesProps>()
   const { mutate, isPending } = useAddUserAnnouncement()
@@ -109,14 +126,14 @@ export function UserForm() {
             testID="origin-city"
             control={control}
             name="originCity"
-            label="Cidade de coleta"
+            label="Cidade de coleta *"
           />
 
           <ControlledDatePicker
             testID="pick-up-date"
             control={control}
             name="pickupOrDepartureDate"
-            label="Data inicial da janela de coleta"
+            label="Data inicial da janela de coleta *"
             placeholder="____/____/____"
           />
 
@@ -133,7 +150,7 @@ export function UserForm() {
             testID="destination-city"
             control={control}
             name="destinationCity"
-            label="Cidade de entrega"
+            label="Cidade de entrega *"
           />
 
           <ControlledDatePicker
@@ -149,7 +166,7 @@ export function UserForm() {
             testID="weight"
             control={control}
             name="weight"
-            label="Peso"
+            label="Peso *"
             measurementUnit="Kg"
             keyboardType="numeric"
           />
@@ -191,6 +208,7 @@ export function UserForm() {
             multiline
             textAlignVertical="top"
             numberOfLines={4}
+            scrollEnabled={false}
           />
 
           <BlankSpacer height={12} />

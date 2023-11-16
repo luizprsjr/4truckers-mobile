@@ -1,1 +1,1 @@
-export * from './add-user.info'
+export * from './add-user-info'

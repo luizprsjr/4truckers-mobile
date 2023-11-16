@@ -78,8 +78,9 @@ const schema = z
 export type TruckerFormType = z.infer<typeof schema>
 
 export function TruckerForm() {
-  const { handleSubmit, control, reset } = useForm<TruckerFormType>({
+  const { handleSubmit, control, formState, reset } = useForm<TruckerFormType>({
     resolver: zodResolver(schema),
+    mode: 'onChange',
   })
 
   const { navigate } = useNavigation<AppNavigationRoutesProps>()
@@ -122,14 +123,14 @@ export function TruckerForm() {
             testID="origin-city"
             control={control}
             name="originCity"
-            label="Cidade de partida"
+            label="Cidade de partida *"
           />
 
           <ControlledDatePicker
             testID="origin-date"
             control={control}
             name="departureDate"
-            label="Data de partida"
+            label="Data de partida *"
             placeholder="____/____/____"
           />
 
@@ -137,7 +138,7 @@ export function TruckerForm() {
             testID="origin-time"
             control={control}
             name="departureTime"
-            label="Hora da partida"
+            label="Hora da partida *"
             placeholder="00:00"
           />
 
@@ -147,20 +148,22 @@ export function TruckerForm() {
             testID="destination-city"
             control={control}
             name="destinationCity"
-            label="Cidade de destino"
+            label="Cidade de destino *"
           />
 
           <ControlledDatePicker
             control={control}
             name="arrivalDate"
-            label="Data de chegada"
+            label="Data de chegada (opcional)"
             placeholder="____/____/____"
           />
 
           <ControlledTimePicker
             control={control}
             name="arrivalTime"
-            label="Hora de chegada"
+            label={`Hora de chegada ${
+              formState.dirtyFields.arrivalDate ? '*' : '(opcional)'
+            }`}
             placeholder="00:00"
           />
 
@@ -170,7 +173,7 @@ export function TruckerForm() {
             title="Cadastrar"
             onPress={handleSubmit(onSubmit)}
             isLoading={isPending}
-            disabled={isPending}
+            disabled={!formState.isValid}
           />
         </View>
       </ScrollView>
