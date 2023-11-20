@@ -11,7 +11,7 @@ import { AddTruck } from '@screens/add-truck'
 import { Announcement } from '@screens/announcement'
 import { Home } from '@screens/home'
 import { Profile } from '@screens/profile'
-import { colors, fonts } from '@theme/index'
+import { colors } from '@theme/index'
 
 type AppRoutes = {
   home: undefined
@@ -29,6 +29,7 @@ const { Navigator, Screen } = createBottomTabNavigator<AppRoutes>()
 
 export function AppRoutes() {
   const { bottom } = useSafeAreaInsets()
+  const tabHeight = Platform.OS === 'android' ? 72 : 62
   return (
     <Navigator
       screenOptions={{
@@ -38,11 +39,11 @@ export function AppRoutes() {
         tabBarInactiveTintColor: colors.secondary400,
         tabBarStyle: {
           backgroundColor: colors.primary950,
-          height: Platform.OS === 'android' ? 72 : 96,
+          height: tabHeight + bottom,
           justifyContent: 'center',
           alignItems: 'center',
           paddingTop: 12,
-          paddingBottom: Platform.OS === 'android' ? 12 : bottom,
+          paddingBottom: Math.max(bottom, 12),
         },
       }}
     >
@@ -51,7 +52,6 @@ export function AppRoutes() {
         component={Home}
         options={{
           tabBarLabel: 'Início',
-          tabBarLabelStyle: { fontFamily: fonts.bold },
           tabBarIcon: ({ color, focused }) => (
             <Ionicons
               name={focused ? 'home' : 'home-outline'}
