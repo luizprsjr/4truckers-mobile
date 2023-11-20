@@ -8,6 +8,7 @@ import {
 import { api } from '@api/index'
 
 import { TruckerForm } from './trucker-form'
+import { Platform } from 'react-native'
 
 const fakeDate = new Date('2025-12-12T12:00:00.000-03:00')
 
@@ -87,31 +88,32 @@ describe('screen: AddAnnouncement(TruckerForm)', () => {
   })
 
   it('should call api with correct values when required values are valid', async () => {
-    render(<TruckerForm />)
+    Platform.OS = 'android'
+    const { debug } = render(<TruckerForm />)
     const originCity = screen.getByTestId('origin-city')
     const showDatePickerButton = screen.getByTestId('origin-date-button')
     const showTimePickerButton = screen.getByTestId('origin-time-button')
     const destination = screen.getByTestId('destination-city')
     const submitButton = screen.getByTestId('submit-button')
 
-    fireEvent.changeText(originCity, 'any-city')
-    fireEvent.press(showDatePickerButton)
-    waitFor(() =>
+    waitFor(() => {
+      fireEvent.changeText(originCity, 'any-city')
+      fireEvent.press(showDatePickerButton)
       fireEvent(
         screen.getByTestId('origin-date'),
         'onChange',
         ...createDateTimeSetEvtParams(fakeDate),
-      ),
-    )
-    fireEvent.press(showTimePickerButton)
-    waitFor(() =>
+      )
+      fireEvent.press(showTimePickerButton)
       fireEvent(
         screen.getByTestId('origin-time'),
         'onChange',
         ...createDateTimeSetEvtParams(fakeDate),
-      ),
-    )
-    fireEvent.changeText(destination, 'any-city2')
+      )
+      fireEvent.changeText(destination, 'any-city2')
+    })
+
+    debug()
 
     await waitFor(() => fireEvent.press(submitButton))
 

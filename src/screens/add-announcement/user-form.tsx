@@ -126,14 +126,14 @@ export function UserForm() {
             testID="origin-city"
             control={control}
             name="originCity"
-            label="Cidade de coleta *"
+            label="Cidade de coleta"
           />
 
           <ControlledDatePicker
             testID="pick-up-date"
             control={control}
             name="pickupOrDepartureDate"
-            label="Data inicial da janela de coleta *"
+            label="Data inicial da janela de coleta"
             placeholder="____/____/____"
           />
 
@@ -150,7 +150,7 @@ export function UserForm() {
             testID="destination-city"
             control={control}
             name="destinationCity"
-            label="Cidade de entrega *"
+            label="Cidade de entrega"
           />
 
           <ControlledDatePicker
@@ -166,7 +166,7 @@ export function UserForm() {
             testID="weight"
             control={control}
             name="weight"
-            label="Peso *"
+            label="Peso"
             measurementUnit="Kg"
             keyboardType="numeric"
           />

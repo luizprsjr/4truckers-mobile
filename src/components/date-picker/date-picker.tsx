@@ -24,19 +24,10 @@ export const DatePicker = forwardRef<TextInput, DatePickerProps>(
     const [selectedDate, setSelectedDate] = useState<Date | undefined>()
     const [showPicker, setShowPicker] = useState(false)
 
-    const labelStyle = {
-      ...styles.label,
-      color: errorMessage ? colors.red : colors.secondary400,
-    }
-
-    const buttonContainerStyle = {
+    const borderStyle = {
       ...styles.buttonContainer,
       borderColor: errorMessage ? colors.red : colors.secondary400,
-    }
-
-    const buttonTextStyle = {
-      ...styles.buttonText,
-      color: errorMessage ? colors.red : colors.secondary400,
+      borderWidth: errorMessage ? 2 : 1,
     }
 
     function onChange(
@@ -75,7 +66,7 @@ export const DatePicker = forwardRef<TextInput, DatePickerProps>(
             showSoftInputOnFocus={false}
             caretHidden
           />
-          <Text style={labelStyle}>{label}</Text>
+          <Text style={styles.label}>{label}</Text>
         </View>
 
         {showPicker && (
@@ -95,9 +86,9 @@ export const DatePicker = forwardRef<TextInput, DatePickerProps>(
           <Pressable
             testID={testID ? `${testID}-button` : 'button'}
             onPress={() => setShowPicker(true)}
-            style={buttonContainerStyle}
+            style={borderStyle}
           >
-            <Text testID="button-text" style={buttonTextStyle}>
+            <Text testID="button-text" style={styles.buttonText}>
               {selectedDate
                 ? dayjs(selectedDate).format('DD/MM/YYYY')
                 : placeholder}
@@ -117,7 +108,7 @@ const styles = StyleSheet.create({
   label: {
     fontFamily: fonts.medium,
     fontSize: 14,
-    color: colors.secondary700,
+    color: colors.secondary400,
     textTransform: 'none',
   },
   buttonContainer: {
@@ -135,7 +126,7 @@ const styles = StyleSheet.create({
     color: colors.secondary400,
   },
   errorMessage: {
-    fontFamily: fonts.regular,
+    fontFamily: fonts.bold,
     fontSize: 14,
     color: colors.red,
   },

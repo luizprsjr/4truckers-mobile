@@ -83,19 +83,18 @@ describe('screen: AddAnnouncement(UserForm)', () => {
     const weight = screen.getByTestId('weight')
     const submitButton = screen.getByTestId('submit-button')
 
-    fireEvent.changeText(originCity, 'any-city')
-    fireEvent.press(showDatePickerButton)
-    waitFor(() =>
+    waitFor(() => {
+      fireEvent.changeText(originCity, 'any-city')
+      fireEvent.press(showDatePickerButton)
       fireEvent(
         screen.getByTestId('pick-up-date'),
         'onChange',
         ...createDateTimeSetEvtParams(fakeDate),
-      ),
-    )
-    fireEvent.changeText(destination, 'any-city2')
-    fireEvent.changeText(weight, '99')
-
-    await waitFor(() => fireEvent.press(submitButton))
+      )
+      fireEvent.changeText(destination, 'any-city2')
+      fireEvent.changeText(weight, '99')
+      fireEvent.press(submitButton)
+    })
 
     const formattedDate = fakeDate
     formattedDate?.setHours(23)

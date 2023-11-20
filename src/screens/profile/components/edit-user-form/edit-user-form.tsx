@@ -220,7 +220,7 @@ export function EditUserForm() {
           testID="submit-button"
           title="Salvar"
           onPress={handleSubmit(handleSaveUser)}
-          disabled={isPending || !formState.isValid || !isFormStateChanged()}
+          disabled={isPending || !isFormStateChanged()}
         />
       </View>
     </ScrollView>

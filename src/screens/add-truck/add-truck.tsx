@@ -45,12 +45,10 @@ export function AddTruck() {
   const { dispatch } = useNavigation<AppNavigationRoutesProps>()
   const { user, updateUser } = useAuth()
 
-  const { control, handleSubmit, formState, reset } = useForm<AddTruckFormData>(
-    {
-      resolver: zodResolver(addTruckFormSchema),
-      mode: 'onChange',
-    },
-  )
+  const { control, handleSubmit, reset } = useForm<AddTruckFormData>({
+    resolver: zodResolver(addTruckFormSchema),
+    mode: 'onChange',
+  })
 
   const { mutate, isPending } = useAddTruck()
 
@@ -95,14 +93,14 @@ export function AddTruck() {
             testID="truck-model"
             control={control}
             name="truckModel"
-            label="Modelo do caminhão*"
+            label="Modelo do caminhão"
           />
 
           <ControlledInputInfo
             testID="capacity"
             control={control}
             name="capacity"
-            label="Capacidade*"
+            label="Capacidade"
             measurementUnit="Kg"
             keyboardType="numeric"
           />
@@ -137,7 +135,7 @@ export function AddTruck() {
             title="Salvar"
             onPress={handleSubmit(handleAddNewTruck)}
             isLoading={isPending}
-            disabled={!formState.isValid}
+            disabled={isPending}
           />
         </View>
       </ScrollView>

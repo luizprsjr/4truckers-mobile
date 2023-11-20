@@ -20,12 +20,6 @@ export const InputInfo = forwardRef<TextInput, InputInfoProps>(
     const onBlur = useCallback(() => setIsFocused(false), [])
     const onFocus = useCallback(() => setIsFocused(true), [])
 
-    const inputColor = errorMessage
-      ? colors.red
-      : isFocused
-      ? colors.primary700
-      : colors.secondary400
-
     const borderStyle = {
       ...styles.inputContainer,
       borderColor: errorMessage
@@ -51,7 +45,7 @@ export const InputInfo = forwardRef<TextInput, InputInfoProps>(
             ref={ref}
             style={styles.input}
             placeholder={placeholder || '______________'}
-            placeholderTextColor={inputColor}
+            placeholderTextColor={colors.secondary400}
             multiline={multiline}
             onFocus={onFocus}
             onBlur={onBlur}

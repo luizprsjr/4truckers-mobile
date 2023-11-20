@@ -123,14 +123,14 @@ export function TruckerForm() {
             testID="origin-city"
             control={control}
             name="originCity"
-            label="Cidade de partida *"
+            label="Cidade de partida"
           />
 
           <ControlledDatePicker
             testID="origin-date"
             control={control}
             name="departureDate"
-            label="Data de partida *"
+            label="Data de partida"
             placeholder="____/____/____"
           />
 
@@ -138,7 +138,7 @@ export function TruckerForm() {
             testID="origin-time"
             control={control}
             name="departureTime"
-            label="Hora da partida *"
+            label="Hora da partida"
             placeholder="00:00"
           />
 
@@ -148,7 +148,7 @@ export function TruckerForm() {
             testID="destination-city"
             control={control}
             name="destinationCity"
-            label="Cidade de destino *"
+            label="Cidade de destino"
           />
 
           <ControlledDatePicker
@@ -173,7 +173,7 @@ export function TruckerForm() {
             title="Cadastrar"
             onPress={handleSubmit(onSubmit)}
             isLoading={isPending}
-            disabled={!formState.isValid}
+            disabled={isPending}
           />
         </View>
       </ScrollView>

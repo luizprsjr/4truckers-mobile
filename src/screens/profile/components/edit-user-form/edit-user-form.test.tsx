@@ -1,5 +1,4 @@
 import {
-  act,
   fireEvent,
   renderWithAuth,
   screen,
@@ -8,6 +7,9 @@ import {
 import { api } from '@api/index'
 
 import { EditUserForm } from './edit-user-form'
+import * as useAuthModule from '@hooks/useAuth'
+import { mockUseAuthReturn } from '@__tests__/mocks/hooks/use-auth'
+import { mockedUser } from '@__tests__/mocks/user/mocked-user'
 
 const axios = jest.spyOn(api, 'put')
 
@@ -39,17 +41,17 @@ describe('screen: Profile(EditUserForm)', () => {
   })
 
   it('should call API if phone is correctly', async () => {
-    jest.useFakeTimers()
+    jest
+      .spyOn(useAuthModule, 'useAuth')
+      .mockReturnValue(mockUseAuthReturn(mockedUser))
     renderWithAuth(<EditUserForm />)
+
     const phone = screen.getByTestId('phone-number')
     const submitButton = screen.getByTestId('submit-button')
 
-    await act(async () => {
-      fireEvent.changeText(phone, '99999999999')
-      await waitFor(() => fireEvent.press(submitButton))
-    })
-
     await waitFor(() => {
+      fireEvent.changeText(phone, '99999999999')
+      fireEvent.press(submitButton)
       expect(axios).toHaveBeenCalled()
     })
   })

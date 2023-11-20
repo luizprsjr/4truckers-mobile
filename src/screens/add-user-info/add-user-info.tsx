@@ -41,7 +41,7 @@ export function AddUserInfo() {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const { updateUser, user } = useAuth()
 
-  const { control, handleSubmit, formState, watch } = useForm<SignUpFormData>({
+  const { control, handleSubmit, watch } = useForm<SignUpFormData>({
     resolver: zodResolver(signUpFormSchema),
     mode: 'onChange',
   })
@@ -141,7 +141,7 @@ export function AddUserInfo() {
           <Button
             title={hasAcceptedTerms ? 'Criar conta' : 'Aceite os termos'}
             onPress={handleSubmit(handleSignUp)}
-            disabled={!formState.isValid || !hasAcceptedTerms}
+            disabled={!hasAcceptedTerms}
             isLoading={isLoading}
           />
         </View>

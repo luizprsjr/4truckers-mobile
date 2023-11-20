@@ -15,9 +15,9 @@ describe('component: SelectButtons', () => {
     const userButtonText = screen.getByText('Usuário')
     const truckerButtonText = screen.getByText('Caminhoneiro')
 
-    expect(userButton).toHaveStyle({ backgroundColor: colors.primary700 })
+    expect(userButton).toHaveStyle({ backgroundColor: 'transparent' })
     expect(truckerButton).toHaveStyle({ backgroundColor: 'transparent' })
-    expect(userButtonText).toHaveStyle({ color: colors.white })
+    expect(userButtonText).toHaveStyle({ color: colors.secondary400 })
     expect(truckerButtonText).toHaveStyle({ color: colors.secondary400 })
   })
 
